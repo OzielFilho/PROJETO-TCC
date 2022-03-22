@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1034754858326",
+    "project_id": "app-flutter-fd2ba",
+    "storage_bucket": "app-flutter-fd2ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1034754858326:android:fdfdbb36659de41af78af7",
+        "android_client_info": {
+          "package_name": "com.lum.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1034754858326-os4a813sij6q91d0hf6kr6ctrt2uhjn4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCz83NF4iXJ_DOZlX1t-InfUsOXtoAQxlg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1034754858326-os4a813sij6q91d0hf6kr6ctrt2uhjn4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

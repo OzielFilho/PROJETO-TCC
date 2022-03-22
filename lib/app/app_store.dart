@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'package:mobx/mobx.dart';
 
 part 'app_store.g.dart';

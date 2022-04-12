@@ -3,6 +3,7 @@
    <application
         android:label="app"
         android:icon="@mipmap/ic_launcher">
+        <service android:name=".VolumeBackgroundService"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -42,5 +43,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
     </application>
 </manifest>

@@ -21,7 +21,9 @@ class _HomePageState extends State<HomePage> {
     if (Platform.isAndroid) {
       var methodChannel = MethodChannel("com.lum.volume");
       await methodChannel.invokeMethod("startService", {
-        "phones": ["+5585989267292", "+5585988714838"]
+        "phones": [
+          "+5585988714838",
+        ]
       }).then((value) => debugPrint('result: ' + value.toString()));
     }
   }

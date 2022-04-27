@@ -1,11 +1,6 @@
 package com.lum.app;
 
 import android.Manifest;
-import android.annotation.TargetApi;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
@@ -33,18 +28,17 @@ import io.flutter.plugins.GeneratedPluginRegistrant;
 
 public class MainActivity extends FlutterActivity {
     private final String CHANNEL = "com.lum.volume";
-    private Intent forService;
-    public static ArrayList directionList = new ArrayList();
-    public static List<String> phones = new ArrayList();
+    private static ArrayList directionList = new ArrayList();
+    private static List<String> phones = new ArrayList();
     private static MediaSessionCompat mediaSession;
 
-    String message = "Olá";
+    private static boolean actionsActive = true;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         GeneratedPluginRegistrant.registerWith(getFlutterEngine());
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS}, PackageManager.PERMISSION_GRANTED);
-        forService = new Intent(this, VolumeBackgroundService.class);
         new MethodChannel(getFlutterEngine().getDartExecutor().getBinaryMessenger(),CHANNEL).setMethodCallHandler(new MethodChannel.MethodCallHandler() {
             @Override
             public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
@@ -58,8 +52,6 @@ public class MainActivity extends FlutterActivity {
     }
 
     public VolumeProviderCompat myVolumeProvider(){
-        String[] result = {"STATUS.AWAIT"};
-        //directionList.clear();
         return new VolumeProviderCompat(VolumeProviderCompat.VOLUME_CONTROL_RELATIVE, 100, 50) {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -69,6 +61,7 @@ public class MainActivity extends FlutterActivity {
                     directionList.add("" + direction);
                     if (directionList.toString().contains("1, 0, 1, 0, 1, 0") || directionList.toString().contains("1, 0, 1, 0, 1, 0, 1, 0")) {
                         Log.d("VOLUME_STATUS", "DEU BOM");
+                        if(actionsActive){sendSMS();}
                         directionList.clear();
                     }
 
@@ -77,15 +70,13 @@ public class MainActivity extends FlutterActivity {
     }
 
 
-    public void start(){
 
+    protected void start(){
         VolumeProviderCompat myVolumePr = myVolumeProvider();
-
         createMediaSession(myVolumePr);
-
     }
 
-    private void createMediaSession(VolumeProviderCompat myVolumeProvider) {
+    protected void createMediaSession(VolumeProviderCompat myVolumeProvider) {
         mediaSession = new MediaSessionCompat(this, "VolumeBackgroundService");
 
         mediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
@@ -97,10 +88,25 @@ public class MainActivity extends FlutterActivity {
         mediaSession.setActive(true);
     }
 
+    private void sendSMS(){
+        for (int i = 0; i < phones.size(); i++) {
+            SmsManager mySmsManager = SmsManager.getDefault();
+            try {
+                mySmsManager.sendTextMessage(phones.get(i),null, "Olá"+phones.get(i), null, null);
+                toastCreate("Mensagem Enviada com sucesso");
+            } catch (Exception e) {
+                toastCreate(e.toString());
+            }
+
+        }
+    }
+
+    private void toastCreate(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(forService);
     }
 }

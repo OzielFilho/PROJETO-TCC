@@ -32,7 +32,6 @@ dependencies:
   mobx:
   flutter_mobx:
   dio:
-  shared_preferences:
   firebase_messaging: ^11.2.7
 
 dev_dependencies:

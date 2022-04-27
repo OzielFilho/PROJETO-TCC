@@ -1,7 +1,7 @@
 import 'dart:io';
 
+import 'package:app/app/modules/event_volume_actions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -11,6 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var value;
   @override
   void initState() {
     super.initState();
@@ -19,8 +20,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> connectToService() async {
     if (Platform.isAndroid) {
-      var methodChannel = MethodChannel("com.lum.volume");
-      await methodChannel.invokeMethod("startService", {
+      EventVolumeActions.call(arguments: {
         "phones": [
           "+5585988714838",
         ]

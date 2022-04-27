@@ -1,16 +1,25 @@
 package com.lum.app;
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 
 import androidx.media.VolumeProviderCompat;
@@ -28,7 +37,8 @@ public class MainActivity extends FlutterActivity {
     public static ArrayList directionList = new ArrayList();
     public static List<String> phones = new ArrayList();
     private static MediaSessionCompat mediaSession;
-    String message = "Boa noite. Estou em uma situação vulnerável. Amo demais você, Andreia Régia Almeida de Souza <3";
+
+    String message = "Olá";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +61,7 @@ public class MainActivity extends FlutterActivity {
         String[] result = {"STATUS.AWAIT"};
         //directionList.clear();
         return new VolumeProviderCompat(VolumeProviderCompat.VOLUME_CONTROL_RELATIVE, 100, 50) {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onAdjustVolume(int direction) {
                 /* -1 -- volume down  1 -- volume up 0 -- volume button released */
@@ -58,13 +69,13 @@ public class MainActivity extends FlutterActivity {
                     directionList.add("" + direction);
                     if (directionList.toString().contains("1, 0, 1, 0, 1, 0") || directionList.toString().contains("1, 0, 1, 0, 1, 0, 1, 0")) {
                         Log.d("VOLUME_STATUS", "DEU BOM");
-                        sendSMS();
                         directionList.clear();
                     }
 
                 }}
         };
     }
+
 
     public void start(){
 
@@ -86,13 +97,6 @@ public class MainActivity extends FlutterActivity {
         mediaSession.setActive(true);
     }
 
-    public void sendSMS(){
-        for (int i = 0; i < phones.size(); i++) {
-            SmsManager mySmsManager = SmsManager.getDefault();
-            mySmsManager.sendTextMessage(phones.get(i),null, message+phones.get(i), null, null);
-        }
-
-    }
 
     @Override
     protected void onDestroy() {

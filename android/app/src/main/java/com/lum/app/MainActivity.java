@@ -1,6 +1,11 @@
 package com.lum.app;
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
@@ -61,7 +66,10 @@ public class MainActivity extends FlutterActivity {
                     directionList.add("" + direction);
                     if (directionList.toString().contains("1, 0, 1, 0, 1, 0") || directionList.toString().contains("1, 0, 1, 0, 1, 0, 1, 0")) {
                         Log.d("VOLUME_STATUS", "DEU BOM");
-                        if(actionsActive){sendSMS();}
+                        if(actionsActive){
+                            sendSMS();
+                            showNotification();
+                        }
                         directionList.clear();
                     }
 
@@ -74,6 +82,33 @@ public class MainActivity extends FlutterActivity {
     protected void start(){
         VolumeProviderCompat myVolumePr = myVolumeProvider();
         createMediaSession(myVolumePr);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
+    public void showNotification(){
+
+        Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+        String CHANNEL_ID="MYCHANNEL";
+        NotificationChannel notificationChannel= null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            notificationChannel = new NotificationChannel(CHANNEL_ID,"name", NotificationManager.IMPORTANCE_DEFAULT);
+        }
+        PendingIntent pendingIntent=PendingIntent.getActivity(getApplicationContext(),1,intent,0);
+        Notification notification=new Notification.Builder(getApplicationContext(),CHANNEL_ID)
+                .setContentText("Ações com os botões ativos")
+                .setContentTitle("Shh! Preciso de ajuda")
+                .setContentIntent(pendingIntent)
+                .addAction(android.R.drawable.sym_def_app_icon,"Ativar",pendingIntent)
+                .setChannelId(CHANNEL_ID)
+                .setSmallIcon(android.R.drawable.sym_def_app_icon)
+                .build();
+
+        NotificationManager notificationManager=(NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
+        notificationManager.createNotificationChannel(notificationChannel);
+        notificationManager.notify(1,notification);
+
+
     }
 
     protected void createMediaSession(VolumeProviderCompat myVolumeProvider) {

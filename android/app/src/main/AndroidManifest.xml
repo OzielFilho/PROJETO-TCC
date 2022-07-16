@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
    <application
-        android:label="app"
+        android:label="Shh! Preciso de Ajuda"
         android:icon="@mipmap/ic_launcher">
         <service android:name=".VolumeBackgroundService"/>
         <activity

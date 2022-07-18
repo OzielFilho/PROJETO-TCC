@@ -1,5 +1,6 @@
 import 'package:app/app/core/error/failure.dart';
 import 'package:app/app/modules/auth/domain/repositories/auth_repository.dart';
+import 'package:app/app/modules/auth/domain/usecases/recovery_password.dart';
 import 'package:app/app/modules/auth/infra/datasources/auth_user_datasource.dart';
 import 'package:dartz/dartz.dart';
 
@@ -39,6 +40,16 @@ class AuthUserRepositoryImpl extends AuthUserRepository {
       return right(result);
     } on CreateUserException {
       return left(CreateUserFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> recoveryPassword(String email) async {
+    try {
+      final result = await datasource.recoveryPassword(email);
+      return right(result);
+    } on RecoveryPasswordException {
+      return left(RecoveryPasswordFailure());
     }
   }
 }

@@ -51,4 +51,18 @@ class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
       return false;
     }
   }
+
+  @override
+  Future<bool> recoveryPassword(String email) async {
+    try {
+      await authClient.sendPasswordResetEmail(
+        email: email,
+      );
+      return true;
+    } on FirebaseAuthException {
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
 }

@@ -6,8 +6,20 @@ class ThemeApp {
     return ThemeData(
         primaryColor: ColorUtils.primaryColor,
         backgroundColor: ColorUtils.primaryColor,
-        buttonTheme: ButtonThemeData(buttonColor: ColorUtils.secondaryColor),
+        buttonTheme: ButtonThemeData(buttonColor: ColorUtils.whiteColor),
         scaffoldBackgroundColor: ColorUtils.primaryColor,
+        fontFamily: 'Poppins',
+        textTheme: TextTheme(
+            subtitle1: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+                color: ColorUtils.whiteColor),
+            headline1: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: ColorUtils.whiteColor),
+            button: TextStyle(
+                fontWeight: FontWeight.bold, color: ColorUtils.primaryColor)),
         appBarTheme: AppBarTheme(
           backgroundColor: ColorUtils.secondaryColor,
         ));

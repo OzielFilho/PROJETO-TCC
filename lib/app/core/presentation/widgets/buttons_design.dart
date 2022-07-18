@@ -1,3 +1,4 @@
+import 'package:app/app/core/theme/theme_app.dart';
 import 'package:app/app/core/utils/colors/colors_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,10 @@ class ButtonsDesign {
     return MaterialButton(
       onPressed: action,
       color: ColorUtils.whiteColor,
-      child: Text(text),
+      child: Text(
+        text,
+        style: ThemeApp.theme.textTheme.button,
+      ),
     );
   }
 }

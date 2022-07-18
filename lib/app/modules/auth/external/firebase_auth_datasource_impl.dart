@@ -4,6 +4,12 @@ import 'package:app/app/modules/auth/infra/datasources/auth_user_datasource.dart
 
 class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
   FirebaseAuth authClient;
+
+  /// ----------------------------------------
+  /// [CALLED] --> GOOGLE CHANNEL INSTANCE
+  /// IMPLEMENTS IN [loginGoogle]
+  /// ----------------------------------------
+
   FirebaseAuthDatasourceImpl({
     required this.authClient,
   });
@@ -22,5 +28,11 @@ class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
     } catch (e) {
       return false;
     }
+  }
+
+  @override
+  Future<bool> loginGoogle(String idToken, String accessToken) {
+    // TODO: implement loginGoogle
+    throw UnimplementedError();
   }
 }

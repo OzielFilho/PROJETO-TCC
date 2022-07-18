@@ -66,6 +66,4 @@ void main() {
       expect(result, left(ParamsLoginUserFailure()));
     });
   });
-
-  group('Create User Group ', () {});
 }

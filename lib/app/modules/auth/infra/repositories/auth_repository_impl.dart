@@ -1,6 +1,5 @@
 import 'package:app/app/core/error/failure.dart';
 import 'package:app/app/modules/auth/domain/repositories/auth_repository.dart';
-import 'package:app/app/modules/auth/domain/usecases/recovery_password.dart';
 import 'package:app/app/modules/auth/infra/datasources/auth_user_datasource.dart';
 import 'package:dartz/dartz.dart';
 

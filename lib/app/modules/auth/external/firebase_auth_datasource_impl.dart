@@ -35,4 +35,20 @@ class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
     // TODO: implement loginGoogle
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> createUser(String email, String password) async {
+    try {
+      final user = await authClient.createUserWithEmailAndPassword(
+          email: email, password: password);
+      if (user.user != null) {
+        return true;
+      }
+      return false;
+    } on FirebaseAuthException {
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
 }

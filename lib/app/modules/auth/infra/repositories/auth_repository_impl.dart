@@ -30,4 +30,15 @@ class AuthUserRepositoryImpl extends AuthUserRepository {
       return left(LoginFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> createUser(
+      String email, String password) async {
+    try {
+      final result = await datasource.createUser(email, password);
+      return right(result);
+    } on CreateUserException {
+      return left(CreateUserFailure());
+    }
+  }
 }

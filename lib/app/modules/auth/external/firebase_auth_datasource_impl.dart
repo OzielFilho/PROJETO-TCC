@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:app/app/modules/auth/infra/datasources/auth_user_datasource.dart';
@@ -5,7 +6,7 @@ import 'package:app/app/modules/auth/infra/datasources/auth_user_datasource.dart
 class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
   FirebaseAuth authClient;
 
-  /// ----------------------------------------
+  /// ----------------------------------------7
   /// [CALLED] --> GOOGLE CHANNEL INSTANCE
   /// IMPLEMENTS IN [loginGoogle]
   /// ----------------------------------------
@@ -16,18 +17,17 @@ class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
 
   @override
   Future<bool> login(String email, String password) async {
+    late bool hasUser;
     try {
       final user = await authClient.signInWithEmailAndPassword(
           email: email, password: password);
-      if (user.user != null) {
-        return true;
-      }
-      return false;
-    } on FirebaseAuthException {
-      return false;
+      hasUser = user.user != null;
+    } on FirebaseAuthException catch (e) {
+      Left(e.message);
     } catch (e) {
-      return false;
+      Left(e);
     }
+    return hasUser;
   }
 
   @override

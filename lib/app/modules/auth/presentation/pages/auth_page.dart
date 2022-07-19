@@ -2,6 +2,7 @@ import 'package:app/app/core/presentation/widgets/buttons_design.dart';
 import 'package:app/app/core/theme/theme_app.dart';
 import 'package:app/app/core/utils/colors/colors_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class AuthPage extends StatefulWidget {
   AuthPage({Key? key}) : super(key: key);
@@ -27,9 +28,12 @@ class _AuthPageState extends State<AuthPage> {
           ),
           alignment: Alignment.bottomCenter,
           child: Container(
+            decoration: BoxDecoration(
+              color: ColorUtils.primaryColor,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+            ),
             padding:
                 const EdgeInsets.symmetric(horizontal: 12.0, vertical: 0.0),
-            color: ColorUtils.primaryColor,
             height: MediaQuery.of(context).size.height * 0.3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,9 +57,15 @@ class _AuthPageState extends State<AuthPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ButtonsDesign.buttonDefault(
-                        text: 'Entrar no App', action: () {}),
+                        text: 'Entrar no App',
+                        action: () {
+                          Modular.to.pushNamed('login_app');
+                        }),
                     ButtonsDesign.buttonDefault(
-                        text: 'Cadastrar Conta', action: () {}),
+                        text: 'Cadastrar Conta',
+                        action: () {
+                          Modular.to.pushNamed('create_account');
+                        }),
                   ],
                 ),
               ],

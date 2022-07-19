@@ -10,6 +10,14 @@ class ThemeApp {
         scaffoldBackgroundColor: ColorUtils.primaryColor,
         fontFamily: 'Poppins',
         textTheme: TextTheme(
+            caption: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: ColorUtils.whiteColor),
+            overline: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.normal,
+                color: ColorUtils.whiteColor),
             subtitle1: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.normal,

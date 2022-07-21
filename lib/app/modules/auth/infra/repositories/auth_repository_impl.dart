@@ -4,6 +4,7 @@ import 'package:app/app/modules/auth/infra/datasources/auth_user_datasource.dart
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';
+import '../../domain/entities/auth_result.dart';
 
 class AuthUserRepositoryImpl extends AuthUserRepository {
   final AuthUserDatasource datasource;
@@ -11,7 +12,8 @@ class AuthUserRepositoryImpl extends AuthUserRepository {
   AuthUserRepositoryImpl(this.datasource);
 
   @override
-  Future<Either<Failure, bool>> loginUser(String email, String password) async {
+  Future<Either<Failure, AuthResult>> loginUser(
+      String email, String password) async {
     try {
       final result = await datasource.login(email, password);
       return right(result);

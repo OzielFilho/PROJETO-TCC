@@ -1,4 +1,5 @@
 import 'package:app/app/core/error/failure.dart';
+import 'package:app/app/modules/auth/domain/entities/auth_result.dart';
 import 'package:app/app/modules/auth/domain/entities/auth_user.dart';
 import 'package:app/app/modules/auth/domain/repositories/auth_repository.dart';
 import 'package:app/app/modules/auth/domain/usecases/login_user.dart';
@@ -20,7 +21,7 @@ void main() {
 
   group('Login Group', () {
     final authUserE = AuthUser(email: 'jose@hotmail.com', password: '123456');
-    final resultAuth = true;
+    final resultAuth = AuthResult('oziel@hotmail.com', 'sfdadad');
     test('Should do login of user if params is not empty', () async {
       when(() => repositoryMock!.loginUser(any(), any()))
           .thenAnswer((_) async => right(resultAuth));

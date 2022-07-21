@@ -3,15 +3,16 @@ import 'package:app/app/core/usecases/usecase.dart';
 import 'package:app/app/core/utils/validations/validations.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import '../entities/auth_result.dart';
 import '../repositories/auth_repository.dart';
 
-class LoginUser implements Usecase<bool, Params> {
+class LoginUser implements Usecase<AuthResult, Params> {
   final AuthUserRepository repository;
 
   LoginUser(this.repository);
 
   @override
-  Future<Either<Failure, bool>> call(Params params) async {
+  Future<Either<Failure, AuthResult>> call(Params params) async {
     if (params.email.isNotEmpty || params.password.isNotEmpty) {
       if (Validations.emailAndPasswordValidation(
           email: params.email, password: params.password)) {

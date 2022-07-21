@@ -1,7 +1,9 @@
-import 'package:dartz/dartz.dart';
+import 'package:app/app/modules/auth/infra/models/auth_result_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:app/app/modules/auth/infra/datasources/auth_user_datasource.dart';
+
+import '../domain/entities/auth_result.dart';
 
 class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
   FirebaseAuth authClient;
@@ -16,18 +18,14 @@ class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
   });
 
   @override
-  Future<bool> login(String email, String password) async {
-    late bool hasUser;
-    try {
-      final user = await authClient.signInWithEmailAndPassword(
-          email: email, password: password);
-      hasUser = user.user != null;
-    } on FirebaseAuthException catch (e) {
-      Left(e.message);
-    } catch (e) {
-      Left(e);
-    }
-    return hasUser;
+  Future<AuthResult> login(String email, String password) async {
+    late AuthResult userResult = AuthResultModel.empty();
+
+    final user = await authClient.signInWithEmailAndPassword(
+        email: email, password: password);
+    userResult = AuthResultModel(user.user!.email!, user.user!.uid);
+
+    return userResult;
   }
 
   @override

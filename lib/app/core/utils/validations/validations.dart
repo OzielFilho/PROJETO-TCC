@@ -8,10 +8,4 @@ class Validations {
   static bool passwordValidation({required String password}) {
     return password.length >= 6;
   }
-
-  static bool emailAndPasswordValidation(
-      {required String email, required String password}) {
-    return (passwordValidation(password: password) ||
-        emailValidation(email: email));
-  }
 }

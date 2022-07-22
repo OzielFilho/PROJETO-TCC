@@ -13,13 +13,6 @@ class CreateAccountWidget extends StatefulWidget {
 }
 
 class _CreateAccountWidgetState extends State<CreateAccountWidget> {
-  final _emailControllerNew = TextEditingController();
-  final _nameControllerNew = TextEditingController();
-
-  final _passwordControllerNew = TextEditingController();
-
-  final _confirmPasswordControllerNew = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,15 +36,26 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                 child: Text('Insira suas credenciais',
                     style: ThemeApp.theme.textTheme.subtitle1),
               ),
-              _buildLoginForm(),
+              BuildFormRegisterAccount(),
             ],
           ),
         ),
       ),
     );
   }
+}
 
-  Widget _buildLoginForm() {
+class BuildFormRegisterAccount extends StatelessWidget {
+  BuildFormRegisterAccount({Key? key}) : super(key: key);
+
+  final _emailControllerNew = TextEditingController();
+  final _nameControllerNew = TextEditingController();
+
+  final _passwordControllerNew = TextEditingController();
+
+  final _confirmPasswordControllerNew = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 54.0),
       child: Column(

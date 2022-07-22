@@ -13,13 +13,17 @@ class CreateUser implements Usecase<bool, Params> {
 
   @override
   Future<Either<Failure, bool>> call(Params params) async {
-    if (params.email.isNotEmpty || params.password.isNotEmpty) {
-      if (Validations.emailAndPasswordValidation(
-          email: params.email, password: params.password)) {
-        return await repository.createUser(params.email, params.password);
-      }
+    if (params.email.isEmpty || params.password.isEmpty) {
+      return left(ParamsEmptyUserFailure());
     }
-    return left(ParamsCreateUserFailure());
+    if (!(Validations.emailValidation(email: params.email))) {
+      return left(ParamsInvalidUserFailure());
+    }
+    if (!(Validations.passwordValidation(password: params.password))) {
+      return left(ParamsInvalidUserFailure());
+    }
+
+    return await repository.createUser(params.email, params.password);
   }
 }
 

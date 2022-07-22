@@ -13,12 +13,16 @@ class RecoveryPassword implements Usecase<bool, Params> {
 
   @override
   Future<Either<Failure, bool>> call(Params params) async {
-    if (params.email.isNotEmpty) {
-      if (Validations.emailValidation(email: params.email)) {
-        return await repository.recoveryPassword(params.email);
-      }
+    print(
+        'seu login ${params.email} ${Validations.emailValidation(email: params.email)}');
+    if (params.email.isEmpty) {
+      return left(ParamsEmptyUserFailure());
     }
-    return left(ParamsRecoveryPasswordFailure());
+    if (!(Validations.emailValidation(email: params.email))) {
+      return left(ParamsInvalidUserFailure());
+    }
+
+    return await repository.recoveryPassword(params.email);
   }
 }
 

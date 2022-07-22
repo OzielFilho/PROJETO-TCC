@@ -24,7 +24,6 @@ void main() {
           .thenAnswer((_) async => right(resultAuth));
 
       final result = await usecase!(Params(email: 'jose@hotmail.com'));
-
       expect(result, right(resultAuth));
       verify(() => repositoryMock!.recoveryPassword(
             'jose@hotmail.com',
@@ -32,26 +31,25 @@ void main() {
       verifyNoMoreInteractions(repositoryMock);
     });
 
-    test('Should returns ParamsRecoveryPasswordFailure if email  is empty',
-        () async {
+    test('Should returns ParamsEmptyUserFailure if email  is empty', () async {
       when(() => repositoryMock!.recoveryPassword(any()))
-          .thenAnswer((_) async => left(ParamsRecoveryPasswordFailure()));
+          .thenAnswer((_) async => left(ParamsEmptyUserFailure()));
 
       final result = await usecase!(Params(
         email: '',
       ));
 
-      expect(result, left(ParamsRecoveryPasswordFailure()));
+      expect(result, left(ParamsEmptyUserFailure()));
     });
 
-    test('Should returns ParamsRecoveryPasswordFailure if email is not valid',
+    test('Should returns ParamsInvalidUserFailure if email is not valid',
         () async {
       when(() => repositoryMock!.recoveryPassword(any()))
-          .thenAnswer((_) async => left(ParamsRecoveryPasswordFailure()));
+          .thenAnswer((_) async => left(ParamsInvalidUserFailure()));
 
       final result = await usecase!(Params(email: 'kkk.com'));
 
-      expect(result, left(ParamsRecoveryPasswordFailure()));
+      expect(result, left(ParamsInvalidUserFailure()));
     });
   });
 }

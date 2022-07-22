@@ -13,13 +13,21 @@ class LoginUser implements Usecase<AuthResult, Params> {
 
   @override
   Future<Either<Failure, AuthResult>> call(Params params) async {
-    if (params.email.isNotEmpty || params.password.isNotEmpty) {
-      if (Validations.emailAndPasswordValidation(
-          email: params.email, password: params.password)) {
-        return await repository.loginUser(params.email, params.password);
-      }
+    if (params.email.isEmpty || params.password.isEmpty) {
+      return left(ParamsEmptyUserFailure());
     }
-    return left(ParamsLoginUserFailure());
+
+    if (!(Validations.passwordValidation(password: params.password))) {
+      return left(ParamsInvalidUserFailure());
+    }
+
+    if (!(Validations.emailValidation(email: params.email))) {
+      return left(ParamsInvalidUserFailure());
+    }
+    final result = await repository.loginWithEmailAndPassword(
+        params.email, params.password);
+
+    return result;
   }
 }
 

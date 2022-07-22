@@ -12,12 +12,14 @@ class AuthUserRepositoryImpl extends AuthUserRepository {
   AuthUserRepositoryImpl(this.datasource);
 
   @override
-  Future<Either<Failure, AuthResult>> loginUser(
+  Future<Either<Failure, AuthResult>> loginWithEmailAndPassword(
       String email, String password) async {
     try {
       final result = await datasource.login(email, password);
       return right(result);
     } on LoginException {
+      return left(LoginFailure());
+    } catch (e) {
       return left(LoginFailure());
     }
   }
@@ -30,6 +32,8 @@ class AuthUserRepositoryImpl extends AuthUserRepository {
       return right(result);
     } on LoginException {
       return left(LoginFailure());
+    } catch (e) {
+      return left(LoginFailure());
     }
   }
 
@@ -41,6 +45,8 @@ class AuthUserRepositoryImpl extends AuthUserRepository {
       return right(result);
     } on CreateUserException {
       return left(CreateUserFailure());
+    } catch (e) {
+      return left(LoginFailure());
     }
   }
 
@@ -51,6 +57,8 @@ class AuthUserRepositoryImpl extends AuthUserRepository {
       return right(result);
     } on RecoveryPasswordException {
       return left(RecoveryPasswordFailure());
+    } catch (e) {
+      return left(LoginFailure());
     }
   }
 }

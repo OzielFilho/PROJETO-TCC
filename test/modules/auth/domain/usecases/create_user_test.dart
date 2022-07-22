@@ -34,36 +34,36 @@ void main() {
       verifyNoMoreInteractions(repositoryMock);
     });
 
-    test('Should returns ParamsCreateUserFailure if email or password is empty',
+    test('Should returns ParamsEmptyUserFailure if email or password is empty',
         () async {
       when(() => repositoryMock!.createUser(any(), any()))
-          .thenAnswer((_) async => left(ParamsCreateUserFailure()));
+          .thenAnswer((_) async => left(ParamsEmptyUserFailure()));
 
       final result = await usecase!(Params(email: '', password: ''));
 
-      expect(result, left(ParamsCreateUserFailure()));
+      expect(result, left(ParamsEmptyUserFailure()));
     });
 
-    test('Should returns ParamsCreateUserFailure if email is not valid',
+    test('Should returns ParamsInvalidUserFailure if email is not valid',
         () async {
       when(() => repositoryMock!.createUser(any(), any()))
-          .thenAnswer((_) async => left(ParamsCreateUserFailure()));
+          .thenAnswer((_) async => left(ParamsInvalidUserFailure()));
 
       final result =
           await usecase!(Params(email: 'kkk.com', password: '1234567'));
 
-      expect(result, left(ParamsCreateUserFailure()));
+      expect(result, left(ParamsInvalidUserFailure()));
     });
 
-    test('Should returns ParamsCreateUserFailure if password is less than 6',
+    test('Should returns ParamsInvalidUserFailure if password is less than 6',
         () async {
       when(() => repositoryMock!.createUser(any(), any()))
-          .thenAnswer((_) async => left(ParamsCreateUserFailure()));
+          .thenAnswer((_) async => left(ParamsInvalidUserFailure()));
 
       final result =
           await usecase!(Params(email: authUserE.email, password: '1234'));
 
-      expect(result, left(ParamsCreateUserFailure()));
+      expect(result, left(ParamsInvalidUserFailure()));
     });
   });
 }

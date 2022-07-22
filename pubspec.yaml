@@ -22,6 +22,7 @@ dependencies:
   cloud_firestore: ^2.5.4
   firebase_storage: ^10.0.6
   google_sign_in: ^5.4.0
+  flutter_bloc: ^8.0.1
 
 dev_dependencies:
   # test: ^1.21.4

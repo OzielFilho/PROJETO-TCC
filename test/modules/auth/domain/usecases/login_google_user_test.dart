@@ -37,11 +37,11 @@ void main() {
     test('Should returns ParamsLoginUserFailure if email or password is empty',
         () async {
       when(() => repositoryMock!.loginGoogleUser(any(), any()))
-          .thenAnswer((_) async => left(ParamsLoginUserFailure()));
+          .thenAnswer((_) async => left(ParamsEmptyUserFailure()));
 
       final result = await usecase!(Params(accessToken: '', idToken: ''));
 
-      expect(result, left(ParamsLoginUserFailure()));
+      expect(result, left(ParamsEmptyUserFailure()));
     });
   });
 }

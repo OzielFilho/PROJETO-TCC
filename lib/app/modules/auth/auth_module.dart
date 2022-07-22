@@ -1,4 +1,6 @@
+import 'package:app/app/modules/auth/domain/usecases/login_user.dart';
 import 'package:app/app/modules/auth/infra/repositories/auth_repository_impl.dart';
+import 'package:app/app/modules/auth/presentation/controllers/login_controller/login_bloc.dart';
 import 'package:app/app/modules/auth/presentation/widgets/create_account.dart';
 import 'package:app/app/modules/auth/presentation/widgets/login_app.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,7 +15,9 @@ class AuthModule extends Module {
   final List<Bind> binds = [
     Bind((i) => FirebaseAuthDatasourceImpl(
         authClient: FirebaseAuth.instance, googleSignIn: GoogleSignIn())),
-    Bind((i) => AuthUserRepositoryImpl(i<FirebaseAuthDatasourceImpl>())),
+    Bind((i) => AuthUserRepositoryImpl(i())),
+    Bind((i) => LoginUser(i())),
+    Bind((i) => LoginBloc(i())),
   ];
 
   @override

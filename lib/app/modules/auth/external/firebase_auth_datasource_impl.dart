@@ -17,12 +17,10 @@ class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
 
   @override
   Future<AuthResult> login(String email, String password) async {
-    late AuthResult userResult = AuthResultModel.empty();
-
+    late AuthResult userResult;
     final user = await authClient.signInWithEmailAndPassword(
         email: email, password: password);
     userResult = AuthResultModel(user.user!.email!, user.user!.uid);
-
     return userResult;
   }
 

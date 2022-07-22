@@ -16,7 +16,7 @@ class LoginGoogleUser implements Usecase<bool, Params> {
       return await repository.loginGoogleUser(
           params.idToken, params.accessToken);
     }
-    return left(ParamsLoginUserFailure());
+    return left(ParamsEmptyUserFailure());
   }
 }
 

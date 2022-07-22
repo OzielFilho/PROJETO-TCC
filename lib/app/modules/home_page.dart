@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:app/app/modules/event_volume_actions.dart';
+import 'event_volume_actions.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {

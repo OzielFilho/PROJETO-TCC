@@ -1,4 +1,4 @@
-import 'package:app/app/modules/auth/domain/repositories/create_account_repository.dart';
+import '../repositories/create_account_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 

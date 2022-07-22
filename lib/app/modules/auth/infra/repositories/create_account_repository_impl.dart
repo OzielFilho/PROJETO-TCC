@@ -1,6 +1,6 @@
-import 'package:app/app/core/error/failure.dart';
-import 'package:app/app/modules/auth/domain/repositories/create_account_repository.dart';
-import 'package:app/app/modules/auth/infra/datasources/create_account_datasource.dart';
+import '../../../../core/error/failure.dart';
+import '../../domain/repositories/create_account_repository.dart';
+import '../datasources/create_account_datasource.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';

@@ -1,7 +1,7 @@
-import 'package:app/app/modules/auth/domain/entities/auth_result.dart';
-import 'package:app/app/core/error/failure.dart';
-import 'package:app/app/modules/auth/domain/repositories/login_repository.dart';
-import 'package:app/app/modules/auth/infra/datasources/login_datasource.dart';
+import '../../domain/entities/auth_result.dart';
+import '../../../../core/error/failure.dart';
+import '../../domain/repositories/login_repository.dart';
+import '../datasources/login_datasource.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';

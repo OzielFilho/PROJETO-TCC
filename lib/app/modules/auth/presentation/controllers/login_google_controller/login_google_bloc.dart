@@ -1,9 +1,10 @@
-import 'package:app/app/core/usecases/usecase.dart';
-import 'package:app/app/modules/auth/domain/usecases/login_with_google_user.dart';
-import 'package:app/app/modules/auth/presentation/controllers/login_controller/login_state.dart';
-import 'package:app/app/modules/auth/presentation/controllers/login_google_controller/login_google_event.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../../../../core/presentation/controller/app_state.dart';
+import '../../../../../core/usecases/usecase.dart';
+import '../../../domain/usecases/login_with_google_user.dart';
+import 'login_google_event.dart';
 
 class LoginWithGoogleBloc extends Bloc<LoginWithGoogleEvent, AppState>
     implements Disposable {

@@ -1,4 +1,4 @@
-import 'package:app/app/core/utils/colors/colors_utils.dart';
+import '../utils/colors/colors_utils.dart';
 import 'package:flutter/material.dart';
 
 class ThemeApp {

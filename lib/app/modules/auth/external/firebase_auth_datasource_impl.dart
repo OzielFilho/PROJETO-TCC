@@ -1,7 +1,7 @@
-import 'package:app/app/modules/auth/infra/datasources/create_account_datasource.dart';
-import 'package:app/app/modules/auth/infra/datasources/login_datasource.dart';
-import 'package:app/app/modules/auth/infra/datasources/recovery_datasource.dart';
-import 'package:app/app/modules/auth/infra/models/auth_result_model.dart';
+import '../infra/datasources/create_account_datasource.dart';
+import '../infra/datasources/login_datasource.dart';
+import '../infra/datasources/recovery_datasource.dart';
+import '../infra/models/auth_result_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../domain/entities/auth_result.dart';

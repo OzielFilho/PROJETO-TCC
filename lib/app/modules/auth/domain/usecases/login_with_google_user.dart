@@ -1,6 +1,6 @@
-import 'package:app/app/core/error/failure.dart';
-import 'package:app/app/core/usecases/usecase.dart';
-import 'package:app/app/modules/auth/domain/repositories/login_repository.dart';
+import '../../../../core/error/failure.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../repositories/login_repository.dart';
 import 'package:dartz/dartz.dart';
 
 import '../entities/auth_result.dart';

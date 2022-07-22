@@ -1,10 +1,10 @@
-import 'package:app/app/core/presentation/widgets/buttons_design.dart';
-import 'package:app/app/modules/auth/presentation/controllers/login_controller/login_state.dart';
-import 'package:app/app/modules/auth/presentation/controllers/recovery_account_controller/recovery_account_event.dart';
+import '../../../../core/presentation/widgets/buttons_design.dart';
+import '../controllers/recovery_account_controller/recovery_account_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../core/presentation/controller/app_state.dart';
 import '../../../../core/presentation/widgets/form_desing.dart';
 import '../../../../core/presentation/widgets/loading_desing.dart';
 import '../../../../core/theme/theme_app.dart';

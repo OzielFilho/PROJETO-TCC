@@ -25,3 +25,5 @@ class EmailOrPasswordInvalidErrorState extends ErrorState {
 class UserNotFoundErrorState extends ErrorState {
   UserNotFoundErrorState(String? message) : super(message);
 }
+
+class UserNotLoggedState extends AppState {}

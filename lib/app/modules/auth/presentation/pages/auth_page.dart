@@ -56,12 +56,12 @@ class _AuthPageState extends State<AuthPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    ButtonsDesign.buttonDefault(
+                    ButtonDesign(
                         text: 'Entrar no App',
                         action: () {
                           Modular.to.pushNamed('login_app');
                         }),
-                    ButtonsDesign.buttonDefault(
+                    ButtonDesign(
                         text: 'Cadastrar Conta',
                         action: () {
                           Modular.to.pushNamed('create_account');

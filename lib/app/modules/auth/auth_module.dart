@@ -1,8 +1,12 @@
 import 'package:app/app/modules/auth/domain/usecases/login_with_email_and_password.dart';
 import 'package:app/app/modules/auth/infra/repositories/login_repository_impl.dart';
+import 'package:app/app/modules/auth/infra/repositories/recovery_repository_impl.dart';
 import 'package:app/app/modules/auth/presentation/controllers/login_controller/login_bloc.dart';
-import 'package:app/app/modules/auth/presentation/widgets/create_account.dart';
-import 'package:app/app/modules/auth/presentation/widgets/login_app.dart';
+import 'package:app/app/modules/auth/presentation/controllers/recovery_account_controller/recovery_account_bloc.dart';
+import 'package:app/app/modules/auth/presentation/pages/create_account.dart';
+import 'package:app/app/modules/auth/presentation/pages/login_app.dart';
+import 'package:app/app/modules/auth/presentation/pages/recovery_account.dart';
+import 'package:app/app/modules/home/home_module.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -25,7 +29,9 @@ class AuthModule extends Module {
     Bind((i) => LoginWithGoogle(i())),
     Bind((i) => LoginWithGoogleBloc(i())),
     Bind((i) => CreateAccountWithEmailAndPassword(i())),
+    Bind((i) => RecoveryRepositoryImpl(i())),
     Bind((i) => RecoveryPassword(i())),
+    Bind((i) => RecoveryAccountBloc(i())),
   ];
 
   @override
@@ -36,9 +42,21 @@ class AuthModule extends Module {
       transition: TransitionType.leftToRight,
       duration: Duration(milliseconds: 500),
     ),
+    ModuleRoute(
+      '/home',
+      module: HomeModule(),
+      transition: TransitionType.leftToRight,
+      duration: Duration(milliseconds: 500),
+    ),
     ChildRoute(
       '/login_app',
       child: (p0, p1) => LoginAppWidget(),
+      transition: TransitionType.leftToRight,
+      duration: Duration(milliseconds: 500),
+    ),
+    ChildRoute(
+      '/recovery_account',
+      child: (p0, p1) => RecoveryAccount(),
       transition: TransitionType.leftToRight,
       duration: Duration(milliseconds: 500),
     ),

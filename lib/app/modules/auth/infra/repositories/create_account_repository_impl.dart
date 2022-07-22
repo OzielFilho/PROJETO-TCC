@@ -19,7 +19,7 @@ class CreateAccountRepositoryImpl extends CreateAccountRepository {
     } on CreateUserException {
       return left(CreateUserFailure());
     } catch (e) {
-      return left(LoginFailure());
+      return left(CreateUserFailure());
     }
   }
 }

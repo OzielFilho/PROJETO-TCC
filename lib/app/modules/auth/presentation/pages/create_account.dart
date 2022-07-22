@@ -60,35 +60,35 @@ class BuildFormRegisterAccount extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 54.0),
       child: Column(
         children: [
-          FormsDesign.textFormCustom(
-            null,
-            null,
-            'Nome',
+          FormsDesign(
+            prefixIcon: null,
+            suffixIcon: null,
+            title: 'Nome',
             visibility: false,
             controller: _nameControllerNew,
           ),
-          FormsDesign.textFormCustom(
-            null,
-            null,
-            'Email',
+          FormsDesign(
+            prefixIcon: null,
+            suffixIcon: null,
+            title: 'Email',
             visibility: false,
             controller: _emailControllerNew,
           ),
-          FormsDesign.textFormCustom(
-            null,
-            null,
-            'Senha',
+          FormsDesign(
+            prefixIcon: null,
+            suffixIcon: null,
+            title: 'Senha',
             visibility: false,
             controller: _passwordControllerNew,
           ),
-          FormsDesign.textFormCustom(
-            null,
-            null,
-            'Confirme a Senha',
+          FormsDesign(
+            prefixIcon: null,
+            suffixIcon: null,
+            title: 'Confirme a Senha',
             visibility: false,
             controller: _confirmPasswordControllerNew,
           ),
-          ButtonsDesign.buttonDefault(text: 'Avançar', action: () {}),
+          ButtonDesign(text: 'Avançar', action: () {}),
         ],
       ),
     );

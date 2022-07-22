@@ -18,7 +18,7 @@ class RecoveryRepositoryImpl extends RecoveryRepository {
     } on RecoveryPasswordException {
       return left(RecoveryPasswordFailure());
     } catch (e) {
-      return left(LoginFailure());
+      return left(RecoveryPasswordFailure());
     }
   }
 }

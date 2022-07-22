@@ -2,9 +2,14 @@ import 'package:app/app/core/theme/theme_app.dart';
 import 'package:app/app/core/utils/colors/colors_utils.dart';
 import 'package:flutter/material.dart';
 
-class ButtonsDesign {
-  static Widget buttonDefault(
-      {required String text, required VoidCallback action}) {
+class ButtonDesign extends StatelessWidget {
+  final String text;
+  final VoidCallback action;
+  const ButtonDesign({Key? key, required this.text, required this.action})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: action,
       color: ColorUtils.whiteColor,

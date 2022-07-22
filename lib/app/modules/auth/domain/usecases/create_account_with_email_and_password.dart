@@ -1,3 +1,4 @@
+import '../entities/auth_result.dart';
 import '../repositories/create_account_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -6,13 +7,13 @@ import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/utils/validations/validations.dart';
 
-class CreateAccountWithEmailAndPassword implements Usecase<bool, Params> {
+class CreateAccountWithEmailAndPassword implements Usecase<AuthResult, Params> {
   final CreateAccountRepository repository;
 
   CreateAccountWithEmailAndPassword(this.repository);
 
   @override
-  Future<Either<Failure, bool>> call(Params? params) async {
+  Future<Either<Failure, AuthResult>> call(Params? params) async {
     if (params!.email.isEmpty || params.password.isEmpty) {
       return left(ParamsEmptyUserFailure());
     }

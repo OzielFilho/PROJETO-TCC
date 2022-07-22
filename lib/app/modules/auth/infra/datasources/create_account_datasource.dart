@@ -1,3 +1,6 @@
+import '../../domain/entities/auth_result.dart';
+
 abstract class CreateAccountDatasource {
-  Future<bool> createAccountWithEmailAndPassword(String email, String password);
+  Future<AuthResult> createAccountWithEmailAndPassword(
+      String email, String password);
 }

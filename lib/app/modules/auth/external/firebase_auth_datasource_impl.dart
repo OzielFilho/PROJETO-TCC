@@ -53,20 +53,13 @@ class FirebaseAuthDatasourceImpl
   }
 
   @override
-  Future<bool> createAccountWithEmailAndPassword(
+  Future<AuthResult> createAccountWithEmailAndPassword(
       String email, String password) async {
-    try {
-      final user = await authClient.createUserWithEmailAndPassword(
-          email: email, password: password);
-      if (user.user != null) {
-        return true;
-      }
-      return false;
-    } on FirebaseAuthException {
-      return false;
-    } catch (e) {
-      return false;
-    }
+    late AuthResult userResult;
+    final user = await authClient.createUserWithEmailAndPassword(
+        email: email, password: password);
+    userResult = AuthResultModel(user.user!.email!, user.user!.uid);
+    return userResult;
   }
 
   @override

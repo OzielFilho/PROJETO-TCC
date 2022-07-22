@@ -1,4 +1,5 @@
 import 'package:app/app/core/error/failure.dart';
+import 'package:app/app/modules/auth/domain/entities/auth_result.dart';
 import 'package:app/app/modules/auth/domain/repositories/create_account_repository.dart';
 import 'package:app/app/modules/auth/domain/usecases/create_account_with_email_and_password.dart';
 import 'package:dartz/dartz.dart';
@@ -19,7 +20,7 @@ void main() {
   });
 
   group('Create User Group', () {
-    final resultAuth = true;
+    final resultAuth = AuthResult('osos@osso.com', '1212151');
     test('Should create user if params is not empty', () async {
       when(() =>
               repositoryMock!.createAccountWithEmailAndPassword(any(), any()))

@@ -1,4 +1,5 @@
 import '../../../../core/error/failure.dart';
+import '../../domain/entities/auth_result.dart';
 import '../../domain/repositories/create_account_repository.dart';
 import '../datasources/create_account_datasource.dart';
 import 'package:dartz/dartz.dart';
@@ -10,7 +11,7 @@ class CreateAccountRepositoryImpl extends CreateAccountRepository {
 
   CreateAccountRepositoryImpl(this.datasource);
   @override
-  Future<Either<Failure, bool>> createAccountWithEmailAndPassword(
+  Future<Either<Failure, AuthResult>> createAccountWithEmailAndPassword(
       String email, String password) async {
     try {
       final result =

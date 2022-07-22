@@ -8,14 +8,14 @@ import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecase.dart';
 
 class SplashBloc extends Bloc<SplashEvent, AppState> implements Disposable {
-  final LoggedUser _usecase;
-  SplashBloc(this._usecase) : super(InitialState()) {
+  final LoggedUser _logged;
+  SplashBloc(this._logged) : super(InitialState()) {
     on<LoggedUserEvent>(_onLoggedUserEvent);
   }
 
   _onLoggedUserEvent(LoggedUserEvent event, Emitter<AppState> emit) async {
     emit(ProcessingState());
-    final result = await _usecase.call(NoParams());
+    final result = await _logged.call(NoParams());
 
     emit(result.fold((failure) {
       switch (failure.runtimeType) {

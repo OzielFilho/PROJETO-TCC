@@ -14,12 +14,28 @@ class SuccessState extends AppState {}
 
 class ProcessingState extends AppState {}
 
+class EmptyParamsErrorState extends ErrorState {
+  EmptyParamsErrorState(String? message) : super(message);
+}
+
+class EmailInvalidErrorState extends ErrorState {
+  EmailInvalidErrorState(String? message) : super(message);
+}
+
+class PasswordInvalidErrorState extends ErrorState {
+  PasswordInvalidErrorState(String? message) : super(message);
+}
+
 class EmailOrPasswordEmptyErrorState extends ErrorState {
   EmailOrPasswordEmptyErrorState(String? message) : super(message);
 }
 
 class EmailOrPasswordInvalidErrorState extends ErrorState {
   EmailOrPasswordInvalidErrorState(String? message) : super(message);
+}
+
+class PasswordDifferenceInvalidErrorState extends ErrorState {
+  PasswordDifferenceInvalidErrorState(String? message) : super(message);
 }
 
 class UserNotFoundErrorState extends ErrorState {

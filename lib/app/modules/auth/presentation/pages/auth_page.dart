@@ -64,7 +64,7 @@ class _AuthPageState extends State<AuthPage> {
                     ButtonDesign(
                         text: 'Cadastrar Conta',
                         action: () {
-                          Modular.to.pushNamed('create_account');
+                          Modular.to.pushNamed('create_account_form');
                         }),
                   ],
                 ),

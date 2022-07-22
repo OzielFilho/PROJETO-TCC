@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:app/app/modules/auth/infra/models/auth_result_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

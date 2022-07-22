@@ -1,21 +1,21 @@
 import 'package:app/app/core/usecases/usecase.dart';
 import 'package:app/app/modules/auth/domain/entities/auth_result.dart';
-import 'package:app/app/modules/auth/domain/repositories/auth_repository.dart';
-import 'package:app/app/modules/auth/domain/usecases/login_google_user.dart';
+import 'package:app/app/modules/auth/domain/repositories/login_repository.dart';
+import 'package:app/app/modules/auth/domain/usecases/login_with_google_user.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
 
-class AuthUserRepositoryI extends Mock implements AuthUserRepository {}
+class LoginRepositoryImpl extends Mock implements LoginRepository {}
 
 void main() {
-  LoginGoogleUser? usecase;
-  AuthUserRepository? repositoryMock;
+  LoginWithGoogle? usecase;
+  LoginRepository? repositoryMock;
 
   setUp(() {
-    repositoryMock = AuthUserRepositoryI();
-    usecase = LoginGoogleUser(repositoryMock!);
+    repositoryMock = LoginRepositoryImpl();
+    usecase = LoginWithGoogle(repositoryMock!);
   });
 
   group('Login Google Group', () {

@@ -4,11 +4,12 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../../core/error/failure.dart';
-import '../../../domain/usecases/login_user.dart';
+import '../../../domain/usecases/login_with_email_and_password.dart';
 
-class LoginBloc extends Bloc<LoginEvent, AppState> implements Disposable {
-  final LoginUser _loginUser;
-  LoginBloc(this._loginUser) : super(InitialState()) {
+class LoginWithEmailAndPasswordBloc extends Bloc<LoginEvent, AppState>
+    implements Disposable {
+  final LoginWithEmailAndPassword _loginUser;
+  LoginWithEmailAndPasswordBloc(this._loginUser) : super(InitialState()) {
     on<LoginWithEmailAndPasswordEvent>(_onLoginWithEmailAndPasswordEvent);
   }
   void _onLoginWithEmailAndPasswordEvent(

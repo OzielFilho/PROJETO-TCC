@@ -1,12 +1,13 @@
+import 'package:app/app/modules/auth/infra/datasources/create_account_datasource.dart';
+import 'package:app/app/modules/auth/infra/datasources/login_datasource.dart';
+import 'package:app/app/modules/auth/infra/datasources/recovery_datasource.dart';
 import 'package:app/app/modules/auth/infra/models/auth_result_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import 'package:app/app/modules/auth/infra/datasources/auth_user_datasource.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import '../domain/entities/auth_result.dart';
 
-class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
+class FirebaseAuthDatasourceImpl
+    implements LoginDatasource, CreateAccountDatasource, RecoveryDatasource {
   final FirebaseAuth authClient;
   final GoogleSignIn googleSignIn;
 
@@ -16,7 +17,8 @@ class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
   });
 
   @override
-  Future<AuthResult> login(String email, String password) async {
+  Future<AuthResult> loginWithEmailAndPassword(
+      String email, String password) async {
     late AuthResult userResult;
     final user = await authClient.signInWithEmailAndPassword(
         email: email, password: password);
@@ -25,7 +27,7 @@ class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
   }
 
   @override
-  Future<AuthResult> loginGoogle() async {
+  Future<AuthResult> loginWithGoogle() async {
     late AuthResult userResult = AuthResultModel.empty();
 
     final GoogleSignInAccount? googleSignInAccount =
@@ -35,7 +37,7 @@ class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
 
-      final AuthCredential credential = GoogleAuthProvider.credential(
+      final credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
@@ -51,7 +53,8 @@ class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
   }
 
   @override
-  Future<bool> createUser(String email, String password) async {
+  Future<bool> createAccountWithEmailAndPassword(
+      String email, String password) async {
     try {
       final user = await authClient.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -67,7 +70,7 @@ class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
   }
 
   @override
-  Future<bool> recoveryPassword(String email) async {
+  Future<bool> recoveryWithEmail(String email) async {
     try {
       await authClient.sendPasswordResetEmail(
         email: email,

@@ -1,15 +1,15 @@
 import 'package:app/app/core/error/failure.dart';
 import 'package:app/app/core/usecases/usecase.dart';
 import 'package:app/app/core/utils/validations/validations.dart';
+import 'package:app/app/modules/auth/domain/repositories/login_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import '../entities/auth_result.dart';
-import '../repositories/auth_repository.dart';
 
-class LoginUser implements Usecase<AuthResult, Params> {
-  final AuthUserRepository repository;
+class LoginWithEmailAndPassword implements Usecase<AuthResult, Params> {
+  final LoginRepository repository;
 
-  LoginUser(this.repository);
+  LoginWithEmailAndPassword(this.repository);
 
   @override
   Future<Either<Failure, AuthResult>> call(Params? params) async {

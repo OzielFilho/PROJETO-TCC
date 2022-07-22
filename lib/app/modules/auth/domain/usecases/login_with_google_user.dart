@@ -1,14 +1,14 @@
 import 'package:app/app/core/error/failure.dart';
 import 'package:app/app/core/usecases/usecase.dart';
+import 'package:app/app/modules/auth/domain/repositories/login_repository.dart';
 import 'package:dartz/dartz.dart';
 
 import '../entities/auth_result.dart';
-import '../repositories/auth_repository.dart';
 
-class LoginGoogleUser implements Usecase<AuthResult, NoParams> {
-  final AuthUserRepository repository;
+class LoginWithGoogle implements Usecase<AuthResult, NoParams> {
+  final LoginRepository repository;
 
-  LoginGoogleUser(this.repository);
+  LoginWithGoogle(this.repository);
 
   @override
   Future<Either<Failure, AuthResult>> call(params) async {

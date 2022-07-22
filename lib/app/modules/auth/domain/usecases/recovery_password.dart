@@ -1,13 +1,13 @@
+import 'package:app/app/modules/auth/domain/repositories/recovery_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/utils/validations/validations.dart';
-import '../repositories/auth_repository.dart';
 
 class RecoveryPassword implements Usecase<bool, Params> {
-  final AuthUserRepository repository;
+  final RecoveryRepository repository;
 
   RecoveryPassword(this.repository);
 
@@ -20,7 +20,7 @@ class RecoveryPassword implements Usecase<bool, Params> {
       return left(ParamsInvalidUserFailure());
     }
 
-    return await repository.recoveryPassword(params.email);
+    return await repository.recoveryPasswordWithEmail(params.email);
   }
 }
 

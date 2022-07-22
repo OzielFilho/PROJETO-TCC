@@ -23,15 +23,15 @@ class LoginAppWidget extends StatefulWidget {
 
 class _LoginAppWidgetState extends State<LoginAppWidget> {
   final TextEditingController _emailController = TextEditingController();
-  final _loginBloc = Modular.get<LoginBloc>();
-  final _loginGoogleBloc = Modular.get<LoginGoogleBloc>();
+  final _loginBloc = Modular.get<LoginWithEmailAndPasswordBloc>();
+  final _loginGoogleBloc = Modular.get<LoginWithGoogleBloc>();
   final TextEditingController _passwordController = TextEditingController();
 
   bool _visibility = true;
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginBloc, AppState>(
+    return BlocConsumer<LoginWithEmailAndPasswordBloc, AppState>(
         bloc: _loginBloc,
         listener: (context, state) {
           if (state is SuccessState) {

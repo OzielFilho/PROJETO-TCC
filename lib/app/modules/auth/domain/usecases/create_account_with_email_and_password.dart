@@ -1,15 +1,15 @@
+import 'package:app/app/modules/auth/domain/repositories/create_account_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/utils/validations/validations.dart';
-import '../repositories/auth_repository.dart';
 
-class CreateUser implements Usecase<bool, Params> {
-  final AuthUserRepository repository;
+class CreateAccountWithEmailAndPassword implements Usecase<bool, Params> {
+  final CreateAccountRepository repository;
 
-  CreateUser(this.repository);
+  CreateAccountWithEmailAndPassword(this.repository);
 
   @override
   Future<Either<Failure, bool>> call(Params? params) async {
@@ -23,7 +23,8 @@ class CreateUser implements Usecase<bool, Params> {
       return left(ParamsInvalidUserFailure());
     }
 
-    return await repository.createUser(params.email, params.password);
+    return await repository.createAccountWithEmailAndPassword(
+        params.email, params.password);
   }
 }
 

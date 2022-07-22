@@ -12,8 +12,8 @@ class LoginUser implements Usecase<AuthResult, Params> {
   LoginUser(this.repository);
 
   @override
-  Future<Either<Failure, AuthResult>> call(Params params) async {
-    if (params.email.isEmpty || params.password.isEmpty) {
+  Future<Either<Failure, AuthResult>> call(Params? params) async {
+    if (params!.email.isEmpty || params.password.isEmpty) {
       return left(ParamsEmptyUserFailure());
     }
 

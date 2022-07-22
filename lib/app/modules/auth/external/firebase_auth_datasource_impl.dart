@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:app/app/modules/auth/infra/models/auth_result_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -25,8 +27,9 @@ class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
   }
 
   @override
-  Future<bool> loginGoogle(String idToken, String accessToken) async {
+  Future<AuthResult> loginGoogle() async {
     late AuthResult userResult = AuthResultModel.empty();
+
     final GoogleSignInAccount? googleSignInAccount =
         await googleSignIn.signIn();
 
@@ -44,9 +47,9 @@ class FirebaseAuthDatasourceImpl implements AuthUserDatasource {
 
       userResult = AuthResultModel(
           userCredential.user!.email!, userCredential.user!.uid);
-      return userCredential.user != null;
+      return userResult;
     }
-    return false;
+    return userResult;
   }
 
   @override

@@ -1,5 +1,5 @@
-import 'package:app/app/core/error/failure.dart';
-import 'package:app/app/modules/auth/domain/entities/auth_credential.dart';
+import 'package:app/app/core/usecases/usecase.dart';
+import 'package:app/app/modules/auth/domain/entities/auth_result.dart';
 import 'package:app/app/modules/auth/domain/repositories/auth_repository.dart';
 import 'package:app/app/modules/auth/domain/usecases/login_google_user.dart';
 import 'package:dartz/dartz.dart';
@@ -19,29 +19,13 @@ void main() {
   });
 
   group('Login Google Group', () {
-    final authUserE =
-        AuthCredential(idToken: '12345648415', accessToken: 'ggafgafafafa');
-    final resultAuth = true;
+    final resultAuth = AuthResult('osos@osso.com', '1212151');
     test('Should do login google of user if params is not empty', () async {
-      when(() => repositoryMock!.loginGoogleUser(any(), any()))
+      when(() => repositoryMock!.loginGoogleUser())
           .thenAnswer((_) async => right(resultAuth));
 
-      final result = await usecase!(
-          Params(accessToken: '12345648415', idToken: 'ggafgafafafa'));
-
+      final result = await usecase!(NoParams());
       expect(result, right(resultAuth));
-      verifyNever(() => repositoryMock!
-          .loginGoogleUser(authUserE.idToken, authUserE.accessToken));
-    });
-
-    test('Should returns ParamsLoginUserFailure if email or password is empty',
-        () async {
-      when(() => repositoryMock!.loginGoogleUser(any(), any()))
-          .thenAnswer((_) async => left(ParamsEmptyUserFailure()));
-
-      final result = await usecase!(Params(accessToken: '', idToken: ''));
-
-      expect(result, left(ParamsEmptyUserFailure()));
     });
   });
 }

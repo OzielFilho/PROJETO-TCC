@@ -12,8 +12,8 @@ class CreateUser implements Usecase<bool, Params> {
   CreateUser(this.repository);
 
   @override
-  Future<Either<Failure, bool>> call(Params params) async {
-    if (params.email.isEmpty || params.password.isEmpty) {
+  Future<Either<Failure, bool>> call(Params? params) async {
+    if (params!.email.isEmpty || params.password.isEmpty) {
       return left(ParamsEmptyUserFailure());
     }
     if (!(Validations.emailValidation(email: params.email))) {

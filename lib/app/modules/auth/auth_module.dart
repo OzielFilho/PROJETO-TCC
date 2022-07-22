@@ -7,7 +7,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'domain/usecases/login_google_user.dart';
 import 'external/firebase_auth_datasource_impl.dart';
+import 'presentation/controllers/login_google_controller/login_google_bloc.dart';
 import 'presentation/pages/auth_page.dart';
 
 class AuthModule extends Module {
@@ -17,7 +19,9 @@ class AuthModule extends Module {
         authClient: FirebaseAuth.instance, googleSignIn: GoogleSignIn())),
     Bind((i) => AuthUserRepositoryImpl(i())),
     Bind((i) => LoginUser(i())),
+    Bind((i) => LoginGoogleUser(i())),
     Bind((i) => LoginBloc(i())),
+    Bind((i) => LoginGoogleBloc(i())),
   ];
 
   @override

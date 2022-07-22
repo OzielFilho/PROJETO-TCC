@@ -25,10 +25,9 @@ class AuthUserRepositoryImpl extends AuthUserRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> loginGoogleUser(
-      String idToken, String accessToken) async {
+  Future<Either<Failure, AuthResult>> loginGoogleUser() async {
     try {
-      final result = await datasource.loginGoogle(idToken, accessToken);
+      final result = await datasource.loginGoogle();
       return right(result);
     } on LoginException {
       return left(LoginFailure());

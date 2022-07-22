@@ -1,29 +1,18 @@
 import 'package:app/app/core/error/failure.dart';
 import 'package:app/app/core/usecases/usecase.dart';
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 
+import '../entities/auth_result.dart';
 import '../repositories/auth_repository.dart';
 
-class LoginGoogleUser implements Usecase<bool, Params> {
+class LoginGoogleUser implements Usecase<AuthResult, NoParams> {
   final AuthUserRepository repository;
 
   LoginGoogleUser(this.repository);
 
   @override
-  Future<Either<Failure, bool>> call(Params params) async {
-    if (params.accessToken.isNotEmpty || params.idToken.isNotEmpty) {
-      return await repository.loginGoogleUser(
-          params.idToken, params.accessToken);
-    }
-    return left(ParamsEmptyUserFailure());
+  Future<Either<Failure, AuthResult>> call(params) async {
+    final result = await repository.loginGoogleUser();
+    return result.fold((l) => left(LoginFailure()), (r) => right(r));
   }
-}
-
-class Params extends Equatable {
-  final String idToken;
-  final String accessToken;
-  Params({required this.idToken, required this.accessToken});
-
-  List<Object> get props => [idToken, accessToken];
 }

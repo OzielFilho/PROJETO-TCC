@@ -9,5 +9,3 @@ class LoginWithEmailAndPasswordEvent implements LoginEvent {
   const LoginWithEmailAndPasswordEvent(
       {required this.email, required this.password});
 }
-
-class LoginWithGoogleEvent implements LoginEvent {}

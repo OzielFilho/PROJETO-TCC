@@ -1,5 +1,5 @@
 import 'package:app/app/modules/auth/infra/repositories/create_account_repository_impl.dart';
-import 'package:app/app/modules/splash/presentation/controllers/splash_bloc.dart';
+import 'package:app/app/modules/auth/presentation/pages/create_account_page.dart';
 
 import 'domain/usecases/login_with_email_and_password.dart';
 import 'infra/repositories/login_repository_impl.dart';
@@ -7,11 +7,8 @@ import 'infra/repositories/recovery_repository_impl.dart';
 import 'presentation/controllers/create_account_controller/create_account_bloc.dart';
 import 'presentation/controllers/login_controller/login_bloc.dart';
 import 'presentation/controllers/recovery_account_controller/recovery_account_bloc.dart';
-import 'presentation/controllers/create_account_controller/create_account_form/create_account_form_bloc.dart';
-import 'presentation/pages/create_account/create_account_finalization.dart';
-import 'presentation/pages/create_account/create_account_form.dart';
-import 'presentation/pages/login_app.dart';
-import 'presentation/pages/recovery_account.dart';
+import 'presentation/pages/login_app_page.dart';
+import 'presentation/pages/recovery_account_page.dart';
 import '../home/home_module.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -41,8 +38,7 @@ class AuthModule extends Module {
     //CREATE ACCOUNT
     Bind((i) => CreateAccountRepositoryImpl(i())),
     Bind((i) => CreateAccountWithEmailAndPassword(i())),
-    Bind((i) => CreateAccountWithEmailAndPasswordBloc(i())),
-    Bind((i) => CreateAccountFormBloc()),
+    Bind((i) => CreateAccountBloc(i())),
 
     //RECOVERY ACCOUNT
     Bind((i) => RecoveryRepositoryImpl(i())),
@@ -66,28 +62,21 @@ class AuthModule extends Module {
     ),
     ChildRoute(
       '/login_app',
-      child: (p0, p1) => LoginAppWidget(),
+      child: (p0, p1) => LoginAppPage(),
       transition: TransitionType.leftToRight,
       duration: Duration(milliseconds: 500),
     ),
     ChildRoute(
       '/recovery_account',
-      child: (p0, p1) => RecoveryAccount(),
+      child: (p0, p1) => RecoveryAccountPage(),
       transition: TransitionType.leftToRight,
       duration: Duration(milliseconds: 500),
     ),
     ChildRoute(
-      '/create_account_form',
-      child: (p0, p1) => CreateAccountForm(),
+      '/create_account',
+      child: (p0, p1) => CreateAccountPage(),
       transition: TransitionType.leftToRight,
       duration: Duration(milliseconds: 500),
     ),
-    ChildRoute(
-      '/create_account_finalization',
-      child: (p0, args) =>
-          CreateAccountFinalization(userCreate: args.data['userCreate']),
-      transition: TransitionType.leftToRight,
-      duration: Duration(milliseconds: 500),
-    )
   ];
 }

@@ -1,3 +1,7 @@
+import 'package:app/app/core/utils/constants/encrypt_data.dart';
+import 'package:app/app/modules/auth/infra/models/user_create_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../infra/datasources/create_account_datasource.dart';
 import '../infra/datasources/login_datasource.dart';
 import '../infra/datasources/recovery_datasource.dart';
@@ -54,11 +58,25 @@ class FirebaseAuthDatasourceImpl
 
   @override
   Future<AuthResult> createAccountWithEmailAndPassword(
-      String email, String password) async {
+      UserCreateModel userCreate) async {
+    final firebase = FirebaseFirestore.instance;
     late AuthResult userResult;
     final user = await authClient.createUserWithEmailAndPassword(
-        email: email, password: password);
+        email: userCreate.email, password: userCreate.password);
+    final phoneCrypt = EncryptData().encrypty(userCreate.phone).base16;
     userResult = AuthResultModel(user.user!.email!, user.user!.uid);
+    final existInContact =
+        await firebase.collection('contacts').doc(phoneCrypt).get();
+    if (!(existInContact.exists)) {
+      await firebase
+          .collection('contacts')
+          .doc(phoneCrypt)
+          .set({'tokenId': userResult.tokenId});
+    }
+    await firebase
+        .collection('users')
+        .doc(userResult.tokenId)
+        .set(userCreate.toMap());
     return userResult;
   }
 

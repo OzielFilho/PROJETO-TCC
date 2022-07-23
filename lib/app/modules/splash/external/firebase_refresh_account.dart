@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:app/app/modules/splash/infra/datasources/refresh_account_datasource.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

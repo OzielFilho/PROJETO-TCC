@@ -1,5 +1,6 @@
 import 'package:app/app/core/error/failure.dart';
 import 'package:app/app/modules/auth/domain/entities/auth_result.dart';
+import 'package:app/app/modules/auth/domain/entities/user_create.dart';
 import 'package:app/app/modules/auth/domain/repositories/create_account_repository.dart';
 import 'package:app/app/modules/auth/domain/usecases/create_account_with_email_and_password.dart';
 import 'package:dartz/dartz.dart';
@@ -13,59 +14,75 @@ class CreateAccountRepositoryImpl extends Mock
 void main() {
   CreateAccountWithEmailAndPassword? usecase;
   CreateAccountRepository? repositoryMock;
-
-  setUp(() {
+  setUpAll(() {
     repositoryMock = CreateAccountRepositoryImpl();
     usecase = CreateAccountWithEmailAndPassword(repositoryMock!);
+    registerFallbackValue(UserCreate(
+        email: 'jose@hotmail.com',
+        password: '1234567',
+        name: 'jose',
+        confirmePassword: '1234567',
+        phone: '85484952151581'));
   });
 
   group('Create User Group', () {
     final resultAuth = AuthResult('osos@osso.com', '1212151');
+    final inputAuth = UserCreate(
+        email: 'jose@hotmail.com',
+        password: '1234567',
+        name: 'jose',
+        confirmePassword: '1234567',
+        phone: '8548484491518');
     test('Should create user if params is not empty', () async {
-      when(() =>
-              repositoryMock!.createAccountWithEmailAndPassword(any(), any()))
+      when(() => repositoryMock!.createAccountWithEmailAndPassword(any()))
           .thenAnswer((_) async => right(resultAuth));
 
-      final result =
-          await usecase!(Params(email: 'jose@hotmail.com', password: '123456'));
+      final result = await usecase!(inputAuth);
 
       expect(result, right(resultAuth));
-      verify(() => repositoryMock!
-          .createAccountWithEmailAndPassword('jose@hotmail.com', '123456'));
+      verify(
+          () => repositoryMock!.createAccountWithEmailAndPassword(inputAuth));
       verifyNoMoreInteractions(repositoryMock);
     });
 
-    test('Should returns ParamsEmptyUserFailure if email or password is empty',
+    test(
+        'Should returns ParamsEmptyUserFailure if email or password or name is empty',
         () async {
-      when(() =>
-              repositoryMock!.createAccountWithEmailAndPassword(any(), any()))
+      when(() => repositoryMock!.createAccountWithEmailAndPassword(any()))
           .thenAnswer((_) async => left(ParamsEmptyUserFailure()));
 
-      final result = await usecase!(Params(email: '', password: ''));
+      final result = await usecase!(UserCreate(
+          email: '', password: '', name: '', confirmePassword: '', phone: ''));
 
       expect(result, left(ParamsEmptyUserFailure()));
     });
 
     test('Should returns ParamsInvalidUserFailure if email is not valid',
         () async {
-      when(() =>
-              repositoryMock!.createAccountWithEmailAndPassword(any(), any()))
+      when(() => repositoryMock!.createAccountWithEmailAndPassword(any()))
           .thenAnswer((_) async => left(ParamsInvalidUserFailure()));
 
-      final result =
-          await usecase!(Params(email: 'kkk.com', password: '1234567'));
+      final result = await usecase!(UserCreate(
+          email: 'jose.com',
+          password: '12345678',
+          name: 'jose',
+          phone: '1588848',
+          confirmePassword: '12345678'));
 
       expect(result, left(ParamsInvalidUserFailure()));
     });
 
     test('Should returns ParamsInvalidUserFailure if password is less than 6',
         () async {
-      when(() =>
-              repositoryMock!.createAccountWithEmailAndPassword(any(), any()))
+      when(() => repositoryMock!.createAccountWithEmailAndPassword(any()))
           .thenAnswer((_) async => left(ParamsInvalidUserFailure()));
 
-      final result =
-          await usecase!(Params(email: 'jose@hotmail.com', password: '1234'));
+      final result = await usecase!(UserCreate(
+          email: 'jose@hotmail.com',
+          password: '1238',
+          name: 'jose',
+          confirmePassword: '1238',
+          phone: '45154189'));
 
       expect(result, left(ParamsInvalidUserFailure()));
     });

@@ -13,14 +13,14 @@ import '../../../../core/presentation/controller/app_state.dart';
 import '../../../../core/presentation/widgets/loading_desing.dart';
 import '../controllers/login_controller/login_bloc.dart';
 
-class LoginAppWidget extends StatefulWidget {
-  const LoginAppWidget({Key? key}) : super(key: key);
+class LoginAppPage extends StatefulWidget {
+  const LoginAppPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginAppWidget> createState() => _LoginAppWidgetState();
+  State<LoginAppPage> createState() => _LoginAppPageState();
 }
 
-class _LoginAppWidgetState extends State<LoginAppWidget> {
+class _LoginAppPageState extends State<LoginAppPage> {
   final TextEditingController _emailController = TextEditingController();
   final _loginBloc = Modular.get<LoginWithEmailAndPasswordBloc>();
   final _loginGoogleBloc = Modular.get<LoginWithGoogleBloc>();

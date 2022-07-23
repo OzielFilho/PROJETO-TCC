@@ -1,3 +1,6 @@
+import 'package:app/app/modules/auth/domain/entities/user_create.dart';
+import 'package:app/app/modules/auth/infra/models/user_create_model.dart';
+
 import '../../../../core/error/failure.dart';
 import '../../domain/entities/auth_result.dart';
 import '../../domain/repositories/create_account_repository.dart';
@@ -10,12 +13,13 @@ class CreateAccountRepositoryImpl extends CreateAccountRepository {
   final CreateAccountDatasource datasource;
 
   CreateAccountRepositoryImpl(this.datasource);
+
   @override
   Future<Either<Failure, AuthResult>> createAccountWithEmailAndPassword(
-      String email, String password) async {
+      UserCreate user) async {
     try {
-      final result =
-          await datasource.createAccountWithEmailAndPassword(email, password);
+      final result = await datasource.createAccountWithEmailAndPassword(
+          UserCreateModel.fromUserCreate(user));
       return right(result);
     } on CreateUserException {
       return left(CreateUserFailure());

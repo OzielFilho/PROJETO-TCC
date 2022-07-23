@@ -11,8 +11,8 @@ import '../../../../core/theme/theme_app.dart';
 import '../../../../core/utils/colors/colors_utils.dart';
 import '../controllers/recovery_account_controller/recovery_account_bloc.dart';
 
-class RecoveryAccount extends StatelessWidget {
-  RecoveryAccount({Key? key}) : super(key: key);
+class RecoveryAccountPage extends StatelessWidget {
+  RecoveryAccountPage({Key? key}) : super(key: key);
 
   final _recoveryBloc = Modular.get<RecoveryAccountBloc>();
   final _emailRecoveryController = TextEditingController();

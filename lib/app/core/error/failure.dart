@@ -24,6 +24,11 @@ class ParamsEmptyUserFailure extends Failure {
   List<Object?> get props => const <dynamic>[];
 }
 
+class PasswordAndConfirmePasswordDifferenceFailure extends Failure {
+  @override
+  List<Object?> get props => const <dynamic>[];
+}
+
 class UserNotFoundFailure extends Failure {
   @override
   List<Object?> get props => const <dynamic>[];

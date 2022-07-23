@@ -2,8 +2,17 @@ abstract class CreateAccountEvent {}
 
 class CreateAccountWithEmailAndPasswordEvent implements CreateAccountEvent {
   final String email;
-  final String password;
   final String phone;
+  final String name;
+  final List<String> contacts;
+  final String password;
+  final String confirmePassword;
 
-  CreateAccountWithEmailAndPasswordEvent(this.email, this.password, this.phone);
+  CreateAccountWithEmailAndPasswordEvent(
+      {required this.email,
+      required this.phone,
+      required this.confirmePassword,
+      required this.name,
+      required this.contacts,
+      required this.password});
 }

@@ -1,4 +1,4 @@
-import 'package:app/app/modules/auth/presentation/controllers/create_account_controller/create_account_bloc.dart';
+import '../controllers/create_account_controller/create_account_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';

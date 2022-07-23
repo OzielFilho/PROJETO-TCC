@@ -1,6 +1,6 @@
-import 'package:app/app/core/error/failure.dart';
-import 'package:app/app/core/usecases/usecase.dart';
-import 'package:app/app/modules/splash/domain/repositories/refresh_account_repository.dart';
+import '../../../../core/error/failure.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../repositories/refresh_account_repository.dart';
 import 'package:dartz/dartz.dart';
 
 class LoggedUser implements Usecase<bool, NoParams> {

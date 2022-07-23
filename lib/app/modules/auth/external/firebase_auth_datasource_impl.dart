@@ -1,7 +1,6 @@
-import 'package:app/app/core/utils/constants/encrypt_data.dart';
-import 'package:app/app/modules/auth/infra/models/user_create_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
+import '../../../core/services/firebase_auth_service.dart';
+import '../../../core/utils/constants/encrypt_data.dart';
+import '../infra/models/user_create_model.dart';
 import '../../../core/services/firestore_service.dart';
 import '../infra/datasources/create_account_datasource.dart';
 import '../infra/datasources/login_datasource.dart';
@@ -13,11 +12,11 @@ import '../domain/entities/auth_result.dart';
 
 class FirebaseAuthDatasourceImpl
     implements LoginDatasource, CreateAccountDatasource, RecoveryDatasource {
-  final FirebaseAuth authClient;
+  final FirebaseAuthServiceImpl authService;
   final GoogleSignIn googleSignIn;
   final FirestoreServiceImpl firestore;
   FirebaseAuthDatasourceImpl({
-    required this.authClient,
+    required this.authService,
     required this.googleSignIn,
     required this.firestore,
   });
@@ -26,9 +25,8 @@ class FirebaseAuthDatasourceImpl
   Future<AuthResult> loginWithEmailAndPassword(
       String email, String password) async {
     late AuthResult userResult;
-    final user = await authClient.signInWithEmailAndPassword(
-        email: email, password: password);
-    userResult = AuthResultModel(user.user!.email!, user.user!.uid);
+    final user = await authService.signInWithEmailAndPassword(email, password);
+    userResult = AuthResultModel(user.email!, user.uid);
     return userResult;
   }
 
@@ -48,11 +46,9 @@ class FirebaseAuthDatasourceImpl
         idToken: googleSignInAuthentication.idToken,
       );
 
-      final UserCredential userCredential =
-          await authClient.signInWithCredential(credential);
+      final userCredential = await authService.signInWithCredential(credential);
 
-      userResult = AuthResultModel(
-          userCredential.user!.email!, userCredential.user!.uid);
+      userResult = AuthResultModel(userCredential.email!, userCredential.uid);
       return userResult;
     }
     return userResult;
@@ -62,10 +58,10 @@ class FirebaseAuthDatasourceImpl
   Future<AuthResult> createAccountWithEmailAndPassword(
       UserCreateModel userCreate) async {
     late AuthResult userResult;
-    final user = await authClient.createUserWithEmailAndPassword(
-        email: userCreate.email, password: userCreate.password);
+    final user =
+        await authService.createUser(userCreate.email, userCreate.password);
     final phoneCrypt = EncryptData().encrypty(userCreate.phone).base16;
-    userResult = AuthResultModel(user.user!.email!, user.user!.uid);
+    userResult = AuthResultModel(user.email!, user.uid);
     final existInContact =
         await firestore.existDocument('contacts', phoneCrypt);
 
@@ -82,8 +78,8 @@ class FirebaseAuthDatasourceImpl
   @override
   Future<bool> recoveryWithEmail(String email) async {
     try {
-      await authClient.sendPasswordResetEmail(
-        email: email,
+      await authService.recoveryPassword(
+        email,
       );
       return true;
     } on FirebaseAuthException {

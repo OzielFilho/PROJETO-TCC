@@ -1,6 +1,6 @@
-import 'package:app/app/core/error/failure.dart';
-import 'package:app/app/core/presentation/controller/app_state.dart';
-import 'package:app/app/modules/auth/domain/entities/user_create.dart';
+import '../../../../../core/error/failure.dart';
+import '../../../../../core/presentation/controller/app_state.dart';
+import '../../../domain/entities/user_create.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 

@@ -1,8 +1,5 @@
-import 'package:app/app/modules/auth/infra/repositories/create_account_repository_impl.dart';
-import 'package:app/app/modules/auth/presentation/pages/create_account_page.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../../core/services/firestore_service.dart';
+import 'infra/repositories/create_account_repository_impl.dart';
+import 'presentation/pages/create_account_page.dart';
 import 'domain/usecases/login_with_email_and_password.dart';
 import 'infra/repositories/login_repository_impl.dart';
 import 'infra/repositories/recovery_repository_impl.dart';
@@ -12,27 +9,17 @@ import 'presentation/controllers/recovery_account_controller/recovery_account_bl
 import 'presentation/pages/login_app_page.dart';
 import 'presentation/pages/recovery_account_page.dart';
 import '../home/home_module.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import 'domain/usecases/create_account_with_email_and_password.dart';
 import 'domain/usecases/login_with_google_user.dart';
 import 'domain/usecases/recovery_password.dart';
-import 'external/firebase_auth_datasource_impl.dart';
 import 'presentation/controllers/login_google_controller/login_google_bloc.dart';
 import 'presentation/pages/auth_page.dart';
 
 class AuthModule extends Module {
   @override
   final List<Bind> binds = [
-    //DATASOURCE GENERAL
-    Bind((i) => FirestoreServiceImpl(FirebaseFirestore.instance)),
-    Bind((i) => FirebaseAuthDatasourceImpl(
-        authClient: FirebaseAuth.instance,
-        googleSignIn: GoogleSignIn(),
-        firestore: i())),
-
     //LOGIN
     Bind((i) => LoginRepositoryImpl(i())),
     Bind((i) => LoginWithEmailAndPassword(i())),

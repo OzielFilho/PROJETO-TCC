@@ -1,4 +1,4 @@
-import 'package:app/app/modules/auth/domain/entities/user_create.dart';
+import '../entities/user_create.dart';
 
 import '../entities/auth_result.dart';
 import '../repositories/create_account_repository.dart';

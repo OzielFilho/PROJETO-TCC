@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+
 import '../../theme/theme_app.dart';
 import '../../utils/colors/colors_utils.dart';
-import 'package:flutter/material.dart';
 
 class ButtonDesign extends StatelessWidget {
   final String text;

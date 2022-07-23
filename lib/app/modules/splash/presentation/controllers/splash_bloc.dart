@@ -1,6 +1,6 @@
-import 'package:app/app/core/presentation/controller/app_state.dart';
-import 'package:app/app/modules/splash/domain/usecases/logged_user.dart';
-import 'package:app/app/modules/splash/presentation/controllers/splash_event.dart';
+import '../../../../core/presentation/controller/app_state.dart';
+import '../../domain/usecases/logged_user.dart';
+import 'splash_event.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 

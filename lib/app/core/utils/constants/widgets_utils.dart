@@ -1,5 +1,6 @@
-import '../../theme/theme_app.dart';
 import 'package:flutter/material.dart';
+
+import '../../theme/theme_app.dart';
 
 class WidgetUtils {
   static showSnackBar(BuildContext context, String title,

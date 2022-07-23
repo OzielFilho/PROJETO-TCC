@@ -1,7 +1,7 @@
-import 'package:app/app/core/utils/colors/colors_utils.dart';
-import 'package:app/app/core/utils/constants/widgets_utils.dart';
-import 'package:app/app/modules/splash/presentation/controllers/splash_bloc.dart';
-import 'package:app/app/modules/splash/presentation/controllers/splash_event.dart';
+import '../../../core/utils/colors/colors_utils.dart';
+import '../../../core/utils/constants/widgets_utils.dart';
+import 'controllers/splash_bloc.dart';
+import 'controllers/splash_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';

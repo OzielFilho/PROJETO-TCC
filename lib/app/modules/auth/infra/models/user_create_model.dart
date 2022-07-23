@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:app/app/modules/auth/domain/entities/user_create.dart';
+import '../../domain/entities/user_create.dart';
 
 import '../../../../core/utils/constants/encrypt_data.dart';
 

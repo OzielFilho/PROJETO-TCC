@@ -1,5 +1,5 @@
-import 'package:app/app/modules/auth/domain/entities/user_create.dart';
-import 'package:app/app/modules/auth/infra/models/user_create_model.dart';
+import '../../domain/entities/user_create.dart';
+import '../models/user_create_model.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../domain/entities/auth_result.dart';

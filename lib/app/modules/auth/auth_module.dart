@@ -1,6 +1,8 @@
 import 'package:app/app/modules/auth/infra/repositories/create_account_repository_impl.dart';
 import 'package:app/app/modules/auth/presentation/pages/create_account_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../core/services/firestore_service.dart';
 import 'domain/usecases/login_with_email_and_password.dart';
 import 'infra/repositories/login_repository_impl.dart';
 import 'infra/repositories/recovery_repository_impl.dart';
@@ -25,8 +27,11 @@ class AuthModule extends Module {
   @override
   final List<Bind> binds = [
     //DATASOURCE GENERAL
+    Bind((i) => FirestoreServiceImpl(FirebaseFirestore.instance)),
     Bind((i) => FirebaseAuthDatasourceImpl(
-        authClient: FirebaseAuth.instance, googleSignIn: GoogleSignIn())),
+        authClient: FirebaseAuth.instance,
+        googleSignIn: GoogleSignIn(),
+        firestore: i())),
 
     //LOGIN
     Bind((i) => LoginRepositoryImpl(i())),

@@ -6,6 +6,8 @@ class FormsDesign extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final String? title;
+  final int? maxLen;
+  final TextInputType type;
   final TextEditingController controller;
   final bool visibility;
   const FormsDesign(
@@ -14,7 +16,9 @@ class FormsDesign extends StatelessWidget {
       this.suffixIcon,
       this.title,
       required this.controller,
-      this.visibility = false})
+      this.visibility = false,
+      this.maxLen,
+      this.type = TextInputType.text})
       : super(key: key);
 
   @override
@@ -22,6 +26,9 @@ class FormsDesign extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
+        maxLength: maxLen,
+        inputFormatters: [],
+        keyboardType: type,
         controller: controller,
         obscureText: visibility,
         decoration: InputDecoration(

@@ -1,3 +1,4 @@
+import '../../../../core/utils/colors/colors_utils.dart';
 import '../controllers/create_account_controller/create_account_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,8 +24,11 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   final _confirmPasswordControllerNew = TextEditingController();
   final _phoneControllerNew = TextEditingController();
   final _passwordControllerNew = TextEditingController();
-
   final _createAccount = Modular.get<CreateAccountBloc>();
+
+  bool _visibilityConfirmPassword = false;
+  bool _visibilityPassword = false;
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CreateAccountBloc, AppState>(
@@ -92,9 +96,20 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                           ),
                           FormsDesign(
                             prefixIcon: null,
-                            suffixIcon: null,
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _visibilityPassword = !_visibilityPassword;
+                                  });
+                                },
+                                icon: Icon(
+                                  _visibilityPassword
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                                  color: ColorUtils.whiteColor,
+                                )),
                             title: 'Senha',
-                            visibility: false,
+                            visibility: _visibilityPassword,
                             controller: _passwordControllerNew,
                           ),
                           Align(
@@ -104,9 +119,21 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                           ),
                           FormsDesign(
                             prefixIcon: null,
-                            suffixIcon: null,
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _visibilityConfirmPassword =
+                                        !_visibilityConfirmPassword;
+                                  });
+                                },
+                                icon: Icon(
+                                  _visibilityConfirmPassword
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                                  color: ColorUtils.whiteColor,
+                                )),
                             title: 'Confirme a Senha',
-                            visibility: false,
+                            visibility: _visibilityConfirmPassword,
                             controller: _confirmPasswordControllerNew,
                           ),
                           Align(
@@ -115,6 +142,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                                 style: ThemeApp.theme.textTheme.subtitle1),
                           ),
                           FormsDesign(
+                            type: TextInputType.number,
                             prefixIcon: null,
                             suffixIcon: null,
                             title: '(xx) xxxxx.xxxx',

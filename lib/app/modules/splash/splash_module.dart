@@ -12,7 +12,7 @@ class SplashModule extends Module {
         Bind((i) => FirebaseRefreshAccount(i())),
         Bind((i) => RefreshAccountRepositoryImpl(i())),
         Bind((i) => LoggedUser(i())),
-        Bind((i) => SplashBloc(i())),
+        Bind((i) => SplashBloc(i(), i())),
       ];
 
   @override

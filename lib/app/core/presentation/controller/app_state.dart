@@ -10,6 +10,10 @@ class ErrorState extends AppState {
   ErrorState(String? message) : super(message);
 }
 
+class NetworkErrorState extends AppState {
+  NetworkErrorState(String? message) : super(message);
+}
+
 class SuccessState extends AppState {}
 
 class ProcessingState extends AppState {}

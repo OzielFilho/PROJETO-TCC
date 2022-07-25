@@ -11,9 +11,10 @@ class UserCreateModel extends UserCreate {
   final String name;
   final List<String> contacts;
   final String confirmePassword;
+  final bool welcomePage;
   final String phone;
   UserCreateModel(this.email, this.password, this.name, this.contacts,
-      this.phone, this.confirmePassword)
+      this.phone, this.confirmePassword, this.welcomePage)
       : super(
             email: email,
             password: password,
@@ -33,8 +34,14 @@ class UserCreateModel extends UserCreate {
   }
 
   factory UserCreateModel.fromUserCreate(UserCreate userCreate) =>
-      UserCreateModel(userCreate.email, userCreate.password, userCreate.name,
-          userCreate.contacts!, userCreate.phone, userCreate.confirmePassword);
+      UserCreateModel(
+          userCreate.email,
+          userCreate.password,
+          userCreate.name,
+          userCreate.contacts!,
+          userCreate.phone,
+          userCreate.confirmePassword,
+          userCreate.welcomePage!);
 
   String toJson() => json.encode(toMap());
 }

@@ -166,6 +166,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                                   _createAccount.add(
                                       CreateAccountWithEmailAndPasswordEvent(
                                           contacts: [],
+                                          welcomePage: false,
                                           phone: _phoneControllerNew.text,
                                           confirmePassword:
                                               _confirmPasswordControllerNew

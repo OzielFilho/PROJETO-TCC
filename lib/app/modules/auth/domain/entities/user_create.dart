@@ -4,6 +4,7 @@ class UserCreate {
   final String name;
   List<String>? contacts;
   final String phone;
+  bool? welcomePage;
   final String confirmePassword;
 
   UserCreate(
@@ -12,5 +13,6 @@ class UserCreate {
       required this.confirmePassword,
       required this.name,
       this.contacts,
+      this.welcomePage,
       required this.phone});
 }

@@ -41,7 +41,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       bloc: _createAccount,
       listener: (context, state) {
         if (state is SuccessState) {
-          Modular.to.pushReplacementNamed('/home/');
+          Modular.to.pushReplacementNamed('/welcome/');
         }
       },
       builder: (context, state) {

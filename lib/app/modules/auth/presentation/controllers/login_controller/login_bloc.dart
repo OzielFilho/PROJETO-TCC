@@ -29,7 +29,9 @@ class LoginWithEmailAndPasswordBloc extends Bloc<LoginEvent, AppState>
         default:
           return ErrorState('Não foi possível realizar o login');
       }
-    }, (success) => SuccessState()));
+    }, (success) {
+      return SuccessState();
+    }));
   }
 
   @override

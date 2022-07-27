@@ -7,7 +7,7 @@ abstract class NetworkService {
 class NetworkServiceImpl implements NetworkService {
   @override
   Future<bool> get hasConnection async {
-    final result = await InternetAddress.lookup('https://www.google.com');
+    final result = await InternetAddress.lookup('www.google.com');
     return (result.isNotEmpty && result.first.rawAddress.isNotEmpty);
   }
 }

@@ -10,6 +10,7 @@ import 'modules/auth/auth_module.dart';
 import 'modules/auth/external/firebase_auth_datasource_impl.dart';
 import 'modules/home/home_module.dart';
 import 'modules/splash/splash_module.dart';
+import 'modules/welcome/welcome_module.dart';
 
 class AppModule extends Module {
   @override
@@ -30,6 +31,10 @@ class AppModule extends Module {
         duration: Duration(seconds: 1)),
     ModuleRoute('/auth',
         module: AuthModule(),
+        transition: TransitionType.leftToRight,
+        duration: Duration(seconds: 1)),
+    ModuleRoute('/welcome',
+        module: WelcomeModule(),
         transition: TransitionType.leftToRight,
         duration: Duration(seconds: 1)),
     ModuleRoute('/home',

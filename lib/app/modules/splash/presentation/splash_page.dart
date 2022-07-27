@@ -33,18 +33,17 @@ class _SplashPageState extends State<SplashPage> {
     return BlocConsumer<SplashBloc, AppState>(
       bloc: _splashBloc,
       listener: (context, state) {
-        if (!(state is NetworkErrorState)) {
-          if (state is ErrorState) {
-            WidgetUtils.showSnackBar(context, state.message!,
-                actionText: 'Ok', onTap: () {});
-            return;
-          }
-          if (state is UserNotLoggedState) {
-            Modular.to.pushReplacementNamed('/auth/');
-            return;
-          }
+        if (state is ErrorState) {
+          WidgetUtils.showSnackBar(context, state.message!,
+              actionText: 'Ok', onTap: () {});
+        }
+        if (state is UserNotLoggedState) {
+          Modular.to.pushReplacementNamed('/auth/');
+        }
+        if (state is SuccessState) {
           Modular.to.pushReplacementNamed('/home/');
         }
+
         if (state is NetworkErrorState) {
           WidgetUtils.showSnackBar(context, state.message!,
               actionText: 'Ok', onTap: () {});

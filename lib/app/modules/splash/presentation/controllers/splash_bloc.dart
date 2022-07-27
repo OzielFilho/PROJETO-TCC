@@ -30,7 +30,10 @@ class SplashBloc extends Bloc<SplashEvent, AppState> implements Disposable {
         default:
           return ErrorState('Erro ao entrar no app');
       }
-    }, (success) => success ? SuccessState() : UserNotLoggedState()));
+    }, (success) {
+      print('seu sucesso $success');
+      return success ? SuccessState() : UserNotLoggedState();
+    }));
   }
 
   @override

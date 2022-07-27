@@ -6,7 +6,10 @@ class WidgetUtils {
   static showSnackBar(BuildContext context, String title,
       {required String? actionText, required VoidCallback? onTap}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(title),
+      content: Text(
+        title,
+        style: TextStyle(color: Colors.white),
+      ),
       action: SnackBarAction(label: actionText!, onPressed: onTap!),
     ));
   }

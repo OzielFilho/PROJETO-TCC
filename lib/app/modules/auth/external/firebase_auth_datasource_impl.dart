@@ -47,6 +47,13 @@ class FirebaseAuthDatasourceImpl
       );
 
       final userCredential = await authService.signInWithCredential(credential);
+      final existUser =
+          await firestore.existDocument('users', userCredential.uid);
+
+      if (!existUser) {
+        await firestore.createDocument('users', userCredential.uid,
+            UserCreateModel.fromUser(userCredential).toMap());
+      }
 
       userResult = AuthResultModel(userCredential.email!, userCredential.uid);
       return userResult;

@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../domain/entities/user_create.dart';
 
@@ -24,12 +25,13 @@ class UserCreateModel extends UserCreate {
             phone: phone);
 
   Map<String, dynamic> toMap() {
-    log(EncryptData().encrypty(phone).base16.toString());
     return {
       'email': email,
       'name': name,
       'contacts': contacts,
-      'phone': EncryptData().encrypty(phone).base16.toString(),
+      'welcomePage': welcomePage,
+      'phone':
+          phone.isEmpty ? '' : EncryptData().encrypty(phone).base16.toString(),
     };
   }
 
@@ -42,6 +44,8 @@ class UserCreateModel extends UserCreate {
           userCreate.phone,
           userCreate.confirmePassword,
           userCreate.welcomePage!);
+  factory UserCreateModel.fromUser(User user) =>
+      UserCreateModel(user.email!, '', user.displayName!, [], '', '', false);
 
   String toJson() => json.encode(toMap());
 }

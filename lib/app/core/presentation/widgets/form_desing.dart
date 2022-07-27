@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '../../theme/theme_app.dart';
 import '../../utils/colors/colors_utils.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +9,13 @@ class FormsDesign extends StatelessWidget {
   final Widget? suffixIcon;
   final String? title;
   final int? maxLen;
+  final List<TextInputFormatter>? formatter;
   final TextInputType type;
   final TextEditingController controller;
   final bool visibility;
   const FormsDesign(
       {Key? key,
+      this.formatter,
       this.prefixIcon,
       this.suffixIcon,
       this.title,
@@ -27,7 +31,7 @@ class FormsDesign extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
         maxLength: maxLen,
-        inputFormatters: [],
+        inputFormatters: formatter ?? [],
         keyboardType: type,
         controller: controller,
         obscureText: visibility,

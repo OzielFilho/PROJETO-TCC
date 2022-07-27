@@ -22,6 +22,10 @@ class EmptyParamsErrorState extends ErrorState {
   EmptyParamsErrorState(String? message) : super(message);
 }
 
+class PhoneErrorState extends ErrorState {
+  PhoneErrorState(String? message) : super(message);
+}
+
 class EmailInvalidErrorState extends ErrorState {
   EmailInvalidErrorState(String? message) : super(message);
 }

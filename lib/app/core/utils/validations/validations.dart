@@ -8,4 +8,8 @@ class Validations {
   static bool passwordValidation({required String password}) {
     return password.length >= 6;
   }
+
+  static bool phoneValidation({required String phone}) {
+    return phone.length == 15 && phone[4] == '9';
+  }
 }

@@ -26,6 +26,9 @@ class CreateAccountWithEmailAndPassword
     if (!(Validations.emailValidation(email: params.email))) {
       return left(ParamsInvalidUserFailure());
     }
+    if (!(Validations.phoneValidation(phone: params.phone))) {
+      return left(PhoneInvalidFailure());
+    }
     if (params.password != params.confirmePassword) {
       return left(PasswordAndConfirmePasswordDifferenceFailure());
     }

@@ -1,3 +1,5 @@
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
 import '../../../../core/utils/colors/colors_utils.dart';
 import '../controllers/create_account_controller/create_account_bloc.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +28,12 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   final _passwordControllerNew = TextEditingController();
   final _createAccount = Modular.get<CreateAccountBloc>();
 
-  bool _visibilityConfirmPassword = false;
-  bool _visibilityPassword = false;
+  bool _visibilityConfirmPassword = true;
+  bool _visibilityPassword = true;
+  var _maskFormatter = new MaskTextInputFormatter(
+      mask: '(##)#####-####',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
 
   @override
   Widget build(BuildContext context) {
@@ -104,8 +110,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                                 },
                                 icon: Icon(
                                   _visibilityPassword
-                                      ? Icons.visibility_outlined
-                                      : Icons.visibility_off_outlined,
+                                      ? Icons.visibility_off_outlined
+                                      : Icons.visibility_outlined,
                                   color: ColorUtils.whiteColor,
                                 )),
                             title: 'Senha',
@@ -128,8 +134,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                                 },
                                 icon: Icon(
                                   _visibilityConfirmPassword
-                                      ? Icons.visibility_outlined
-                                      : Icons.visibility_off_outlined,
+                                      ? Icons.visibility_off_outlined
+                                      : Icons.visibility_outlined,
                                   color: ColorUtils.whiteColor,
                                 )),
                             title: 'Confirme a Senha',
@@ -145,6 +151,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                             type: TextInputType.number,
                             prefixIcon: null,
                             suffixIcon: null,
+                            formatter: [_maskFormatter],
                             title: '(xx) xxxxx.xxxx',
                             visibility: false,
                             controller: _phoneControllerNew,

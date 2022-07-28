@@ -40,7 +40,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     return BlocConsumer<CreateAccountBloc, AppState>(
       bloc: _createAccount,
       listener: (context, state) {
-        if (state is SuccessState) {
+        if (state is SuccessCreateAccountState) {
           Modular.to.pushReplacementNamed('/welcome/');
         }
       },

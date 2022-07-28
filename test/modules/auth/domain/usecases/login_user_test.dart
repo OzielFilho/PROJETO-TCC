@@ -19,7 +19,8 @@ void main() {
   });
 
   group('Login Group', () {
-    final resultAuth = AuthResult('oziel@hotmail.com', 'sfdadad', true);
+    final resultAuth =
+        AuthResult('oziel@hotmail.com', 'sfdadad', true, '(85)98828-6381');
     test('Should do login of user if params is not empty', () async {
       when(() => repositoryMock!.loginWithEmailAndPassword(any(), any()))
           .thenAnswer((_) async => right(resultAuth));

@@ -73,7 +73,7 @@ class FirebaseAuthDatasourceImpl
     final user =
         await authService.createUser(userCreate.email, userCreate.password);
     final phoneCrypt = EncryptData().encrypty(userCreate.phone).base16;
-    userResult = AuthResultModel(user.email!, user.uid, false);
+    userResult = AuthResultModel(user.email!, user.uid, false, phoneCrypt);
     final existInContact =
         await firestore.existDocument('contacts', phoneCrypt);
 

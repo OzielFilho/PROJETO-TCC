@@ -215,7 +215,9 @@ class _LoginAppPageState extends State<LoginAppPage> {
             },
             listener: (context, state) {
               if (state is SuccessHomeState) {
-                Modular.to.pushReplacementNamed('/home/');
+                Modular.to.pushReplacementNamed(
+                  '/home/',
+                );
               }
               if (state is SuccessWelcomeState) {
                 Modular.to.pushReplacementNamed('/welcome/');

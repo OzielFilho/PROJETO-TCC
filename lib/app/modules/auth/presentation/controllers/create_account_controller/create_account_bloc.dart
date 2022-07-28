@@ -43,7 +43,7 @@ class CreateAccountBloc
         default:
           return ErrorState('Não foi possível realizar o cadastro');
       }
-    }, (success) => SuccessState()));
+    }, (success) => SuccessCreateAccountState()));
   }
 
   @override

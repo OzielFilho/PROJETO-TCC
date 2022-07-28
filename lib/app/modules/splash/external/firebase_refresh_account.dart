@@ -15,8 +15,8 @@ class FirebaseRefreshAccount implements RefreshAccountDatasource {
     final user = await firestore.getDocument('users', token);
     final logged = await auth.userLogged();
 
-    final result =
-        UserLoggedInfoModel(logged: logged, welcomePage: user['welcomePage']);
+    final result = UserLoggedInfoModel(
+        logged: logged, welcomePage: user['welcomePage'], phone: user['phone']);
     return result;
   }
 }

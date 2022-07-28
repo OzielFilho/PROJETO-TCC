@@ -7,9 +7,8 @@ class WelcomeModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute(Modular.initialRoute,
-        child: (context, args) => WelcomePage(),
-        transition: TransitionType.leftToRight,
-        duration: Duration(seconds: 1))
+    ChildRoute(Modular.initialRoute, child: (context, args) {
+      return WelcomePage(hasPhone: false);
+    }, transition: TransitionType.leftToRight, duration: Duration(seconds: 1))
   ];
 }

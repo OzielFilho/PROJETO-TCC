@@ -44,7 +44,9 @@ class _SplashPageState extends State<SplashPage> {
           Modular.to.pushReplacementNamed('/home/');
         }
         if (state is SuccessWelcomeState) {
-          Modular.to.pushReplacementNamed('/welcome/');
+          Modular.to.pushReplacementNamed(
+            '/welcome/',
+          );
         }
 
         if (state is NetworkErrorState) {

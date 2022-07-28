@@ -16,7 +16,8 @@ void main() {
   setUp(() {
     repository = RefreshAccountRepositoryImpl();
     usecase = LoggedUser(repository!);
-    userLoggedInfo = UserLoggedInfo(logged: true, welcomePage: true);
+    userLoggedInfo = UserLoggedInfo(
+        logged: true, welcomePage: true, phone: '(85)98828-6381');
   });
 
   test('Should return true if user logged', () async {

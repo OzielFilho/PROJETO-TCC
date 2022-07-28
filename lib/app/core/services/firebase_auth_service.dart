@@ -5,6 +5,7 @@ abstract class FirebaseAuthService {
   Future<User> signInWithCredential(dynamic credential);
   Future<void> recoveryPassword(String email);
   Future<void> signOut();
+  Future<String> getToken();
   Future<User> createUser(String email, String password);
   Future<bool> userLogged();
 }
@@ -42,5 +43,11 @@ class FirebaseAuthServiceImpl implements FirebaseAuthService {
   Future<User> signInWithCredential(dynamic credential) async {
     final result = await auth.signInWithCredential(credential);
     return result.user!;
+  }
+
+  @override
+  Future<String> getToken() async {
+    final result = auth.currentUser!.uid;
+    return result;
   }
 }

@@ -33,8 +33,11 @@ class _LoginAppPageState extends State<LoginAppPage> {
     return BlocConsumer<LoginWithEmailAndPasswordBloc, AppState>(
         bloc: _loginBloc,
         listener: (context, state) {
-          if (state is SuccessState) {
+          if (state is SuccessHomeState) {
             Modular.to.pushReplacementNamed('/home/');
+          }
+          if (state is SuccessWelcomeState) {
+            Modular.to.pushReplacementNamed('/welcome/');
           }
         },
         builder: (context, stateEmail) {
@@ -211,8 +214,11 @@ class _LoginAppPageState extends State<LoginAppPage> {
               );
             },
             listener: (context, state) {
-              if (state is SuccessState) {
+              if (state is SuccessHomeState) {
                 Modular.to.pushReplacementNamed('/home/');
+              }
+              if (state is SuccessWelcomeState) {
+                Modular.to.pushReplacementNamed('/welcome/');
               }
             },
             bloc: _loginGoogleBloc,

@@ -25,8 +25,11 @@ class FirebaseAuthDatasourceImpl
   Future<AuthResult> loginWithEmailAndPassword(
       String email, String password) async {
     late AuthResult userResult;
-    final user = await authService.signInWithEmailAndPassword(email, password);
-    userResult = AuthResultModel(user.email!, user.uid);
+    final userLogin =
+        await authService.signInWithEmailAndPassword(email, password);
+    final user = await firestore.getDocument('users', userLogin.uid);
+
+    userResult = AuthResultModel.fromDocument(user);
     return userResult;
   }
 
@@ -55,7 +58,9 @@ class FirebaseAuthDatasourceImpl
             UserCreateModel.fromUser(userCredential).toMap());
       }
 
-      userResult = AuthResultModel(userCredential.email!, userCredential.uid);
+      final user = await firestore.getDocument('users', userCredential.uid);
+
+      userResult = AuthResultModel.fromDocument(user);
       return userResult;
     }
     return userResult;
@@ -68,7 +73,7 @@ class FirebaseAuthDatasourceImpl
     final user =
         await authService.createUser(userCreate.email, userCreate.password);
     final phoneCrypt = EncryptData().encrypty(userCreate.phone).base16;
-    userResult = AuthResultModel(user.email!, user.uid);
+    userResult = AuthResultModel(user.email!, user.uid, false);
     final existInContact =
         await firestore.existDocument('contacts', phoneCrypt);
 

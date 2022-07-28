@@ -40,8 +40,11 @@ class _SplashPageState extends State<SplashPage> {
         if (state is UserNotLoggedState) {
           Modular.to.pushReplacementNamed('/auth/');
         }
-        if (state is SuccessState) {
+        if (state is SuccessHomeState) {
           Modular.to.pushReplacementNamed('/home/');
+        }
+        if (state is SuccessWelcomeState) {
+          Modular.to.pushReplacementNamed('/welcome/');
         }
 
         if (state is NetworkErrorState) {

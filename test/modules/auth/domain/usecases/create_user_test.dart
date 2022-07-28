@@ -22,17 +22,17 @@ void main() {
         password: '1234567',
         name: 'jose',
         confirmePassword: '1234567',
-        phone: '85484952151581'));
+        phone: '(85)98828-6381'));
   });
 
   group('Create User Group', () {
-    final resultAuth = AuthResult('osos@osso.com', '1212151');
+    final resultAuth = AuthResult('osos@osso.com', '1212151', true);
     final inputAuth = UserCreate(
         email: 'jose@hotmail.com',
         password: '1234567',
         name: 'jose',
         confirmePassword: '1234567',
-        phone: '8548484491518');
+        phone: '(85)98828-6381');
     test('Should create user if params is not empty', () async {
       when(() => repositoryMock!.createAccountWithEmailAndPassword(any()))
           .thenAnswer((_) async => right(resultAuth));
@@ -66,7 +66,7 @@ void main() {
           email: 'jose.com',
           password: '12345678',
           name: 'jose',
-          phone: '1588848',
+          phone: '(85)98828-6381',
           confirmePassword: '12345678'));
 
       expect(result, left(ParamsInvalidUserFailure()));
@@ -82,7 +82,7 @@ void main() {
           password: '1238',
           name: 'jose',
           confirmePassword: '1238',
-          phone: '45154189'));
+          phone: '(85)98828-6381'));
 
       expect(result, left(ParamsInvalidUserFailure()));
     });

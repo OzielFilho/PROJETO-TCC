@@ -19,7 +19,7 @@ void main() {
     registerFallbackValue(FinalizationUser(contacts: ['859877647367']));
   });
 
-  final resultAuth = AuthResult('osos@osso.com', '1212151');
+  final resultAuth = AuthResult('osos@osso.com', '1212151', true);
   final inputUsecase = FinalizationUser(contacts: ['859877647367']);
 
   test('Should return list of contacts', () async {

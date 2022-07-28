@@ -10,6 +10,6 @@ class Validations {
   }
 
   static bool phoneValidation({required String phone}) {
-    return phone.length == 15 && phone[4] == '9';
+    return phone.length == 14 && phone[4] == '9';
   }
 }

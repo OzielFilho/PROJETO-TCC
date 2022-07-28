@@ -18,9 +18,11 @@ class LoginWithGoogleBloc extends Bloc<LoginWithGoogleEvent, AppState>
     emit(ProcessingState());
 
     final result = await _loginGoogleUser.call(NoParams());
-    emit(result.fold(
-        (failure) => ErrorState('Não foi possível realizar o login'),
-        (success) => SuccessState()));
+    emit(result
+        .fold((failure) => ErrorState('Não foi possível realizar o login'),
+            (success) {
+      return !success.welcomePage ? SuccessWelcomeState() : SuccessHomeState();
+    }));
   }
 
   @override

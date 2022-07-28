@@ -30,7 +30,7 @@ class LoginWithEmailAndPasswordBloc extends Bloc<LoginEvent, AppState>
           return ErrorState('Não foi possível realizar o login');
       }
     }, (success) {
-      return SuccessState();
+      return !success.welcomePage ? SuccessWelcomeState() : SuccessHomeState();
     }));
   }
 

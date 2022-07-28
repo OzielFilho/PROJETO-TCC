@@ -19,7 +19,7 @@ void main() {
   });
 
   group('Login Google Group', () {
-    final resultAuth = AuthResult('osos@osso.com', '1212151');
+    final resultAuth = AuthResult('osos@osso.com', '1212151', true);
     test('Should do login google of user if params is not empty', () async {
       when(() => repositoryMock!.loginGoogleUser())
           .thenAnswer((_) async => right(resultAuth));

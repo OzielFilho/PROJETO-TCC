@@ -9,7 +9,7 @@ import 'presentation/splash_page.dart';
 class SplashModule extends Module {
   @override
   List<Bind> get binds => [
-        Bind((i) => FirebaseRefreshAccount(i())),
+        Bind((i) => FirebaseRefreshAccount(i(), i())),
         Bind((i) => RefreshAccountRepositoryImpl(i())),
         Bind((i) => LoggedUser(i())),
         Bind((i) => SplashBloc(i(), i())),

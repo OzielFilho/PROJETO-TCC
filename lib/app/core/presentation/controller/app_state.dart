@@ -16,6 +16,10 @@ class NetworkErrorState extends AppState {
 
 class SuccessState extends AppState {}
 
+class SuccessHomeState extends AppState {}
+
+class SuccessWelcomeState extends AppState {}
+
 class ProcessingState extends AppState {}
 
 class EmptyParamsErrorState extends ErrorState {

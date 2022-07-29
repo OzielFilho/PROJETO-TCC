@@ -27,7 +27,7 @@ void main() {
 
   group('Create User Group', () {
     final resultAuth =
-        AuthResult('osos@osso.com', '1212151', true, '(85)98828-6381');
+        AuthResult('osos@osso.com', '1212151', true, '(85)98828-6381', 'ozzy');
     final inputAuth = UserCreate(
         email: 'jose@hotmail.com',
         password: '1234567',

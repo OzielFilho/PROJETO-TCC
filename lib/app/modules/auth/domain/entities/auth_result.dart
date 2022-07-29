@@ -3,6 +3,7 @@ class AuthResult {
   final String? tokenId;
   final bool welcomePage;
   final String phone;
+  final String name;
 
-  AuthResult(this.email, this.tokenId, this.welcomePage, this.phone);
+  AuthResult(this.email, this.tokenId, this.welcomePage, this.phone, this.name);
 }

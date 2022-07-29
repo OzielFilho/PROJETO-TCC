@@ -5,7 +5,6 @@ import '../../utils/colors/colors_utils.dart';
 import 'package:flutter/material.dart';
 
 class FormsDesign extends StatelessWidget {
-  final Widget? prefixIcon;
   final Widget? suffixIcon;
   final String? title;
   final int? maxLen;
@@ -13,11 +12,12 @@ class FormsDesign extends StatelessWidget {
   final TextInputType type;
   final TextEditingController controller;
   final bool visibility;
-  const FormsDesign(
+  final Widget? prefixIcon;
+  FormsDesign(
       {Key? key,
+      this.suffixIcon,
       this.formatter,
       this.prefixIcon,
-      this.suffixIcon,
       this.title,
       required this.controller,
       this.visibility = false,

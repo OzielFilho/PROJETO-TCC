@@ -16,6 +16,8 @@ class NetworkErrorState extends AppState {
 
 class SuccessState extends AppState {}
 
+class SuccessGetUserState extends AppState {}
+
 class SuccessHomeState extends AppState {}
 
 class SuccessCreateAccountState extends AppState {}
@@ -26,6 +28,10 @@ class ProcessingState extends AppState {}
 
 class EmptyParamsErrorState extends ErrorState {
   EmptyParamsErrorState(String? message) : super(message);
+}
+
+class ListContactsErrorState extends ErrorState {
+  ListContactsErrorState(String? message) : super(message);
 }
 
 class PhoneErrorState extends ErrorState {

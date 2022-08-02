@@ -11,12 +11,18 @@ class FirebaseRefreshAccount implements RefreshAccountDatasource {
 
   @override
   Future<UserLoggedInfoModel> loggedUser() async {
+    UserLoggedInfoModel result = UserLoggedInfoModel.toEmpty();
     final token = await auth.getToken();
-    final user = await firestore.getDocument('users', token);
-    final logged = await auth.userLogged();
+    if (token.isNotEmpty) {
+      final user = await firestore.getDocument('users', token);
+      final logged = await auth.userLogged();
 
-    final result = UserLoggedInfoModel(
-        logged: logged, welcomePage: user['welcomePage'], phone: user['phone']);
+      result = UserLoggedInfoModel(
+          logged: logged,
+          welcomePage: user['welcomePage'],
+          phone: user['phone']);
+    }
+
     return result;
   }
 }

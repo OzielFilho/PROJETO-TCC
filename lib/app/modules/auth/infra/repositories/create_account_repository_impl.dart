@@ -23,6 +23,8 @@ class CreateAccountRepositoryImpl extends CreateAccountRepository {
       return right(result);
     } on CreateUserException {
       return left(CreateUserFailure());
+    } on PhoneExistException {
+      return left(PhoneExistFailure());
     } catch (e) {
       return left(CreateUserFailure());
     }

@@ -25,6 +25,7 @@ class CreateAccountBloc
         email: event.email,
         password: event.password,
         name: event.name,
+        welcomePage: event.welcomePage,
         confirmePassword: event.confirmePassword,
         contacts: event.contacts,
         phone: event.phone));
@@ -38,6 +39,8 @@ class CreateAccountBloc
               'As senhas não correspondem');
         case PhoneInvalidFailure:
           return PhoneErrorState('Telefone inválido');
+        case PhoneExistFailure:
+          return PhoneErrorState('Telefone já existe');
         case ParamsInvalidUserFailure:
           return EmailOrPasswordInvalidErrorState('Email ou Senha Inválidos');
         default:

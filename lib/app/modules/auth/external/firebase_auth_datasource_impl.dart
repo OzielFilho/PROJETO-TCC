@@ -1,3 +1,4 @@
+import '../../../core/error/exceptions.dart';
 import '../../../core/services/firebase_auth_service.dart';
 import '../../../core/utils/constants/encrypt_data.dart';
 import '../infra/models/user_create_model.dart';
@@ -70,15 +71,21 @@ class FirebaseAuthDatasourceImpl
   Future<AuthResult> createAccountWithEmailAndPassword(
       UserCreateModel userCreate) async {
     late AuthResult userResult;
-    final user =
-        await authService.createUser(userCreate.email, userCreate.password);
+
     final phoneCrypt = EncryptData().encrypty(userCreate.phone).base16;
-    userResult = AuthResultModel(
-        user.email!, user.uid, false, phoneCrypt, userCreate.name);
+
     final existInContact =
         await firestore.existDocument('contacts', phoneCrypt);
 
+    if (existInContact) {
+      throw PhoneExistException();
+    }
+
     if (!(existInContact)) {
+      final user =
+          await authService.createUser(userCreate.email, userCreate.password);
+      userResult = AuthResultModel(
+          user.email!, user.uid, false, phoneCrypt, userCreate.name);
       await firestore.createDocument(
           'contacts', phoneCrypt, {'tokenId': userResult.tokenId});
     }

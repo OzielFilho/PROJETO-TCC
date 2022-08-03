@@ -21,7 +21,7 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(Duration(seconds: 1), () {
       _splashBloc.add(LoggedUserEvent());
     });
 

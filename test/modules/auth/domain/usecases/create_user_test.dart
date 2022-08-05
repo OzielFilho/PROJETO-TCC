@@ -46,14 +46,17 @@ void main() {
       verifyNoMoreInteractions(repositoryMock);
     });
 
-    test(
-        'Should returns ParamsEmptyUserFailure if email or password or name is empty',
+    test('Should returns ParamsEmptyUserFailure if one of params is empty',
         () async {
       when(() => repositoryMock!.createAccountWithEmailAndPassword(any()))
           .thenAnswer((_) async => left(ParamsEmptyUserFailure()));
 
       final result = await usecase!(UserCreate(
-          email: '', password: '', name: '', confirmePassword: '', phone: ''));
+          email: '',
+          password: '',
+          name: '',
+          confirmePassword: '1234567',
+          phone: ''));
 
       expect(result, left(ParamsEmptyUserFailure()));
     });
@@ -73,7 +76,39 @@ void main() {
       expect(result, left(ParamsInvalidUserFailure()));
     });
 
-    test('Should returns ParamsInvalidUserFailure if password is less than 6',
+    test('Should returns PhoneInvalidFailure if phone is not valid', () async {
+      when(() => repositoryMock!.createAccountWithEmailAndPassword(any()))
+          .thenAnswer((_) async => left(PhoneInvalidFailure()));
+
+      final result = await usecase!(UserCreate(
+          email: 'jose@hotmail.com',
+          password: '12345678',
+          name: 'jose',
+          phone: '(85)18828-6381',
+          confirmePassword: '12345678'));
+
+      expect(result, left(PhoneInvalidFailure()));
+    });
+
+    test(
+        'Should returns PasswordAndConfirmePasswordDifferenceFailure if password is diffent confirme password',
+        () async {
+      when(() => repositoryMock!.createAccountWithEmailAndPassword(any()))
+          .thenAnswer((_) async =>
+              left(PasswordAndConfirmePasswordDifferenceFailure()));
+
+      final result = await usecase!(UserCreate(
+          email: 'jose@hotmail.com',
+          password: '12345678',
+          name: 'jose',
+          phone: '(85)98828-6381',
+          confirmePassword: '123456789'));
+
+      expect(result, left(PasswordAndConfirmePasswordDifferenceFailure()));
+    });
+
+    test(
+        'Should returns ParamsInvalidUserFailure if password or confirme password is less than 6',
         () async {
       when(() => repositoryMock!.createAccountWithEmailAndPassword(any()))
           .thenAnswer((_) async => left(ParamsInvalidUserFailure()));

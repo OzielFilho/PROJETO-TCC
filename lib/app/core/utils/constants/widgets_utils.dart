@@ -1,3 +1,4 @@
+import 'package:app/app/core/utils/colors/colors_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme/theme_app.dart';
@@ -15,17 +16,23 @@ class WidgetUtils {
   }
 
   static showOkDialog(BuildContext context, String title, String message,
-      String okButton, void Function() onOkPressed) {
+      String okButton, void Function() onOkPressed,
+      {bool permanentDialog = true}) {
     Future.delayed(Duration(milliseconds: 500), () {
       showDialog(
+          barrierDismissible: permanentDialog,
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-                title: Text(title),
+                backgroundColor: ColorUtils.secondaryColor,
+                title: Text(title, style: ThemeApp.theme.textTheme.headline1),
                 content:
                     Text(message, style: ThemeApp.theme.textTheme.subtitle1),
                 actions: [
-                  TextButton(onPressed: onOkPressed, child: Text(okButton))
+                  TextButton(
+                      onPressed: onOkPressed,
+                      child: Text(okButton,
+                          style: ThemeApp.theme.textTheme.subtitle1))
                 ]);
           });
     });

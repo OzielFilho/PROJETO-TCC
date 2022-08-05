@@ -34,25 +34,30 @@ class _SplashPageState extends State<SplashPage> {
       bloc: _splashBloc,
       listener: (context, state) {
         if (state is ErrorState) {
-          WidgetUtils.showSnackBar(context, state.message!,
-              actionText: 'Ok', onTap: () {});
+          WidgetUtils.showOkDialog(context, 'Não foi possível entrar no app',
+              state.message!, 'Reload', () {
+            Modular.to.pushReplacementNamed('/');
+          }, permanentDialog: false);
         }
-        if (state is UserNotLoggedState) {
-          Modular.to.pushReplacementNamed('/auth/');
-        }
-        if (state is SuccessHomeState) {
-          Modular.to.pushReplacementNamed('/home/');
-        }
-        if (state is SuccessWelcomeState) {
-          Modular.to.pushReplacementNamed(
-            '/welcome/',
-          );
+        if (!(state is NetworkErrorState)) {
+          if (state is UserNotLoggedState) {
+            Modular.to.pushReplacementNamed('/auth/');
+          }
+          if (state is SuccessHomeState) {
+            Modular.to.pushReplacementNamed('/home/');
+          }
+          if (state is SuccessWelcomeState) {
+            Modular.to.pushReplacementNamed(
+              '/welcome/',
+            );
+          }
         }
 
         if (state is NetworkErrorState) {
-          WidgetUtils.showSnackBar(context, state.message!,
-              actionText: 'Ok', onTap: () {});
-          return;
+          WidgetUtils.showOkDialog(
+              context, 'Internet Indisponível', state.message!, 'Reload', () {
+            Modular.to.pushReplacementNamed('/');
+          }, permanentDialog: false);
         }
       },
       builder: (context, state) {

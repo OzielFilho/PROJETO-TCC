@@ -1,11 +1,12 @@
 import 'package:app/app/modules/welcome/domain/usecases/update_user_create.dart';
-import 'package:app/app/modules/welcome/presentation/controllers/welcome_event.dart';
+import 'package:app/app/modules/welcome/presentation/controllers/event/welcome_event.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../core/error/failure.dart';
-import '../../../../core/presentation/controller/app_state.dart';
-import '../../domain/entities/update_user.dart';
+import '../../../../../core/error/failure.dart';
+import '../../../../../core/presentation/controller/app_state.dart';
+import '../../../domain/entities/update_user.dart';
 
 class UpdateUserCreateBloc extends Bloc<WelcomeEvent, AppState>
     implements Disposable {
@@ -13,7 +14,7 @@ class UpdateUserCreateBloc extends Bloc<WelcomeEvent, AppState>
   UpdateUserCreateBloc(this._usecase) : super(InitialState()) {
     on<UpdateUserCreateEvent>(_onUpdateUserCreatesEvent);
   }
-
+  ScrollController scrollController = ScrollController();
   _onUpdateUserCreatesEvent(
       UpdateUserCreateEvent event, Emitter<AppState> emit) async {
     emit(ProcessingState());
@@ -29,16 +30,16 @@ class UpdateUserCreateBloc extends Bloc<WelcomeEvent, AppState>
     emit(result.fold((failure) {
       switch (failure.runtimeType) {
         case PhoneEmptyFailure:
-          return PhoneErrorState('Telefone não pode está vazio');
+          return PhoneInvalidErrorState('Telefone não pode está vazio');
         case PhoneInvalidFailure:
-          return PhoneErrorState('Telefone inserido inválido');
+          return PhoneInvalidErrorState('Telefone inserido inválido');
         case ListContactsEmptyFailure:
           return ListContactsErrorState('Insira no mínimo um telefone');
         default:
           return ErrorState('Serviço indisponível no momento');
       }
     }, (success) {
-      return SuccessGetUserState();
+      return SuccessUpdateUserCreateState();
     }));
   }
 

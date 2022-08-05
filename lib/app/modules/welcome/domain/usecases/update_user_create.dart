@@ -19,6 +19,12 @@ class UpdateUserCreate implements Usecase<void, UpdateUserWelcome> {
     if (!Validations.phoneValidation(phone: params.phone)) {
       return left(PhoneInvalidFailure());
     }
+    params.contacts.map((contact) {
+      if (!Validations.phoneValidation(phone: contact)) {
+        return left(PhoneInvalidFailure());
+      }
+    }).toList();
+
     if (params.contacts.isEmpty) {
       return left(ListContactsEmptyFailure());
     }

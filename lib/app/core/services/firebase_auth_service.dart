@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class FirebaseAuthService {
@@ -15,9 +13,7 @@ abstract class FirebaseAuthService {
 class FirebaseAuthServiceImpl implements FirebaseAuthService {
   final FirebaseAuth auth;
 
-  FirebaseAuthServiceImpl(this.auth) {
-    print('seu auth ${auth.app}');
-  }
+  FirebaseAuthServiceImpl(this.auth);
 
   @override
   Future<User> createUser(String email, String password) async {

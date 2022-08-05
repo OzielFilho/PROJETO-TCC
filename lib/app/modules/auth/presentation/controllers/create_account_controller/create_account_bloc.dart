@@ -38,9 +38,9 @@ class CreateAccountBloc
           return PasswordDifferenceInvalidErrorState(
               'As senhas não correspondem');
         case PhoneInvalidFailure:
-          return PhoneErrorState('Telefone inválido');
+          return PhoneInvalidErrorState('Telefone inválido');
         case PhoneExistFailure:
-          return PhoneErrorState('Telefone já existe');
+          return PhoneInvalidErrorState('Telefone já existe');
         case ParamsInvalidUserFailure:
           return EmailOrPasswordInvalidErrorState('Email ou Senha Inválidos');
         default:

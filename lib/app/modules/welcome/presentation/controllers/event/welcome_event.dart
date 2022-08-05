@@ -2,6 +2,12 @@ abstract class WelcomeEvent {}
 
 class GetUserEvent implements WelcomeEvent {}
 
+class PhoneIsEmptyEvent implements WelcomeEvent {
+  final String phone;
+
+  PhoneIsEmptyEvent({required this.phone});
+}
+
 class UpdateUserCreateEvent implements WelcomeEvent {
   final String name;
   final String phone;

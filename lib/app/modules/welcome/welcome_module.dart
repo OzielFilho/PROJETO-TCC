@@ -1,10 +1,13 @@
 import 'package:app/app/modules/welcome/domain/usecases/get_user_create.dart';
+import 'package:app/app/modules/welcome/domain/usecases/update_user_create.dart';
 import 'package:app/app/modules/welcome/infra/repositories/welcome_repository_impl.dart';
+import 'package:app/app/modules/welcome/presentation/controllers/bloc/update_user_create_bloc.dart';
+import 'package:app/app/modules/welcome/presentation/controllers/bloc/user_phone_is_empty_bloc.dart';
 import 'package:app/app/modules/welcome/presentation/pages/welcome_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'external/firebase_welcome_datasource_impl.dart';
-import 'presentation/controllers/get_user_welcome_bloc.dart';
+import 'presentation/controllers/bloc/get_user_welcome_bloc.dart';
 
 class WelcomeModule extends Module {
   @override
@@ -13,6 +16,9 @@ class WelcomeModule extends Module {
     Bind((i) => WelcomeRepositoryImpl(i())),
     Bind((i) => GetUserCreate(i())),
     Bind((i) => GetUserWelcomeBloc(i())),
+    Bind((i) => UpdateUserCreate(i())),
+    Bind((i) => UpdateUserCreateBloc(i())),
+    Bind((i) => UserPhoneIsEmptyBloc()),
   ];
 
   @override

@@ -3,7 +3,7 @@ import 'package:app/app/modules/welcome/domain/entities/update_user.dart';
 import '../../../../core/utils/constants/encrypt_data.dart';
 
 class UpdateUserWelcomeModel extends UpdateUserWelcome {
-  final List<String> contacts;
+  List<String> contacts;
   final bool welcomePage;
   final String phone;
   String email;

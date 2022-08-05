@@ -17,12 +17,14 @@ class FirebaseWelcomeDatasourceImpl implements WelcomeDatasource {
     final document = await store.getDocument('users', token);
 
     final userAuth = AuthResultModel.fromDocument(document);
-    if (userAuth.phone.isEmpty) {
+    if (userAuth.phone.isNotEmpty) {
       final phoneCrypt = EncryptData().encrypty(user.phone).base16;
       if (!await store.existDocument('contacts', phoneCrypt)) {
         await store.createDocument('contacts', phoneCrypt, {'tokenId': token});
       }
     }
+    user.contacts =
+        user.contacts.map((e) => EncryptData().encrypty(e).base16).toList();
 
     user.name = userAuth.name;
     user.email = userAuth.email;

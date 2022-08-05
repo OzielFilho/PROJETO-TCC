@@ -18,6 +18,8 @@ class SuccessState extends AppState {}
 
 class SuccessGetUserState extends AppState {}
 
+class SuccessUpdateUserCreateState extends AppState {}
+
 class SuccessHomeState extends AppState {}
 
 class SuccessCreateAccountState extends AppState {}
@@ -34,8 +36,12 @@ class ListContactsErrorState extends ErrorState {
   ListContactsErrorState(String? message) : super(message);
 }
 
-class PhoneErrorState extends ErrorState {
-  PhoneErrorState(String? message) : super(message);
+class PhoneEmptyErrorState extends ErrorState {
+  PhoneEmptyErrorState(String? message) : super(message);
+}
+
+class PhoneInvalidErrorState extends ErrorState {
+  PhoneInvalidErrorState(String? message) : super(message);
 }
 
 class EmailInvalidErrorState extends ErrorState {

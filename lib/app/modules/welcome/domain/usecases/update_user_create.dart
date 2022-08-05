@@ -20,7 +20,6 @@ class UpdateUserCreate implements Usecase<void, UpdateUserWelcome> {
       return left(PhoneInvalidFailure());
     }
     params.contacts.map((contact) {
-      print('CONTATO $contact');
       if (!Validations.phoneValidation(phone: contact)) {
         return left(PhoneInvalidFailure());
       }

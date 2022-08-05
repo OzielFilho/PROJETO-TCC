@@ -140,8 +140,6 @@ class _WelcomePageState extends State<WelcomePage> {
                                     Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: ListView.builder(
-                                        controller: _updateUserCreateBloc
-                                            .scrollController,
                                         shrinkWrap: true,
                                         itemCount: _formsContacts.length,
                                         physics: NeverScrollableScrollPhysics(),

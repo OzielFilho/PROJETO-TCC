@@ -47,7 +47,7 @@ class RecoveryAccountPage extends StatelessWidget {
                           Text('Insira seus dados para recuperar sua Senha',
                               style: ThemeApp.theme.textTheme.headline1),
                           const SizedBox(
-                            height: 50,
+                            height: 20,
                           ),
                           Text('Insira Seu Email',
                               style: ThemeApp.theme.textTheme.subtitle1),

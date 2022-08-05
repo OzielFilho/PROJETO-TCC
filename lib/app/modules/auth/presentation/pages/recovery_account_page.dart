@@ -1,15 +1,15 @@
-import '../../../../core/presentation/widgets/buttons_design.dart';
-import '../controllers/recovery_account_controller/recovery_account_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../core/presentation/controller/app_state.dart';
+import '../../../../core/presentation/widgets/buttons_design.dart';
 import '../../../../core/presentation/widgets/form_desing.dart';
 import '../../../../core/presentation/widgets/loading_desing.dart';
 import '../../../../core/theme/theme_app.dart';
 import '../../../../core/utils/colors/colors_utils.dart';
 import '../controllers/recovery_account_controller/recovery_account_bloc.dart';
+import '../controllers/recovery_account_controller/recovery_account_event.dart';
 
 class RecoveryAccountPage extends StatelessWidget {
   RecoveryAccountPage({Key? key}) : super(key: key);

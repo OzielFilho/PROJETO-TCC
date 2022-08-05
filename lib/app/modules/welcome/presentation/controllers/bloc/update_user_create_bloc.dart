@@ -1,5 +1,5 @@
-import 'package:app/app/modules/welcome/domain/usecases/update_user_create.dart';
-import 'package:app/app/modules/welcome/presentation/controllers/event/welcome_event.dart';
+import '../../../domain/usecases/update_user_create.dart';
+import '../event/welcome_event.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -30,7 +30,7 @@ class UpdateUserCreateBloc extends Bloc<WelcomeEvent, AppState>
     emit(result.fold((failure) {
       switch (failure.runtimeType) {
         case PhoneEmptyFailure:
-          return PhoneInvalidErrorState('Telefone não pode está vazio');
+          return PhoneEmptyErrorState('Telefone não pode está vazio');
         case PhoneInvalidFailure:
           return PhoneInvalidErrorState('Telefone inserido inválido');
         case ListContactsEmptyFailure:

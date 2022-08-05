@@ -2,9 +2,8 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../domain/entities/user_create.dart';
-
 import '../../../../core/utils/constants/encrypt_data.dart';
+import '../../domain/entities/user_create.dart';
 
 class UserCreateModel extends UserCreate {
   final String email;

@@ -1,4 +1,4 @@
-import 'package:app/app/core/services/network_service.dart';
+import '../../../../core/services/network_service.dart';
 
 import '../../../../core/presentation/controller/app_state.dart';
 import '../../domain/usecases/logged_user.dart';

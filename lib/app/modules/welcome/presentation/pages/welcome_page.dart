@@ -1,10 +1,11 @@
-import 'package:app/app/core/presentation/widgets/buttons_design.dart';
-import 'package:app/app/core/presentation/widgets/form_desing.dart';
-import 'package:app/app/core/utils/colors/colors_utils.dart';
-import 'package:app/app/modules/welcome/presentation/controllers/bloc/update_user_create_bloc.dart';
-import 'package:app/app/modules/welcome/presentation/controllers/bloc/user_phone_is_empty_bloc.dart';
-import 'package:app/app/modules/welcome/presentation/controllers/event/welcome_event.dart';
+import '../../../../core/presentation/widgets/buttons_design.dart';
+import '../../../../core/presentation/widgets/form_desing.dart';
+import '../../../../core/utils/colors/colors_utils.dart';
+import '../controllers/bloc/update_user_create_bloc.dart';
+import '../controllers/bloc/user_phone_is_empty_bloc.dart';
+import '../controllers/event/welcome_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -12,7 +13,6 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../../../core/presentation/controller/app_state.dart';
 import '../../../../core/presentation/widgets/loading_desing.dart';
 import '../../../../core/theme/theme_app.dart';
-import '../../../../core/utils/constants/encrypt_data.dart';
 import '../controllers/bloc/get_user_welcome_bloc.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -46,6 +46,7 @@ class _WelcomePageState extends State<WelcomePage> {
   List<FormsDesign> _formsContacts = [];
 
   final _controllerPhone = TextEditingController();
+  PageController? _controllerPage;
 
   var _maskFormatter = new MaskTextInputFormatter(
       mask: '(##)#####-####',
@@ -55,14 +56,26 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   void initState() {
     _createNewForm();
+    _controllerPage = PageController(initialPage: 0);
     _getUserBloc.add(GetUserEvent());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GetUserWelcomeBloc, AppState>(
+    return BlocConsumer<GetUserWelcomeBloc, AppState>(
       bloc: _getUserBloc,
+      listener: (context, state) {
+        if (state is SuccessGetUserState) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            if (_controllerPage!.hasClients) {
+              if (_getUserBloc.user!.phone.isEmpty) {
+                _controllerPage!.jumpToPage(2);
+              }
+            }
+          });
+        }
+      },
       builder: (context, state) {
         if (state is ProcessingState) {
           return Scaffold(body: Center(child: LoadingDesign()));
@@ -102,8 +115,10 @@ class _WelcomePageState extends State<WelcomePage> {
                     ),
                     Expanded(
                         child: PageView(
-                      controller: _getUserBloc.controller,
+                      physics: NeverScrollableScrollPhysics(),
+                      controller: _controllerPage,
                       children: [
+                        Container(),
                         BlocConsumer<UpdateUserCreateBloc, AppState>(
                             listener: (context, state) {
                               if (state is SuccessUpdateUserCreateState) {
@@ -177,17 +192,15 @@ class _WelcomePageState extends State<WelcomePage> {
                         BlocConsumer<UserPhoneIsEmptyBloc, AppState>(
                             listener: (context, state) {
                               if (state is SuccessState) {
-                                _getUserBloc.user!.phone = EncryptData()
-                                    .encrypty(_controllerPhone.text)
-                                    .base16;
-                                _getUserBloc.controller.nextPage(
-                                    duration: Duration(milliseconds: 500),
-                                    curve: Curves.bounceIn);
+                                _getUserBloc.user!.phone =
+                                    _controllerPhone.text;
+                                _controllerPage!.jumpToPage(1);
                               }
                             },
                             bloc: _userPhoneEmptyBloc,
-                            builder: (context, event) {
+                            builder: (context, eventPhoneEmpty) {
                               return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     'Insira seu telefone',
@@ -203,27 +216,47 @@ class _WelcomePageState extends State<WelcomePage> {
                                         Icons.phone_android,
                                         color: Colors.white,
                                       )),
-                                  const SizedBox(
-                                    height: 20.0,
-                                  ),
-                                  if (state is ErrorState) ...[
+                                  if (eventPhoneEmpty is ProcessingState) ...[
+                                    const SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Align(
+                                        alignment: Alignment.center,
+                                        child: LoadingDesign()),
+                                  ],
+                                  if (eventPhoneEmpty is ErrorState) ...[
+                                    const SizedBox(
+                                      height: 20.0,
+                                    ),
                                     AnimatedContainer(
+                                      alignment: Alignment.center,
                                       duration: Duration(seconds: 5),
                                       curve: Curves.ease,
                                       child: Text(
-                                        state.message!,
+                                        eventPhoneEmpty.message!,
                                         style:
                                             ThemeApp.theme.textTheme.subtitle1,
                                       ),
                                     )
                                   ],
-                                  ButtonDesign(
-                                      text: 'Continuar',
-                                      action: () {
-                                        _userPhoneEmptyBloc.add(
-                                            PhoneIsEmptyEvent(
-                                                phone: _controllerPhone.text));
-                                      }),
+                                  const SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: ButtonDesign(
+                                        text: 'Continuar',
+                                        action: () {
+                                          FocusNode().unfocus();
+                                          if (!(eventPhoneEmpty
+                                              is ProcessingState)) {
+                                            _userPhoneEmptyBloc.add(
+                                                PhoneIsEmptyEvent(
+                                                    phone:
+                                                        _controllerPhone.text));
+                                          }
+                                        }),
+                                  ),
                                 ],
                               );
                             }),

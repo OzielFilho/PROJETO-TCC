@@ -1,9 +1,9 @@
-import 'package:app/app/modules/welcome/domain/entities/update_user.dart';
-import 'package:app/app/modules/auth/domain/entities/auth_result.dart';
-import 'package:app/app/core/error/failure.dart';
-import 'package:app/app/modules/welcome/domain/repositories/welcome_repository.dart';
-import 'package:app/app/modules/welcome/infra/datasources/welcome_datasource.dart';
-import 'package:app/app/modules/welcome/infra/models/update_user_model.dart';
+import '../../domain/entities/update_user.dart';
+import '../../../auth/domain/entities/auth_result.dart';
+import '../../../../core/error/failure.dart';
+import '../../domain/repositories/welcome_repository.dart';
+import '../datasources/welcome_datasource.dart';
+import '../models/update_user_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';

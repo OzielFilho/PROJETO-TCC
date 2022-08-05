@@ -1,5 +1,5 @@
-import 'package:app/app/core/services/firestore_service.dart';
-import 'package:app/app/modules/splash/infra/models/user_logged_info_model.dart';
+import '../../../core/services/firestore_service.dart';
+import '../infra/models/user_logged_info_model.dart';
 
 import '../../../core/services/firebase_auth_service.dart';
 import '../infra/datasources/refresh_account_datasource.dart';

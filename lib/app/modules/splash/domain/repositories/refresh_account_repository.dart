@@ -1,4 +1,4 @@
-import 'package:app/app/modules/splash/domain/entities/user_logged_info.dart';
+import '../entities/user_logged_info.dart';
 
 import '../../../../core/error/failure.dart';
 import 'package:dartz/dartz.dart';

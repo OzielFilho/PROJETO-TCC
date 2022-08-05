@@ -1,6 +1,5 @@
-import 'package:app/app/modules/welcome/domain/entities/update_user.dart';
-
 import '../../../../core/utils/constants/encrypt_data.dart';
+import '../../domain/entities/update_user.dart';
 
 class UpdateUserWelcomeModel extends UpdateUserWelcome {
   List<String> contacts;

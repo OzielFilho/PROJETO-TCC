@@ -1,10 +1,10 @@
-import 'login_event.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../../core/error/failure.dart';
 import '../../../../../core/presentation/controller/app_state.dart';
 import '../../../domain/usecases/login_with_email_and_password.dart';
+import 'login_event.dart';
 
 class LoginWithEmailAndPasswordBloc extends Bloc<LoginEvent, AppState>
     implements Disposable {

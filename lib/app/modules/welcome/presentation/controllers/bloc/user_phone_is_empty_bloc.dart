@@ -1,5 +1,5 @@
-import 'package:app/app/core/presentation/controller/app_state.dart';
-import 'package:app/app/core/utils/validations/validations.dart';
+import '../../../../../core/presentation/controller/app_state.dart';
+import '../../../../../core/utils/validations/validations.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -19,11 +19,12 @@ class UserPhoneIsEmptyBloc extends Bloc<WelcomeEvent, AppState>
       emit(PhoneEmptyErrorState('Seu telefone não pode está vazio'));
     }
 
-    if (!Validations.phoneValidation(phone: event.phone)) {
-      emit(PhoneInvalidErrorState('Telefone Inserido é inválido'));
-    }
+    if (event.phone.isNotEmpty) {
+      if (!Validations.phoneValidation(phone: event.phone)) {
+        emit(PhoneInvalidErrorState('Telefone Inserido é inválido'));
+        return;
+      }
 
-    if (Validations.emailValidation(email: event.phone)) {
       phone = event.phone;
       emit(SuccessState());
     }

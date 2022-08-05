@@ -1,7 +1,7 @@
-import 'package:app/app/core/error/failure.dart';
-import 'package:app/app/core/usecases/usecase.dart';
-import 'package:app/app/core/utils/validations/validations.dart';
-import 'package:app/app/modules/welcome/domain/repositories/welcome_repository.dart';
+import '../../../../core/error/failure.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../../../../core/utils/validations/validations.dart';
+import '../repositories/welcome_repository.dart';
 import 'package:dartz/dartz.dart';
 
 import '../entities/update_user.dart';
@@ -20,6 +20,7 @@ class UpdateUserCreate implements Usecase<void, UpdateUserWelcome> {
       return left(PhoneInvalidFailure());
     }
     params.contacts.map((contact) {
+      print('CONTATO $contact');
       if (!Validations.phoneValidation(phone: contact)) {
         return left(PhoneInvalidFailure());
       }

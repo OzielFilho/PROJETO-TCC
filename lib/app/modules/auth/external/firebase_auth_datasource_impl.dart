@@ -1,15 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 import '../../../core/error/exceptions.dart';
 import '../../../core/services/firebase_auth_service.dart';
-import '../../../core/utils/constants/encrypt_data.dart';
-import '../infra/models/user_create_model.dart';
 import '../../../core/services/firestore_service.dart';
+import '../../../core/utils/constants/encrypt_data.dart';
+import '../domain/entities/auth_result.dart';
 import '../infra/datasources/create_account_datasource.dart';
 import '../infra/datasources/login_datasource.dart';
 import '../infra/datasources/recovery_datasource.dart';
 import '../infra/models/auth_result_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import '../domain/entities/auth_result.dart';
+import '../infra/models/user_create_model.dart';
 
 class FirebaseAuthDatasourceImpl
     implements LoginDatasource, CreateAccountDatasource, RecoveryDatasource {

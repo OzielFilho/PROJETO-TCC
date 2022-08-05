@@ -1,9 +1,9 @@
-import 'package:app/app/modules/splash/domain/entities/user_logged_info.dart';
+import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecase.dart';
+import '../entities/user_logged_info.dart';
 import '../repositories/refresh_account_repository.dart';
-import 'package:dartz/dartz.dart';
 
 class LoggedUser implements Usecase<UserLoggedInfo, NoParams> {
   final RefreshAccountRepository repository;

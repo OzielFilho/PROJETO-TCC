@@ -32,7 +32,7 @@ public class MainActivity extends FlutterActivity {
     private static List<String> phones = new ArrayList();
     private static MediaSessionCompat mediaSession;
 
-    private static boolean actionsActive = true;
+    private static boolean actionsActive = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,13 +45,14 @@ public class MainActivity extends FlutterActivity {
                 if(call.method.equals("startService")){
                     phones = call.argument("phones");
                     start();
-                    result.success("SUCESSO");
+                    result.success(actionsActive);
                 }
             }
         });
     }
 
     public VolumeProviderCompat myVolumeProvider(){
+        actionsActive = false;
         return new VolumeProviderCompat(VolumeProviderCompat.VOLUME_CONTROL_RELATIVE, 100, 50) {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -60,9 +61,10 @@ public class MainActivity extends FlutterActivity {
                 if(direction !=-1) {
                     directionList.add("" + direction);
                     if (directionList.toString().contains("1, 0, 1, 0, 1, 0") || directionList.toString().contains("1, 0, 1, 0, 1, 0, 1, 0")) {
+                        actionsActive = true;
                         Log.d("VOLUME_STATUS", "DEU BOM");
                         if(actionsActive){sendSMS();}
-                        directionList.clear();
+                        directionList.clear();                     
                     }
 
                 }}
@@ -95,7 +97,7 @@ public class MainActivity extends FlutterActivity {
                 mySmsManager.sendTextMessage(phones.get(i),null, "Olá"+phones.get(i), null, null);
                 toastCreate("Mensagem Enviada com sucesso");
             } catch (Exception e) {
-                toastCreate(e.toString());
+                toastCreate("Não foi possível enviar a mensagem");
             }
 
         }

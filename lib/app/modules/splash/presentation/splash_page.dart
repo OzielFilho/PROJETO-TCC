@@ -64,7 +64,7 @@ class _SplashPageState extends State<SplashPage> {
         return Scaffold(
           body: Center(
             child: SvgPicture.asset(
-              'assets/images/splash_icon.svg',
+              'assets/images/svg/splash_icon.svg',
               color: ColorUtils.whiteColor,
             ),
           ),

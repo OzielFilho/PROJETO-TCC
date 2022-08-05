@@ -1,5 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:app/app/modules/home/presentation/pages/home_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class HomeModule extends Module {
@@ -7,21 +6,6 @@ class HomeModule extends Module {
   List<Bind> get binds => [];
 
   @override
-  List<ModularRoute> get routes => [
-        ChildRoute(
-          Modular.initialRoute,
-          child: (context, args) => Container(
-            child: Center(
-              child: MaterialButton(
-                color: Colors.white,
-                onPressed: () async {
-                  await FirebaseAuth.instance.signOut();
-                  Modular.to.pushReplacementNamed('/');
-                },
-                child: Text('opa'),
-              ),
-            ),
-          ),
-        )
-      ];
+  List<ModularRoute> get routes =>
+      [ChildRoute(Modular.initialRoute, child: (context, args) => HomePage())];
 }

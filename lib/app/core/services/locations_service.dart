@@ -7,6 +7,12 @@ abstract class LocationsService {
 class LocationsServiceImpl implements LocationsService {
   @override
   Future<Position> getCurrentLocation() async {
+    final permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever ||
+        permission == LocationPermission.unableToDetermine) {
+      await Geolocator.requestPermission();
+    }
     return await Geolocator.getCurrentPosition();
   }
 }

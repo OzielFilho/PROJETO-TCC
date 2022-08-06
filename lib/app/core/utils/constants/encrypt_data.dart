@@ -13,9 +13,10 @@ class EncryptData {
     return encrypted;
   }
 
-  String decrypty(Encrypted encrypty) {
+  String decrypty(String encrypty) {
+    final value = Encrypted.fromBase16(encrypty);
     final iv = IV.fromLength(16);
-    final decrypted = encrypter.decrypt(encrypty, iv: iv);
+    final decrypted = encrypter.decrypt(value, iv: iv);
     return decrypted;
   }
 }

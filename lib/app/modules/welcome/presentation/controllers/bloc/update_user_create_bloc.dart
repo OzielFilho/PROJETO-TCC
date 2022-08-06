@@ -1,3 +1,4 @@
+import '../../../../../core/utils/constants/encrypt_data.dart';
 import '../../../domain/usecases/update_user_create.dart';
 import '../event/welcome_event.dart';
 import 'package:bloc/bloc.dart';
@@ -17,11 +18,16 @@ class UpdateUserCreateBloc extends Bloc<WelcomeEvent, AppState>
       UpdateUserCreateEvent event, Emitter<AppState> emit) async {
     emit(ProcessingState());
 
+    String phone = event.phone;
+    if (!phone.startsWith('(')) {
+      phone = EncryptData().decrypty(phone);
+    }
+
     UpdateUserWelcome userWelcome = UpdateUserWelcome(
         contacts: event.contacts,
         email: event.email,
         name: event.name,
-        phone: event.phone,
+        phone: phone,
         welcomePage: event.welcomePage);
 
     final result = await _usecase.call(userWelcome);

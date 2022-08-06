@@ -72,6 +72,7 @@ class _WelcomePageState extends State<WelcomePage> {
               if (_getUserBloc.user!.phone.isEmpty) {
                 _controllerPage!.jumpToPage(2);
               }
+              _controllerPage!.jumpToPage(1);
             }
           });
         }
@@ -114,152 +115,159 @@ class _WelcomePageState extends State<WelcomePage> {
                       height: 20.0,
                     ),
                     Expanded(
+                        flex: 1,
                         child: PageView(
-                      physics: NeverScrollableScrollPhysics(),
-                      controller: _controllerPage,
-                      children: [
-                        Container(),
-                        BlocConsumer<UpdateUserCreateBloc, AppState>(
-                            listener: (context, state) {
-                              if (state is SuccessUpdateUserCreateState) {
-                                Modular.to.pushReplacementNamed('/home/');
-                              }
-                            },
-                            bloc: _updateUserCreateBloc,
-                            builder: (context, stateUpdate) {
-                              return SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Para continuar, insira seus telefones de confiança que serão utilizados para contato',
-                                      style: ThemeApp.theme.textTheme.subtitle1,
-                                    ),
-                                    const SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: _formsContacts.length,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        padding: const EdgeInsets.all(12.0),
-                                        itemBuilder: (context, index) {
-                                          return _formsContacts[index];
-                                        },
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    ButtonDesign(
-                                        text: 'Finalizar Conta',
-                                        action: () {
-                                          _contactsText = _formsContacts
-                                              .map((e) => e.controller.text)
-                                              .toList();
-                                          _updateUserCreateBloc.add(
-                                              UpdateUserCreateEvent(
-                                                  contacts: _contactsText,
-                                                  email:
-                                                      _getUserBloc.user!.email,
-                                                  name: _getUserBloc.user!.name,
-                                                  phone:
-                                                      _getUserBloc.user!.phone,
-                                                  welcomePage: !_getUserBloc
-                                                      .user!.welcomePage));
-                                        }),
-                                    const SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    if (stateUpdate is ErrorState) ...[
-                                      AnimatedContainer(
-                                        duration: Duration(seconds: 5),
-                                        curve: Curves.ease,
-                                        child: Text(
-                                          stateUpdate.message!,
+                          physics: NeverScrollableScrollPhysics(),
+                          controller: _controllerPage,
+                          children: [
+                            Center(child: LoadingDesign()),
+                            BlocConsumer<UpdateUserCreateBloc, AppState>(
+                                listener: (context, state) {
+                                  if (state is SuccessUpdateUserCreateState) {
+                                    Modular.to.pushReplacementNamed('/home/');
+                                  }
+                                },
+                                bloc: _updateUserCreateBloc,
+                                builder: (context, stateUpdate) {
+                                  return SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'Para continuar, insira seus telefones de confiança que serão utilizados para contato',
                                           style: ThemeApp
                                               .theme.textTheme.subtitle1,
                                         ),
-                                      )
-                                    ],
-                                  ],
-                                ),
-                              );
-                            }),
-                        BlocConsumer<UserPhoneIsEmptyBloc, AppState>(
-                            listener: (context, state) {
-                              if (state is SuccessState) {
-                                _getUserBloc.user!.phone =
-                                    _controllerPhone.text;
-                                _controllerPage!.jumpToPage(1);
-                              }
-                            },
-                            bloc: _userPhoneEmptyBloc,
-                            builder: (context, eventPhoneEmpty) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Insira seu telefone',
-                                    style: ThemeApp.theme.textTheme.subtitle1,
-                                  ),
-                                  const SizedBox(
-                                    height: 20.0,
-                                  ),
-                                  FormsDesign(
-                                      controller: _controllerPhone,
-                                      formatter: [_maskFormatter],
-                                      suffixIcon: Icon(
-                                        Icons.phone_android,
-                                        color: Colors.white,
-                                      )),
-                                  if (eventPhoneEmpty is ProcessingState) ...[
-                                    const SizedBox(
-                                      height: 20.0,
+                                        const SizedBox(
+                                          height: 20.0,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: ListView.builder(
+                                            shrinkWrap: true,
+                                            itemCount: _formsContacts.length,
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            padding: const EdgeInsets.all(12.0),
+                                            itemBuilder: (context, index) {
+                                              return _formsContacts[index];
+                                            },
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 20.0,
+                                        ),
+                                        ButtonDesign(
+                                            text: 'Finalizar Conta',
+                                            action: () {
+                                              _contactsText = _formsContacts
+                                                  .map((e) => e.controller.text)
+                                                  .toList();
+                                              _updateUserCreateBloc.add(
+                                                  UpdateUserCreateEvent(
+                                                      contacts: _contactsText,
+                                                      email: _getUserBloc
+                                                          .user!.email,
+                                                      name: _getUserBloc
+                                                          .user!.name,
+                                                      phone: _getUserBloc
+                                                          .user!.phone,
+                                                      welcomePage: !_getUserBloc
+                                                          .user!.welcomePage));
+                                            }),
+                                        const SizedBox(
+                                          height: 20.0,
+                                        ),
+                                        if (stateUpdate is ErrorState) ...[
+                                          AnimatedContainer(
+                                            duration: Duration(seconds: 5),
+                                            curve: Curves.ease,
+                                            child: Text(
+                                              stateUpdate.message!,
+                                              style: ThemeApp
+                                                  .theme.textTheme.subtitle1,
+                                            ),
+                                          )
+                                        ],
+                                      ],
                                     ),
-                                    Align(
-                                        alignment: Alignment.center,
-                                        child: LoadingDesign()),
-                                  ],
-                                  if (eventPhoneEmpty is ErrorState) ...[
-                                    const SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    AnimatedContainer(
-                                      alignment: Alignment.center,
-                                      duration: Duration(seconds: 5),
-                                      curve: Curves.ease,
-                                      child: Text(
-                                        eventPhoneEmpty.message!,
+                                  );
+                                }),
+                            BlocConsumer<UserPhoneIsEmptyBloc, AppState>(
+                                listener: (context, state) {
+                                  if (state is SuccessState) {
+                                    _getUserBloc.user!.phone =
+                                        _controllerPhone.text;
+                                    _controllerPage!.jumpToPage(1);
+                                  }
+                                },
+                                bloc: _userPhoneEmptyBloc,
+                                builder: (context, eventPhoneEmpty) {
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Insira seu telefone',
                                         style:
                                             ThemeApp.theme.textTheme.subtitle1,
                                       ),
-                                    )
-                                  ],
-                                  const SizedBox(
-                                    height: 20.0,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: ButtonDesign(
-                                        text: 'Continuar',
-                                        action: () {
-                                          FocusNode().unfocus();
-                                          if (!(eventPhoneEmpty
-                                              is ProcessingState)) {
-                                            _userPhoneEmptyBloc.add(
-                                                PhoneIsEmptyEvent(
-                                                    phone:
-                                                        _controllerPhone.text));
-                                          }
-                                        }),
-                                  ),
-                                ],
-                              );
-                            }),
-                      ],
-                    )),
+                                      const SizedBox(
+                                        height: 20.0,
+                                      ),
+                                      FormsDesign(
+                                          controller: _controllerPhone,
+                                          formatter: [_maskFormatter],
+                                          suffixIcon: Icon(
+                                            Icons.phone_android,
+                                            color: Colors.white,
+                                          )),
+                                      if (eventPhoneEmpty
+                                          is ProcessingState) ...[
+                                        const SizedBox(
+                                          height: 20.0,
+                                        ),
+                                        Align(
+                                            alignment: Alignment.center,
+                                            child: LoadingDesign()),
+                                      ],
+                                      if (eventPhoneEmpty is ErrorState) ...[
+                                        const SizedBox(
+                                          height: 20.0,
+                                        ),
+                                        AnimatedContainer(
+                                          alignment: Alignment.center,
+                                          duration: Duration(seconds: 5),
+                                          curve: Curves.ease,
+                                          child: Text(
+                                            eventPhoneEmpty.message!,
+                                            style: ThemeApp
+                                                .theme.textTheme.subtitle1,
+                                          ),
+                                        )
+                                      ],
+                                      const SizedBox(
+                                        height: 20.0,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: ButtonDesign(
+                                            text: 'Continuar',
+                                            action: () {
+                                              FocusNode().unfocus();
+                                              if (!(eventPhoneEmpty
+                                                  is ProcessingState)) {
+                                                _userPhoneEmptyBloc.add(
+                                                    PhoneIsEmptyEvent(
+                                                        phone: _controllerPhone
+                                                            .text));
+                                              }
+                                            }),
+                                      ),
+                                    ],
+                                  );
+                                }),
+                          ],
+                        )),
                   ],
                 ),
               ),

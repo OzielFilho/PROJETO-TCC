@@ -4,14 +4,15 @@ import 'package:app/app/core/presentation/controller/app_state.dart';
 import 'package:app/app/core/services/volume_actions_service.dart';
 import 'package:app/app/core/theme/theme_app.dart';
 import 'package:app/app/core/utils/colors/colors_utils.dart';
+import 'package:app/app/core/utils/constants/widgets_utils.dart';
 import 'package:app/app/modules/home/presentation/controllers/bloc/get_user_home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import '../../../../core/presentation/widgets/loading_desing.dart';
+import '../controllers/bloc/get_current_location_bloc.dart';
 import '../controllers/events/home_event.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,18 +25,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   VolumeActionsServiceImpl _actionsServiceImpl = VolumeActionsServiceImpl();
   final _blocGetUserHome = Modular.get<GetUserHomeBloc>();
+  final _blocCurrentPositionHome = Modular.get<GetCurrentLocationBloc>();
 
   Completer<GoogleMapController> _controller = Completer();
-
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
 
   @override
   void initState() {
     _actionsServiceImpl.initialization(['(85)98828-6381']);
     _blocGetUserHome.add(GetUserHomeEvent());
+
     super.initState();
   }
 
@@ -48,6 +46,7 @@ class _HomePageState extends State<HomePage> {
             return Scaffold(body: Center(child: LoadingDesign()));
           }
           if (stateGetUser is SuccessGetUserState) {
+            _blocCurrentPositionHome.add(GetCurrentLocationEvent());
             return Scaffold(
               floatingActionButton: Padding(
                 padding: const EdgeInsets.only(top: 16.0, right: 4.0),
@@ -92,18 +91,39 @@ class _HomePageState extends State<HomePage> {
               ),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.startTop,
-              body: GoogleMap(
-                zoomControlsEnabled: false,
-                myLocationEnabled: true,
-                buildingsEnabled: false,
-                indoorViewEnabled: false,
-                compassEnabled: false,
-                mapType: MapType.normal,
-                initialCameraPosition: _kGooglePlex,
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                },
-              ),
+              body: BlocConsumer<GetCurrentLocationBloc, AppState>(
+                  listener: (context, state) {
+                    if (state is ErrorState) {
+                      WidgetUtils.showOkDialog(context, 'Localização',
+                          state.message!, 'Reload', () {});
+                    }
+                  },
+                  bloc: _blocCurrentPositionHome,
+                  builder: (context, stateMap) {
+                    if (stateMap is ProcessingState) {
+                      return Scaffold(body: Center(child: LoadingDesign()));
+                    }
+                    if (stateMap is SuccessGetCurrentLocationState) {
+                      return GoogleMap(
+                        zoomControlsEnabled: false,
+                        myLocationEnabled: true,
+                        mapToolbarEnabled: false,
+                        myLocationButtonEnabled: false,
+                        buildingsEnabled: false,
+                        indoorViewEnabled: false,
+                        compassEnabled: false,
+                        mapType: MapType.normal,
+                        initialCameraPosition:
+                            _blocCurrentPositionHome.position!,
+                        onMapCreated: (GoogleMapController controller) {
+                          _controller.complete(controller);
+                        },
+                      );
+                    }
+                    return Scaffold(
+                      body: Container(),
+                    );
+                  }),
             );
           }
 

@@ -10,4 +10,6 @@ class RefreshAccountException implements Exception {}
 
 class InformationsUserException implements Exception {}
 
+class InformationsMapException implements Exception {}
+
 class UpdateUserErrorException implements Exception {}

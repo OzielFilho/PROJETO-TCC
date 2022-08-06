@@ -88,3 +88,8 @@ class GetUserFailure extends Failure {
   @override
   List<Object?> get props => const <dynamic>[];
 }
+
+class GetCurrentLocationFailure extends Failure {
+  @override
+  List<Object?> get props => const <dynamic>[];
+}

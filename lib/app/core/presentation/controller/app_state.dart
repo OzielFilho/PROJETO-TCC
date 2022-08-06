@@ -18,6 +18,8 @@ class SuccessState extends AppState {}
 
 class SuccessGetUserState extends AppState {}
 
+class SuccessGetCurrentLocationState extends AppState {}
+
 class SuccessUpdateUserCreateState extends AppState {}
 
 class SuccessHomeState extends AppState {}

@@ -1,3 +1,4 @@
+import 'core/services/locations_service.dart';
 import 'core/services/network_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,6 +20,7 @@ class AppModule extends Module {
     Bind((i) => FirestoreServiceImpl(FirebaseFirestore.instance)),
     Bind((i) => FirebaseAuthServiceImpl(FirebaseAuth.instance)),
     Bind((i) => NetworkServiceImpl()),
+    Bind((i) => LocationsServiceImpl()),
     Bind((i) => FirebaseAuthDatasourceImpl(
         authService: i(), googleSignIn: GoogleSignIn(), firestore: i())),
   ];

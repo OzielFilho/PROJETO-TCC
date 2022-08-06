@@ -8,4 +8,6 @@ class RecoveryPasswordException implements Exception {}
 
 class RefreshAccountException implements Exception {}
 
+class InformationsUserException implements Exception {}
+
 class UpdateUserErrorException implements Exception {}

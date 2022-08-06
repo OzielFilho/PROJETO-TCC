@@ -27,6 +27,10 @@ class ThemeApp {
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: ColorUtils.whiteColor),
+            headline2: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: ColorUtils.whiteColor),
             button: TextStyle(
                 fontWeight: FontWeight.bold, color: ColorUtils.primaryColor)),
         appBarTheme: AppBarTheme(

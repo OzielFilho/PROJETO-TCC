@@ -27,7 +27,7 @@ class GetCurrentLocationBloc extends Bloc<HomeEvent, AppState>
       _location = success;
       position = CameraPosition(
         target: LatLng(_location!.lat, _location!.long),
-        zoom: 14.4746,
+        zoom: 17,
       );
       return SuccessGetCurrentLocationState();
     }));

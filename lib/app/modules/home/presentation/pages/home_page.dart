@@ -27,6 +27,12 @@ class _HomePageState extends State<HomePage> {
   final _blocGetUserHome = Modular.get<GetUserHomeBloc>();
   final _blocCurrentPositionHome = Modular.get<GetCurrentLocationBloc>();
   bool _optionsShow = false;
+
+  void _updateOptionsShow() {
+    _optionsShow = !_optionsShow;
+    setState(() {});
+  }
+
   Completer<GoogleMapController> _controller = Completer();
 
   @override
@@ -75,8 +81,8 @@ class _HomePageState extends State<HomePage> {
                           ? Padding(
                               padding: const EdgeInsets.only(right: 28.0),
                               child: Container(
-                                height: 105,
-                                width: MediaQuery.of(context).size.width * .08,
+                                height: 110,
+                                width: MediaQuery.of(context).size.width * .075,
                                 decoration: BoxDecoration(
                                     color: ColorUtils.primaryColor,
                                     borderRadius: BorderRadius.circular(60.0)),
@@ -86,23 +92,26 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            _optionsShow = !_optionsShow;
-                                          });
-                                        },
+                                        onTap: _updateOptionsShow,
                                         child: SvgDesign(
                                           path:
                                               'assets/images/svg/button_arrow_back_up.svg',
                                         )),
                                     InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          _updateOptionsShow();
+                                          Modular.to.pushNamed('chat_home');
+                                        },
                                         child: SvgDesign(
                                           path:
                                               'assets/images/svg/button_chat.svg',
                                         )),
                                     InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          _updateOptionsShow();
+                                          Modular.to
+                                              .pushNamed('configurations_home');
+                                        },
                                         child: SvgDesign(
                                           path:
                                               'assets/images/svg/button_config.svg',
@@ -118,11 +127,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             )
                           : MaterialButton(
-                              onPressed: () {
-                                setState(() {
-                                  _optionsShow = !_optionsShow;
-                                });
-                              },
+                              onPressed: _updateOptionsShow,
                               child: Container(
                                   width: MediaQuery.of(context).size.width * .1,
                                   height: 25,

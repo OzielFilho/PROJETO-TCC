@@ -25,6 +25,8 @@ class WelcomeModule extends Module {
   final List<ModularRoute> routes = [
     ChildRoute(Modular.initialRoute, child: (context, args) {
       return WelcomePage();
-    }, transition: TransitionType.leftToRight, duration: Duration(seconds: 1))
+    },
+        transition: TransitionType.leftToRight,
+        duration: Duration(milliseconds: 500))
   ];
 }

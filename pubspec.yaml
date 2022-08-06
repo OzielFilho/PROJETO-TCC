@@ -19,9 +19,9 @@ dependencies:
   equatable: ^2.0.3
   firebase_core: ^1.19.2
   google_maps_flutter: ^2.1.10
+  geolocator: ^9.0.1
   firebase_auth: ^3.1.4
   cloud_firestore: ^2.5.4
-  geolocator: ^9.0.1
   firebase_storage: ^10.0.6
   google_sign_in: ^5.4.0
   flutter_bloc: ^8.0.1

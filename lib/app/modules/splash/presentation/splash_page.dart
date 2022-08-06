@@ -1,11 +1,10 @@
-import '../../../core/utils/colors/colors_utils.dart';
+import '../../../core/presentation/widgets/svg_design.dart';
 import '../../../core/utils/constants/widgets_utils.dart';
 import 'controllers/splash_bloc.dart';
 import 'controllers/splash_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/presentation/controller/app_state.dart';
 
@@ -62,13 +61,9 @@ class _SplashPageState extends State<SplashPage> {
       },
       builder: (context, state) {
         return Scaffold(
-          body: Center(
-            child: SvgPicture.asset(
-              'assets/images/svg/splash_icon.svg',
-              color: ColorUtils.whiteColor,
-            ),
-          ),
-        );
+            body: SvgDesign(
+          path: 'assets/images/svg/splash_icon.svg',
+        ));
       },
     );
   }

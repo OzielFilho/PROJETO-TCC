@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1034754858326-d8u77j25e1mfq86c0r87q6ncfq7vsc9l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lum.app",
+            "certificate_hash": "d2c22a8066e515b04806e5529e4de54668f4b11f"
+          }
+        },
+        {
           "client_id": "1034754858326-rvnpvfgddovt8j3bo6fc7dklvs1c2lg5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -21,35 +29,6 @@
             "certificate_hash": "9e5d1e0e8c40b21d53040c7217d14f61c062422a"
           }
         },
-        {
-          "client_id": "1034754858326-os4a813sij6q91d0hf6kr6ctrt2uhjn4.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCz83NF4iXJ_DOZlX1t-InfUsOXtoAQxlg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1034754858326-os4a813sij6q91d0hf6kr6ctrt2uhjn4.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1034754858326:android:6bc24d3f64fdc40af78af7",
-        "android_client_info": {
-          "package_name": "com.lum.flutter_app"
-        }
-      },
-      "oauth_client": [
         {
           "client_id": "1034754858326-os4a813sij6q91d0hf6kr6ctrt2uhjn4.apps.googleusercontent.com",
           "client_type": 3

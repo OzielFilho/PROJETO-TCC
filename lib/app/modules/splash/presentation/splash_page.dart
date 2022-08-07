@@ -1,5 +1,5 @@
 import '../../../core/presentation/widgets/svg_design.dart';
-import '../../../core/utils/constants/widgets_utils.dart';
+import '../../../core/utils/widgets_utils.dart';
 import 'controllers/splash_bloc.dart';
 import 'controllers/splash_event.dart';
 import 'package:flutter/material.dart';

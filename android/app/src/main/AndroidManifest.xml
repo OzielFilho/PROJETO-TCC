@@ -6,6 +6,19 @@
     <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!--#docregion android-queries-->
+    <!-- Provide required visibility configuration for API level 30 and above -->
+    <queries>
+        <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="tel" />
+        </intent>
+        <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="https" />
+        </intent>
+    </queries>
+
    <application
         
         android:label="Shh! Preciso de Ajuda"
@@ -29,7 +42,6 @@
               android:name="io.flutter.embedding.android.SplashScreenDrawable"
               android:resource="@drawable/launch_background"
               />
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

@@ -6,7 +6,9 @@ import '../../utils/colors/colors_utils.dart';
 class ButtonDesign extends StatelessWidget {
   final String text;
   final VoidCallback action;
-  const ButtonDesign({Key? key, required this.text, required this.action})
+  final Widget? content;
+  const ButtonDesign(
+      {Key? key, required this.text, required this.action, this.content})
       : super(key: key);
 
   @override
@@ -14,9 +16,18 @@ class ButtonDesign extends StatelessWidget {
     return MaterialButton(
       onPressed: action,
       color: ColorUtils.whiteColor,
-      child: Text(
-        text,
-        style: ThemeApp.theme.textTheme.button,
+      child: Row(
+        children: [
+          content != null
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  child: content)
+              : Container(),
+          Text(
+            text,
+            style: ThemeApp.theme.textTheme.button,
+          ),
+        ],
       ),
     );
   }

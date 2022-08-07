@@ -8,6 +8,7 @@ import 'package:app/app/modules/home/presentation/controllers/bloc/get_user_home
 import 'package:app/app/modules/home/presentation/controllers/bloc/logout_user_bloc.dart';
 import 'package:app/app/modules/home/presentation/pages/chat_home_page.dart';
 import 'package:app/app/modules/home/presentation/pages/configuration_home_page.dart';
+import 'package:app/app/modules/home/presentation/pages/emergence_phones_home_page.dart';
 import 'package:app/app/modules/home/presentation/pages/home_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -44,6 +45,10 @@ class HomeModule extends Module {
             duration: Duration(milliseconds: 500)),
         ChildRoute('/chat_home',
             child: (context, args) => ChatHomePage(),
+            transition: TransitionType.leftToRight,
+            duration: Duration(milliseconds: 500)),
+        ChildRoute('/emergence_phones_home',
+            child: (context, args) => EmergencePhonesHome(),
             transition: TransitionType.leftToRight,
             duration: Duration(milliseconds: 500)),
       ];

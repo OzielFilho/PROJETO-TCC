@@ -1,7 +1,7 @@
 import 'package:app/app/core/utils/colors/colors_utils.dart';
 import 'package:flutter/material.dart';
 
-import '../../theme/theme_app.dart';
+import '../theme/theme_app.dart';
 
 class WidgetUtils {
   static showSnackBar(BuildContext context, String title,
@@ -35,6 +35,28 @@ class WidgetUtils {
                           style: ThemeApp.theme.textTheme.subtitle1))
                 ]);
           });
+    });
+  }
+
+  static showBottomSheetCustom(BuildContext context, String title,
+      Widget? content, String okButton, void Function() onOkPressed,
+      {bool permanentDialog = true}) {
+    Future.delayed(Duration(milliseconds: 500), () {
+      return showBottomSheet(
+        context: context,
+        backgroundColor: ColorUtils.transparentColor,
+        builder: (context) {
+          return Column(
+            children: [
+              Text(title, style: ThemeApp.theme.textTheme.headline1),
+              TextButton(
+                  onPressed: onOkPressed,
+                  child:
+                      Text(okButton, style: ThemeApp.theme.textTheme.subtitle1))
+            ],
+          );
+        },
+      );
     });
   }
 }

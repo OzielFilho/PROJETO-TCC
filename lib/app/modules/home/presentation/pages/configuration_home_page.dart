@@ -1,6 +1,6 @@
 import 'package:app/app/core/presentation/controller/app_state.dart';
 import 'package:app/app/core/theme/theme_app.dart';
-import 'package:app/app/core/utils/constants/widgets_utils.dart';
+import 'package:app/app/core/utils/widgets_utils.dart';
 import 'package:app/app/modules/home/presentation/controllers/bloc/logout_user_bloc.dart';
 import 'package:app/app/modules/home/presentation/controllers/events/home_event.dart';
 import 'package:flutter/material.dart';

@@ -5,7 +5,7 @@ import 'package:app/app/core/presentation/widgets/svg_design.dart';
 import 'package:app/app/core/services/volume_actions_service.dart';
 import 'package:app/app/core/theme/theme_app.dart';
 import 'package:app/app/core/utils/colors/colors_utils.dart';
-import 'package:app/app/core/utils/constants/widgets_utils.dart';
+import 'package:app/app/core/utils/widgets_utils.dart';
 import 'package:app/app/modules/home/presentation/controllers/bloc/get_user_home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -121,7 +121,11 @@ class _HomePageState extends State<HomePage> {
                                               'assets/images/svg/button_config.svg',
                                         )),
                                     InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          _updateOptionsShow();
+                                          Modular.to.pushNamed(
+                                              'emergence_phones_home');
+                                        },
                                         child: SvgDesign(
                                           height: 25,
                                           width: 25,

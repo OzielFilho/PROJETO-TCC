@@ -13,3 +13,5 @@ class InformationsUserException implements Exception {}
 class InformationsMapException implements Exception {}
 
 class UpdateUserErrorException implements Exception {}
+
+class LogoutUserErrorException implements Exception {}

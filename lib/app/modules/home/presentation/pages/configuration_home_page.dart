@@ -1,5 +1,10 @@
+import 'package:app/app/core/presentation/controller/app_state.dart';
 import 'package:app/app/core/theme/theme_app.dart';
+import 'package:app/app/core/utils/constants/widgets_utils.dart';
+import 'package:app/app/modules/home/presentation/controllers/bloc/logout_user_bloc.dart';
+import 'package:app/app/modules/home/presentation/controllers/events/home_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class ConfigurationsHomePage extends StatefulWidget {
@@ -10,6 +15,8 @@ class ConfigurationsHomePage extends StatefulWidget {
 }
 
 class _ConfigurationsHomePageState extends State<ConfigurationsHomePage> {
+  final _blocLogoutUser = Modular.get<LogoutUserBloc>();
+
   @override
   void initState() {
     super.initState();
@@ -47,12 +54,34 @@ class _ConfigurationsHomePageState extends State<ConfigurationsHomePage> {
             ),
             Column(
               children: [
-                TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Sair do App',
-                      style: ThemeApp.theme.textTheme.headline2,
-                    )),
+                BlocConsumer<LogoutUserBloc, AppState>(
+                    listener: (context, state) {
+                      if (state is ErrorState) {
+                        WidgetUtils.showOkDialog(
+                            context,
+                            'Problema ao Sair do App',
+                            state.message!,
+                            'Fechar', () {
+                          Modular.to.pop();
+                        });
+                      }
+                      if (state is SuccessLogoutUserState) {
+                        Modular.to.pushNamedAndRemoveUntil(
+                          '/auth/',
+                          (p0) => false,
+                        );
+                      }
+                    },
+                    bloc: _blocLogoutUser,
+                    builder: (context, snapshot) {
+                      return TextButton(
+                          onPressed: () =>
+                              _blocLogoutUser.add(LogoutUserEvent()),
+                          child: Text(
+                            'Sair do App',
+                            style: ThemeApp.theme.textTheme.headline2,
+                          ));
+                    }),
                 Align(
                   alignment: Alignment.center,
                   child: Text(

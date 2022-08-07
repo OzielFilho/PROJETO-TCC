@@ -6,13 +6,19 @@ import '../../utils/colors/colors_utils.dart';
 class SvgDesign extends StatelessWidget {
   final String path;
   final Color? color;
-  const SvgDesign({Key? key, required this.path, this.color}) : super(key: key);
+  final double? height;
+  final double? width;
+  const SvgDesign(
+      {Key? key, required this.path, this.color, this.width, this.height})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: SvgPicture.asset(
         path,
+        height: height,
+        width: width,
         color: color ?? ColorUtils.whiteColor,
       ),
     );

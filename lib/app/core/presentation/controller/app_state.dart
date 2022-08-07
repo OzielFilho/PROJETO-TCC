@@ -22,6 +22,8 @@ class SuccessGetCurrentLocationState extends AppState {}
 
 class SuccessUpdateUserCreateState extends AppState {}
 
+class SuccessLogoutUserState extends AppState {}
+
 class SuccessHomeState extends AppState {}
 
 class SuccessCreateAccountState extends AppState {}

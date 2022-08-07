@@ -81,8 +81,8 @@ class _HomePageState extends State<HomePage> {
                           ? Padding(
                               padding: const EdgeInsets.only(right: 28.0),
                               child: Container(
-                                height: 110,
-                                width: MediaQuery.of(context).size.width * .075,
+                                height: 180,
+                                width: MediaQuery.of(context).size.width * .085,
                                 decoration: BoxDecoration(
                                     color: ColorUtils.primaryColor,
                                     borderRadius: BorderRadius.circular(60.0)),
@@ -103,6 +103,8 @@ class _HomePageState extends State<HomePage> {
                                           Modular.to.pushNamed('chat_home');
                                         },
                                         child: SvgDesign(
+                                          height: 25,
+                                          width: 25,
                                           path:
                                               'assets/images/svg/button_chat.svg',
                                         )),
@@ -113,12 +115,16 @@ class _HomePageState extends State<HomePage> {
                                               .pushNamed('configurations_home');
                                         },
                                         child: SvgDesign(
+                                          height: 25,
+                                          width: 25,
                                           path:
                                               'assets/images/svg/button_config.svg',
                                         )),
                                     InkWell(
                                         onTap: () {},
                                         child: SvgDesign(
+                                          height: 25,
+                                          width: 25,
                                           path:
                                               'assets/images/svg/button_phone.svg',
                                         ))

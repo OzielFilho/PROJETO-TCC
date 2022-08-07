@@ -1,9 +1,11 @@
 import 'package:app/app/core/services/firebase_auth_service.dart';
 import 'package:app/app/core/services/firestore_service.dart';
 import 'package:app/app/modules/auth/infra/models/auth_result_model.dart';
+import 'package:app/app/modules/home/infra/datasources/home_datasource.dart';
 import 'package:app/app/modules/home/infra/datasources/informations_user_datasource.dart';
 
-class InformationsUserFromFirebase implements InformationUserDatasource {
+class InformationsUserFromFirebase
+    implements InformationUserDatasource, HomeDatasource {
   final FirebaseAuthService authService;
   final FirestoreService firestoreService;
   InformationsUserFromFirebase({
@@ -16,5 +18,10 @@ class InformationsUserFromFirebase implements InformationUserDatasource {
     final tokenId = await authService.getToken();
     final data = await firestoreService.getDocument('users', tokenId);
     return AuthResultModel.fromDocument(data);
+  }
+
+  @override
+  Future<void> logoutUser() async {
+    await authService.signOut();
   }
 }

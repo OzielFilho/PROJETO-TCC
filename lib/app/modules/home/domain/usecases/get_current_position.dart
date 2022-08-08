@@ -3,10 +3,10 @@ import 'package:app/app/core/usecases/usecase.dart';
 import 'package:app/app/modules/home/domain/entities/current_position.dart';
 import 'package:dartz/dartz.dart';
 
-import '../repositories/informations_map_repository.dart';
+import '../repositories/home_repository.dart';
 
 class GetCurrentPosition extends Usecase<CurrentPosition, NoParams> {
-  final InformationMapRepository repository;
+  final HomeRepository repository;
 
   GetCurrentPosition(this.repository);
 

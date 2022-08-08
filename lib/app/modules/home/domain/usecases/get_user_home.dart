@@ -1,11 +1,12 @@
 import 'package:app/app/core/error/failure.dart';
 import 'package:app/app/core/usecases/usecase.dart';
 import 'package:app/app/modules/auth/domain/entities/auth_result.dart';
-import 'package:app/app/modules/home/domain/repositories/informations_user_repository.dart';
 import 'package:dartz/dartz.dart';
 
+import '../repositories/home_repository.dart';
+
 class GetUserHome extends Usecase<AuthResult, NoParams> {
-  final InformationUserRepository repository;
+  final HomeRepository repository;
 
   GetUserHome(this.repository);
 

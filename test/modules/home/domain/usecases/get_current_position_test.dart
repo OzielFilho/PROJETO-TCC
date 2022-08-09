@@ -3,7 +3,6 @@ import 'package:app/app/core/usecases/usecase.dart';
 import 'package:app/app/modules/home/domain/entities/current_position.dart';
 import 'package:app/app/modules/home/domain/repositories/home_repository.dart';
 import 'package:app/app/modules/home/domain/usecases/get_current_position.dart';
-import 'package:app/app/modules/splash/domain/entities/user_logged_info.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';

@@ -25,7 +25,7 @@
         android:icon="@mipmap/ic_launcher">
         <service android:name=".VolumeBackgroundService"/>
         <meta-data android:name="com.google.android.geo.API_KEY" 
-        android:value="AIzaSyBqhOxHQZ1hk4KFC4086Ia2Y4X8Xt7JcK8"/>
+        android:value="@string/ANDROID_MAP_GOOGLE_KEY"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

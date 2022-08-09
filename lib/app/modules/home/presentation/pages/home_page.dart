@@ -100,7 +100,11 @@ class _HomePageState extends State<HomePage> {
                                     InkWell(
                                         onTap: () {
                                           _updateOptionsShow();
-                                          Modular.to.pushNamed('chat_home');
+                                          Modular.to.pushNamed('chat_home',
+                                              arguments: {
+                                                'contacts': _blocGetUserHome
+                                                    .user!.contacts
+                                              });
                                         },
                                         child: SvgDesign(
                                           height: 25,
@@ -111,8 +115,9 @@ class _HomePageState extends State<HomePage> {
                                     InkWell(
                                         onTap: () {
                                           _updateOptionsShow();
-                                          Modular.to
-                                              .pushNamed('configurations_home');
+                                          Modular.to.pushNamed(
+                                            'configurations_home',
+                                          );
                                         },
                                         child: SvgDesign(
                                           height: 25,

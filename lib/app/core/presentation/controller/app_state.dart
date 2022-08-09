@@ -18,6 +18,8 @@ class SuccessState extends AppState {}
 
 class SuccessGetUserState extends AppState {}
 
+class SuccessGetListDetailsContactFromPhoneChatState extends AppState {}
+
 class SuccessGetCurrentLocationState extends AppState {}
 
 class SuccessUpdateUserCreateState extends AppState {}
@@ -38,6 +40,10 @@ class EmptyParamsErrorState extends ErrorState {
 
 class ListContactsErrorState extends ErrorState {
   ListContactsErrorState(String? message) : super(message);
+}
+
+class GetListContactsErrorState extends ErrorState {
+  GetListContactsErrorState(String? message) : super(message);
 }
 
 class PhoneEmptyErrorState extends ErrorState {

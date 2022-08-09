@@ -1,17 +1,17 @@
 import 'package:app/app/core/error/failure.dart';
 import 'package:app/app/core/usecases/usecase.dart';
-import 'package:app/app/modules/auth/domain/entities/auth_result.dart';
 import 'package:dartz/dartz.dart';
 
+import '../entities/user_result_home.dart';
 import '../repositories/home_repository.dart';
 
-class GetUserHome extends Usecase<AuthResult, NoParams> {
+class GetUserHome extends Usecase<UserResultHome, NoParams> {
   final HomeRepository repository;
 
   GetUserHome(this.repository);
 
   @override
-  Future<Either<Failure, AuthResult>> call(NoParams? params) async {
+  Future<Either<Failure, UserResultHome>> call(NoParams? params) async {
     return await repository.getUserHome();
   }
 }

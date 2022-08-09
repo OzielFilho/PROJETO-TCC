@@ -5,14 +5,14 @@ import 'package:app/app/modules/home/presentation/controllers/events/home_event.
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../auth/domain/entities/auth_result.dart';
+import '../../../domain/entities/user_result_home.dart';
 
 class GetUserHomeBloc extends Bloc<HomeEvent, AppState> implements Disposable {
   final GetUserHome _usecase;
   GetUserHomeBloc(this._usecase) : super(InitialState()) {
     on<GetUserHomeEvent>(_onGetUserHome);
   }
-  AuthResult? user;
+  UserResultHome? user;
   _onGetUserHome(GetUserHomeEvent event, Emitter<AppState> emit) async {
     emit(ProcessingState());
     final result = await _usecase.call(NoParams());

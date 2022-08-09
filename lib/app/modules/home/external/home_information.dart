@@ -1,6 +1,6 @@
 import 'package:app/app/modules/home/infra/models/current_position_model.dart';
 
-import 'package:app/app/modules/auth/infra/models/auth_result_model.dart';
+import 'package:app/app/modules/home/infra/models/user_result_home_model.dart';
 
 import '../../../core/services/firebase_auth_service.dart';
 import '../../../core/services/firestore_service.dart';
@@ -21,10 +21,10 @@ class HomeInformation implements HomeDatasource {
   }
 
   @override
-  Future<AuthResultModel> getUserHome() async {
+  Future<UserResultHomeModel> getUserHome() async {
     final tokenId = await authService.getToken();
     final data = await firestoreService.getDocument('users', tokenId);
-    return AuthResultModel.fromDocument(data);
+    return UserResultHomeModel.fromDocument(data);
   }
 
   @override

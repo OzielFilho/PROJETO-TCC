@@ -54,6 +54,11 @@ class PhoneEmptyFailure extends Failure {
   List<Object?> get props => const <dynamic>[];
 }
 
+class ListPhoneEmptyFailure extends Failure {
+  @override
+  List<Object?> get props => const <dynamic>[];
+}
+
 class ParamsCreateUserFailure extends Failure {
   @override
   List<Object?> get props => const <dynamic>[];
@@ -90,6 +95,16 @@ class GetUserFailure extends Failure {
 }
 
 class GetCurrentLocationFailure extends Failure {
+  @override
+  List<Object?> get props => const <dynamic>[];
+}
+
+class GetDetailsContactFromPhoneFailure extends Failure {
+  @override
+  List<Object?> get props => const <dynamic>[];
+}
+
+class GetListDetailsContactFailure extends Failure {
   @override
   List<Object?> get props => const <dynamic>[];
 }

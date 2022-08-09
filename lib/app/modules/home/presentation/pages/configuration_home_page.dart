@@ -6,7 +6,6 @@ import 'package:app/app/modules/home/presentation/controllers/events/home_event.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:google_place/google_place.dart';
 
 class ConfigurationsHomePage extends StatefulWidget {
   const ConfigurationsHomePage({Key? key}) : super(key: key);
@@ -17,26 +16,6 @@ class ConfigurationsHomePage extends StatefulWidget {
 
 class _ConfigurationsHomePageState extends State<ConfigurationsHomePage> {
   final _blocLogoutUser = Modular.get<LogoutUserBloc>();
-
-  GooglePlace? googlePlace;
-  List<AutocompletePrediction> predictions = [];
-
-  void autoCompleteSearch(String value) async {
-    var result = await googlePlace!.autocomplete.get(value);
-    print('Result ${result!.status}');
-    if (result != null && result.predictions != null && mounted) {
-      setState(() {
-        predictions = result.predictions!;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    String apiKey = "AIzaSyBqhOxHQZ1hk4KFC4086Ia2Y4X8Xt7JcK8";
-    googlePlace = GooglePlace(apiKey);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +40,7 @@ class _ConfigurationsHomePageState extends State<ConfigurationsHomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextButton(
-                    onPressed: () {
-                      autoCompleteSearch('delegacias');
-                      print('p ${predictions.toString()}');
-                    },
+                    onPressed: () {},
                     child: Text(
                       'Editar Perfil',
                       style: ThemeApp.theme.textTheme.headline2,

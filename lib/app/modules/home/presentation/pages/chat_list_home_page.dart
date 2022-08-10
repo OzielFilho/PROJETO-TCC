@@ -8,15 +8,15 @@ import '../../../../core/presentation/controller/app_state.dart';
 import '../../../../core/presentation/widgets/loading_desing.dart';
 import '../../../../core/theme/theme_app.dart';
 
-class ChatHomePage extends StatefulWidget {
+class ChatListHomePage extends StatefulWidget {
   final List<String> contacts;
-  const ChatHomePage({Key? key, required this.contacts}) : super(key: key);
+  const ChatListHomePage({Key? key, required this.contacts}) : super(key: key);
 
   @override
-  State<ChatHomePage> createState() => _ChatHomePageState();
+  State<ChatListHomePage> createState() => _ChatListHomePageState();
 }
 
-class _ChatHomePageState extends State<ChatHomePage> {
+class _ChatListHomePageState extends State<ChatListHomePage> {
   final _blocGetContacts =
       Modular.get<GetListDetailsContactFromPhoneChatBloc>();
 
@@ -30,16 +30,6 @@ class _ChatHomePageState extends State<ChatHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            onPressed: () => Modular.to.pop(),
-            icon: Icon(Icons.arrow_back_ios)),
-        title: Text(
-          'Chat',
-          style: ThemeApp.theme.textTheme.headline3,
-        ),
-        centerTitle: true,
-      ),
       body: BlocBuilder<GetListDetailsContactFromPhoneChatBloc, AppState>(
           bloc: _blocGetContacts,
           builder: (context, state) {
@@ -59,12 +49,29 @@ class _ChatHomePageState extends State<ChatHomePage> {
             }
             if (state is SuccessGetListDetailsContactFromPhoneChatState) {
               return Container(
-                child: Text('SuccessGetListDetailsContactFromPhoneChatState'),
-              );
+                  padding: const EdgeInsets.all(12.0),
+                  child: ListView.builder(
+                    itemBuilder: (context, index) => InkWell(
+                      onTap: () =>
+                          Modular.to.pushNamed('chat_conversation_home'),
+                      child: Container(
+                          child: ListTile(
+                        leading: CircleAvatar(),
+                        subtitle: Text(
+                          '${_blocGetContacts.contacts![index].email}',
+                          style: ThemeApp.theme.textTheme.subtitle1,
+                        ),
+                        title: Text(
+                          '${_blocGetContacts.contacts![index].name}',
+                          style: ThemeApp.theme.textTheme.headline2,
+                        ),
+                      )),
+                    ),
+                    itemCount: _blocGetContacts.contacts!.length,
+                    shrinkWrap: true,
+                  ));
             }
-            return Container(
-              child: Text('Não deu bom'),
-            );
+            return Center(child: LoadingDesign());
           }),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:app/app/modules/home/domain/entities/contacts_with_message.dart';
 import 'package:app/app/modules/home/domain/entities/details_contact_chat.dart';
 import 'package:app/app/core/error/failure.dart';
 import 'package:app/app/modules/home/domain/repositories/chat_home_repository.dart';
@@ -22,6 +23,20 @@ class ChatHomeRepositoryImpl implements ChatHomeRepository {
       return left(GetDetailsContactFromPhoneFailure());
     } catch (e) {
       return left(GetDetailsContactFromPhoneFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ContactsWithMessage>>>
+      getListContactsWithMessageChat({String? tokenId}) async {
+    try {
+      final result =
+          await datasource.getListContactsWithMessageChat(tokenId: tokenId!);
+      return right(result);
+    } on ChatHomeException {
+      return left(GetListContactsChatFailure());
+    } catch (e) {
+      return left(GetListContactsChatFailure());
     }
   }
 }

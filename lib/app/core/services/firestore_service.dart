@@ -4,6 +4,8 @@ abstract class FirestoreService {
   Future<bool> existDocument(String collectionPath, String documentPath);
   Future<Map<String, dynamic>> getDocument(
       String collectionPath, String documentPath);
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getDocumentSnapshot(
+      String collectionPath, String documentPath);
   Future<void> createDocument(
       String collectionPath, String documentPath, Map<String, dynamic>? data);
   Future<void> removeDocument(String collectionPath, String documentPath);
@@ -53,5 +55,11 @@ class FirestoreServiceImpl implements FirestoreService {
         .collection(collectionPath)
         .doc(documentPath)
         .update(data!);
+  }
+
+  @override
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getDocumentSnapshot(
+      String collectionPath, String documentPath) {
+    return firestore.collection(collectionPath).doc(documentPath).snapshots();
   }
 }

@@ -103,7 +103,9 @@ class _HomePageState extends State<HomePage> {
                                           Modular.to.pushNamed('chat_home',
                                               arguments: {
                                                 'contacts': _blocGetUserHome
-                                                    .user!.contacts
+                                                    .user!.contacts,
+                                                'tokenId': _blocGetUserHome
+                                                    .user!.tokenId,
                                               });
                                         },
                                         child: SvgDesign(

@@ -20,6 +20,8 @@ class SuccessGetUserState extends AppState {}
 
 class SuccessGetListDetailsContactFromPhoneChatState extends AppState {}
 
+class SuccessGetListContactWithMessageChatState extends AppState {}
+
 class SuccessGetCurrentLocationState extends AppState {}
 
 class SuccessUpdateUserCreateState extends AppState {}

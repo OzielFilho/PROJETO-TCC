@@ -24,6 +24,7 @@ class HomeInformation implements HomeDatasource {
   Future<UserResultHomeModel> getUserHome() async {
     final tokenId = await authService.getToken();
     final data = await firestoreService.getDocument('users', tokenId);
+    data.addAll({'tokenId': tokenId});
     return UserResultHomeModel.fromDocument(data);
   }
 

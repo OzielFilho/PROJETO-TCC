@@ -109,7 +109,17 @@ class GetListDetailsContactFailure extends Failure {
   List<Object?> get props => const <dynamic>[];
 }
 
+class GetListContactsChatFailure extends Failure {
+  @override
+  List<Object?> get props => const <dynamic>[];
+}
+
 class LogoutUserFailure extends Failure {
+  @override
+  List<Object?> get props => const <dynamic>[];
+}
+
+class IdTokenFailure extends Failure {
   @override
   List<Object?> get props => const <dynamic>[];
 }

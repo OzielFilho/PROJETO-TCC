@@ -8,10 +8,10 @@ class GetListDetailsContactFromPhoneChatEvent implements HomeEvent {
   GetListDetailsContactFromPhoneChatEvent({required this.contacts});
 }
 
-class GetListContactsWithChatEvent implements HomeEvent {
+class GetListContactsMessageEvent implements HomeEvent {
   final String tokenId;
 
-  GetListContactsWithChatEvent({required this.tokenId});
+  GetListContactsMessageEvent({required this.tokenId});
 }
 
 class GetCurrentLocationEvent implements HomeEvent {}

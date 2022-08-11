@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:app/app/modules/home/infra/models/contacts_with_message_model.dart';
 import 'package:app/app/modules/home/infra/models/details_contact_chat_model.dart';
 
@@ -36,15 +34,12 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
   }
 
   @override
-  Future<List<ContactsWithMessageModel>> getListContactsWithMessageChat(
-      {String? tokenId}) async {
-    List<ContactsWithMessageModel> contacts = [];
-    final contactData = await firestoreService.getDocument('chat', tokenId!);
-    final listContacts = contactData['contacts'];
-    for (var contact in listContacts) {
-      final modelContact = ContactsWithMessageModel.fromMap(contact);
-      contacts.add(modelContact);
-    }
-    return contacts;
+  Stream<List> getListContactsMessage(String tokenId) {
+    final snapshot = firestoreService.getDocumentSnapshot('chat', tokenId);
+    final doc = snapshot.map((event) => event
+        .data()!['contacts']
+        .map((element) => ContactsWithMessageModel.fromMap(element))
+        .toList() as List);
+    return doc;
   }
 }

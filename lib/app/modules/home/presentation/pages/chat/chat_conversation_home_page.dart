@@ -93,7 +93,8 @@ class _ChatConversationHomePageState extends State<ChatConversationHomePage> {
                         itemBuilder: (context, index) => ListTile(
                           onTap: () => Modular.to
                               .pushNamed('chat_with_contact_home', arguments: {
-                            'tokenId': result[index].tokenId,
+                            'tokenIdContact': result[index].tokenId,
+                            'tokenIdUser': widget.tokenId,
                             'name': result[index].name
                           }),
                           leading: CircleAvatar(),

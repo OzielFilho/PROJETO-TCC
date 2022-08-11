@@ -10,7 +10,10 @@ import '../../../../../core/theme/theme_app.dart';
 
 class ChatListHomePage extends StatefulWidget {
   final List<String> contacts;
-  const ChatListHomePage({Key? key, required this.contacts}) : super(key: key);
+  final String tokenId;
+  const ChatListHomePage(
+      {Key? key, required this.contacts, required this.tokenId})
+      : super(key: key);
 
   @override
   State<ChatListHomePage> createState() => _ChatListHomePageState();
@@ -54,7 +57,9 @@ class _ChatListHomePageState extends State<ChatListHomePage> {
                     itemBuilder: (context, index) => InkWell(
                       onTap: () => Modular.to
                           .pushNamed('chat_with_contact_home', arguments: {
-                        'tokenId': _blocGetContacts.contacts![index].tokenId,
+                        'tokenIdContact':
+                            _blocGetContacts.contacts![index].tokenId,
+                        'tokenIdUser': widget.tokenId,
                         'name': _blocGetContacts.contacts![index].name
                       }),
                       child: Container(

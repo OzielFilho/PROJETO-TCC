@@ -22,6 +22,8 @@ class SuccessGetListDetailsContactFromPhoneChatState extends AppState {}
 
 class SuccessGetListContactMessageState extends AppState {}
 
+class SuccessGetListMessageChatUserState extends AppState {}
+
 class SuccessGetCurrentLocationState extends AppState {}
 
 class SuccessUpdateUserCreateState extends AppState {}

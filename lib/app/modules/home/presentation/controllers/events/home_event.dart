@@ -14,6 +14,14 @@ class GetListContactsMessageEvent implements HomeEvent {
   GetListContactsMessageEvent({required this.tokenId});
 }
 
+class GetListMessageChatUserEvent implements HomeEvent {
+  final String tokenIdUser;
+  final String tokenIdContact;
+
+  GetListMessageChatUserEvent(
+      {required this.tokenIdUser, required this.tokenIdContact});
+}
+
 class GetCurrentLocationEvent implements HomeEvent {}
 
 class LogoutUserEvent implements HomeEvent {}

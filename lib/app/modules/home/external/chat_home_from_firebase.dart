@@ -1,5 +1,6 @@
 import 'package:app/app/modules/home/infra/models/contacts_with_message_model.dart';
 import 'package:app/app/modules/home/infra/models/details_contact_chat_model.dart';
+import 'package:app/app/modules/home/infra/models/message_chat_model.dart';
 
 import '../../../core/services/firebase_auth_service.dart';
 import '../../../core/services/firestore_service.dart';
@@ -43,6 +44,27 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
           .data()!['contacts']
           .map((element) => ContactsWithMessageModel.fromMap(element))
           .toList() as List);
+    }
+
+    yield* doc!;
+  }
+
+  @override
+  Stream<List<MessageChatModel>> getListMessageChatUser(
+      {String? tokenIdUserActual, String? tokenIdContact}) async* {
+    Stream<List<MessageChatModel>>? doc;
+    final existDocument =
+        await firestoreService.existDocument('chat', tokenIdUserActual!);
+    if (existDocument) {
+      final snapshot =
+          firestoreService.getDocumentSnapshot('chat', tokenIdUserActual);
+
+      doc = snapshot.map((event) => event.data()!['contacts']).map((contacts) =>
+          (contacts
+                  .map((contact) => ContactsWithMessageModel.fromMap(contact))
+                  .toList())
+              .firstWhere((item) => item.tokenId == tokenIdContact)
+              .messages);
     }
 
     yield* doc!;

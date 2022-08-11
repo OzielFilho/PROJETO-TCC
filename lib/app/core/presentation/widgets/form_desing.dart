@@ -10,9 +10,11 @@ class FormsDesign extends StatelessWidget {
   final int? maxLen;
   final List<TextInputFormatter>? formatter;
   final TextInputType type;
+  final double borderRadius;
   final TextEditingController controller;
   final bool visibility;
   final Widget? prefixIcon;
+  final bool filled;
   FormsDesign(
       {Key? key,
       this.suffixIcon,
@@ -22,7 +24,9 @@ class FormsDesign extends StatelessWidget {
       required this.controller,
       this.visibility = false,
       this.maxLen,
-      this.type = TextInputType.text})
+      this.type = TextInputType.text,
+      this.borderRadius = 12,
+      this.filled = false})
       : super(key: key);
 
   @override
@@ -36,27 +40,37 @@ class FormsDesign extends StatelessWidget {
         controller: controller,
         obscureText: visibility,
         decoration: InputDecoration(
+          filled: filled,
+          fillColor: ColorUtils.whiteColor,
           disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: BorderRadius.circular(borderRadius),
               borderSide: new BorderSide(color: ColorUtils.whiteColor)),
           errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: BorderRadius.circular(borderRadius),
               borderSide: new BorderSide(color: ColorUtils.whiteColor)),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: BorderRadius.circular(borderRadius),
               borderSide: new BorderSide(color: ColorUtils.whiteColor)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: BorderRadius.circular(borderRadius),
               borderSide: new BorderSide(color: ColorUtils.whiteColor)),
           border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: BorderRadius.circular(borderRadius),
               borderSide: new BorderSide(color: ColorUtils.whiteColor)),
           prefixIcon: prefixIcon,
           prefixIconColor: ColorUtils.whiteColor,
-          hintStyle: ThemeApp.theme.textTheme.overline,
-          labelStyle: ThemeApp.theme.textTheme.overline,
-          errorStyle: ThemeApp.theme.textTheme.overline,
-          floatingLabelStyle: ThemeApp.theme.textTheme.overline,
+          hintStyle: ThemeApp.theme.textTheme.overline!.copyWith(
+              color:
+                  filled ? ColorUtils.secondaryColor : ColorUtils.whiteColor),
+          labelStyle: ThemeApp.theme.textTheme.overline!.copyWith(
+              color:
+                  filled ? ColorUtils.secondaryColor : ColorUtils.whiteColor),
+          errorStyle: ThemeApp.theme.textTheme.overline!.copyWith(
+              color:
+                  filled ? ColorUtils.secondaryColor : ColorUtils.whiteColor),
+          floatingLabelStyle: ThemeApp.theme.textTheme.overline!.copyWith(
+              color:
+                  filled ? ColorUtils.secondaryColor : ColorUtils.whiteColor),
           suffixIcon: suffixIcon,
           labelText: title,
         ),

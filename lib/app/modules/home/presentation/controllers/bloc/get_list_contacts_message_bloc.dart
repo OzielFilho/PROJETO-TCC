@@ -13,6 +13,7 @@ class GetListContactsMessageBloc extends Bloc<HomeEvent, AppState>
     on<GetListContactsMessageEvent>(_onGetListContactsMessage);
   }
   Stream<List>? streamGetList;
+
   _onGetListContactsMessage(
       GetListContactsMessageEvent event, Emitter<AppState> emit) {
     emit(ProcessingState());
@@ -23,10 +24,6 @@ class GetListContactsMessageBloc extends Bloc<HomeEvent, AppState>
 
     final result = _usecase.call(event.tokenId);
     streamGetList = result;
-
-    if (streamGetList == null) {
-      emit(ErrorState('Não foi possível carregar os dados do usuário'));
-    }
 
     emit(SuccessGetListContactMessageState());
   }

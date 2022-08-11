@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../core/presentation/controller/app_state.dart';
-import '../../../../core/presentation/widgets/loading_desing.dart';
-import '../../../../core/theme/theme_app.dart';
+import '../../../../../core/presentation/controller/app_state.dart';
+import '../../../../../core/presentation/widgets/loading_desing.dart';
+import '../../../../../core/theme/theme_app.dart';
 
 class ChatListHomePage extends StatefulWidget {
   final List<String> contacts;
@@ -52,8 +52,11 @@ class _ChatListHomePageState extends State<ChatListHomePage> {
                   padding: const EdgeInsets.all(12.0),
                   child: ListView.builder(
                     itemBuilder: (context, index) => InkWell(
-                      onTap: () =>
-                          Modular.to.pushNamed('chat_conversation_home'),
+                      onTap: () => Modular.to
+                          .pushNamed('chat_with_contact_home', arguments: {
+                        'tokenId': _blocGetContacts.contacts![index].tokenId,
+                        'name': _blocGetContacts.contacts![index].name
+                      }),
                       child: Container(
                           child: ListTile(
                         leading: CircleAvatar(),

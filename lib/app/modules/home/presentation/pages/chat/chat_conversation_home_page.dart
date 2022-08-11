@@ -3,10 +3,10 @@ import 'package:app/app/modules/home/presentation/controllers/events/home_event.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../../../../core/presentation/widgets/loading_desing.dart';
-import '../../../../core/theme/theme_app.dart';
-import '../../infra/models/contacts_with_message_model.dart';
-import '../controllers/bloc/get_list_contacts_message_bloc.dart';
+import '../../../../../core/presentation/widgets/loading_desing.dart';
+import '../../../../../core/theme/theme_app.dart';
+import '../../../infra/models/contacts_with_message_model.dart';
+import '../../controllers/bloc/get_list_contacts_message_bloc.dart';
 
 class ChatConversationHomePage extends StatefulWidget {
   final String tokenId;
@@ -25,6 +25,12 @@ class _ChatConversationHomePageState extends State<ChatConversationHomePage> {
     _blocGetListContactsMessage
         .add(GetListContactsMessageEvent(tokenId: widget.tokenId));
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _blocGetListContactsMessage.streamGetList = Stream<List>.empty();
+    super.dispose();
   }
 
   @override
@@ -61,10 +67,22 @@ class _ChatConversationHomePageState extends State<ChatConversationHomePage> {
                           .map((contact) => contact as ContactsWithMessageModel)
                           .toList();
 
-                      if (result.isEmpty) {
+                      if (snapshot.data == null) {
                         return AnimatedContainer(
                           duration: Duration(seconds: 5),
                           curve: Curves.ease,
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Você não possui conversas no momento',
+                            style: ThemeApp.theme.textTheme.subtitle1,
+                          ),
+                        );
+                      }
+                      if (snapshot.data!.isEmpty) {
+                        return AnimatedContainer(
+                          duration: Duration(seconds: 5),
+                          curve: Curves.ease,
+                          alignment: Alignment.center,
                           child: Text(
                             'Você não possui conversas no momento',
                             style: ThemeApp.theme.textTheme.subtitle1,
@@ -73,6 +91,11 @@ class _ChatConversationHomePageState extends State<ChatConversationHomePage> {
                       }
                       return ListView.builder(
                         itemBuilder: (context, index) => ListTile(
+                          onTap: () => Modular.to
+                              .pushNamed('chat_with_contact_home', arguments: {
+                            'tokenId': result[index].tokenId,
+                            'name': result[index].name
+                          }),
                           leading: CircleAvatar(),
                           subtitle: Text(
                             '${result[index].messages.last.text}',

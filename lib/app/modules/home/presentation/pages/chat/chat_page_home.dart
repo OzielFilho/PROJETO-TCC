@@ -1,9 +1,9 @@
 import 'package:app/app/core/utils/colors/colors_utils.dart';
-import 'package:app/app/modules/home/presentation/pages/chat_conversation_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../core/theme/theme_app.dart';
+import '../../../../../core/theme/theme_app.dart';
+import 'chat_conversation_home_page.dart';
 import 'chat_list_home_page.dart';
 
 class ChatPageHome extends StatefulWidget {

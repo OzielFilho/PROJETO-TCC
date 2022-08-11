@@ -6,7 +6,7 @@ import 'package:app/app/modules/home/infra/repositories/home_repository_impl.dar
 import 'package:app/app/modules/home/presentation/controllers/bloc/get_list_contacts_message_bloc.dart';
 import 'package:app/app/modules/home/presentation/controllers/bloc/get_user_home_bloc.dart';
 import 'package:app/app/modules/home/presentation/controllers/bloc/logout_user_bloc.dart';
-import 'package:app/app/modules/home/presentation/pages/chat_page_home.dart';
+import 'package:app/app/modules/home/presentation/pages/chat/chat_with_contact_page.dart';
 import 'package:app/app/modules/home/presentation/pages/configuration_home_page.dart';
 import 'package:app/app/modules/home/presentation/pages/emergence_phones_home_page.dart';
 import 'package:app/app/modules/home/presentation/pages/home_page.dart';
@@ -17,6 +17,7 @@ import 'external/home_information.dart';
 import 'infra/repositories/chat_home_repository_impl.dart';
 import 'presentation/controllers/bloc/get_current_location_bloc.dart';
 import 'presentation/controllers/bloc/get_list_details_contact_from_phone_chat_bloc.dart';
+import 'presentation/pages/chat/chat_page_home.dart';
 
 class HomeModule extends Module {
   @override
@@ -50,6 +51,13 @@ class HomeModule extends Module {
         ChildRoute('/chat_home',
             child: (context, args) => ChatPageHome(
                 contacts: args.data['contacts'], tokenId: args.data['tokenId']),
+            transition: TransitionType.leftToRight,
+            duration: Duration(milliseconds: 500)),
+        ChildRoute('/chat_with_contact_home',
+            child: (context, args) => ChatWithContactPage(
+                  name: args.data['name'],
+                  tokenId: args.data['tokenId'],
+                ),
             transition: TransitionType.leftToRight,
             duration: Duration(milliseconds: 500)),
         ChildRoute('/emergence_phones_home',

@@ -5,6 +5,7 @@ import 'package:app/app/core/presentation/widgets/svg_design.dart';
 import 'package:app/app/core/services/volume_actions_service.dart';
 import 'package:app/app/core/theme/theme_app.dart';
 import 'package:app/app/core/utils/colors/colors_utils.dart';
+import 'package:app/app/core/utils/constants/encrypt_data.dart';
 import 'package:app/app/core/utils/widgets_utils.dart';
 import 'package:app/app/modules/home/presentation/controllers/bloc/get_user_home_bloc.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    _actionsServiceImpl.initialization(['(85)98828-6381']);
     _blocGetUserHome.add(GetUserHomeEvent());
     _blocCurrentPositionHome.add(GetCurrentLocationEvent());
 
@@ -46,7 +46,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GetUserHomeBloc, AppState>(
+    return BlocConsumer<GetUserHomeBloc, AppState>(
+        listener: (context, state) {
+          if (state is SuccessGetUserState) {
+            List<String> contacts = _blocGetUserHome.user!.contacts
+                .map((e) => EncryptData().decrypty(e))
+                .toList();
+            _actionsServiceImpl.initialization(contacts);
+          }
+        },
         bloc: _blocGetUserHome,
         builder: (context, stateGetUser) {
           if (stateGetUser is ProcessingState) {

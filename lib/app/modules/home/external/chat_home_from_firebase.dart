@@ -34,12 +34,17 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
   }
 
   @override
-  Stream<List> getListContactsMessage(String tokenId) {
-    final snapshot = firestoreService.getDocumentSnapshot('chat', tokenId);
-    final doc = snapshot.map((event) => event
-        .data()!['contacts']
-        .map((element) => ContactsWithMessageModel.fromMap(element))
-        .toList() as List);
-    return doc;
+  Stream<List> getListContactsMessage(String tokenId) async* {
+    Stream<List>? doc;
+    final existDocument = await firestoreService.existDocument('chat', tokenId);
+    if (existDocument) {
+      final snapshot = firestoreService.getDocumentSnapshot('chat', tokenId);
+      doc = snapshot.map((event) => event
+          .data()!['contacts']
+          .map((element) => ContactsWithMessageModel.fromMap(element))
+          .toList() as List);
+    }
+
+    yield* doc!;
   }
 }

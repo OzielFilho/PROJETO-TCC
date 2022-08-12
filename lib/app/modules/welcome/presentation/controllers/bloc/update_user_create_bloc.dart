@@ -1,12 +1,12 @@
-import '../../../../../core/utils/constants/encrypt_data.dart';
-import '../../../domain/usecases/update_user_create.dart';
-import '../event/welcome_event.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../../core/error/failure.dart';
 import '../../../../../core/presentation/controller/app_state.dart';
+import '../../../../../core/utils/constants/encrypt_data.dart';
 import '../../../domain/entities/update_user.dart';
+import '../../../domain/usecases/update_user_create.dart';
+import '../event/welcome_event.dart';
 
 class UpdateUserCreateBloc extends Bloc<WelcomeEvent, AppState>
     implements Disposable {

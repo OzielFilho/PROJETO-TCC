@@ -1,5 +1,4 @@
-import 'package:app/app/modules/home/presentation/controllers/bloc/get_list_details_contact_from_phone_chat_bloc.dart';
-import 'package:app/app/modules/home/presentation/controllers/events/home_event.dart';
+import '../../controllers/events/home_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../../../../../core/presentation/controller/app_state.dart';
 import '../../../../../core/presentation/widgets/loading_desing.dart';
 import '../../../../../core/theme/theme_app.dart';
+import '../../controllers/bloc/chat/get_list_details_contact_from_phone_chat_bloc.dart';
 
 class ChatListHomePage extends StatefulWidget {
   final List<String> contacts;
@@ -67,6 +67,8 @@ class _ChatListHomePageState extends State<ChatListHomePage> {
                         leading: CircleAvatar(),
                         subtitle: Text(
                           '${_blocGetContacts.contacts![index].email}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: ThemeApp.theme.textTheme.subtitle1,
                         ),
                         title: Text(

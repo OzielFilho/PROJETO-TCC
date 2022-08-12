@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:app/app/modules/home/domain/entities/contacts_with_message.dart';
-import 'package:app/app/modules/home/infra/models/message_chat_model.dart';
+import '../../domain/entities/contacts_with_message.dart';
+import 'message_chat_model.dart';
 
 class ContactsWithMessageModel extends ContactsWithMessage {
   final List<MessageChatModel> messages;

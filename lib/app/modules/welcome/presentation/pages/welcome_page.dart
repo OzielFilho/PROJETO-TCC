@@ -1,9 +1,3 @@
-import '../../../../core/presentation/widgets/buttons_design.dart';
-import '../../../../core/presentation/widgets/form_desing.dart';
-import '../../../../core/utils/colors/colors_utils.dart';
-import '../controllers/bloc/update_user_create_bloc.dart';
-import '../controllers/bloc/user_phone_is_empty_bloc.dart';
-import '../controllers/event/welcome_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,9 +5,15 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../../../core/presentation/controller/app_state.dart';
+import '../../../../core/presentation/widgets/buttons_design.dart';
+import '../../../../core/presentation/widgets/form_desing.dart';
 import '../../../../core/presentation/widgets/loading_desing.dart';
 import '../../../../core/theme/theme_app.dart';
+import '../../../../core/utils/colors/colors_utils.dart';
 import '../controllers/bloc/get_user_welcome_bloc.dart';
+import '../controllers/bloc/update_user_create_bloc.dart';
+import '../controllers/bloc/user_phone_is_empty_bloc.dart';
+import '../controllers/event/welcome_event.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({

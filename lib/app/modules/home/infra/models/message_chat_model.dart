@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:app/app/modules/home/domain/entities/message_chat.dart';
+import '../../domain/entities/message_chat.dart';
 
 class MessageChatModel extends MessageChat {
   final String text;

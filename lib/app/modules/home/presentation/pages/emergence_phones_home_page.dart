@@ -1,4 +1,4 @@
-import 'package:app/app/core/presentation/widgets/buttons_design.dart';
+import '../../../../core/presentation/widgets/buttons_design.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:url_launcher/url_launcher_string.dart';

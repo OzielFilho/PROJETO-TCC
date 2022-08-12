@@ -1,12 +1,12 @@
-import '../../../core/presentation/widgets/svg_design.dart';
-import '../../../core/utils/widgets_utils.dart';
-import 'controllers/splash_bloc.dart';
-import 'controllers/splash_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../core/presentation/controller/app_state.dart';
+import '../../../core/presentation/widgets/svg_design.dart';
+import '../../../core/utils/widgets_utils.dart';
+import 'controllers/splash_bloc.dart';
+import 'controllers/splash_event.dart';
 
 class SplashPage extends StatefulWidget {
   SplashPage({Key? key}) : super(key: key);

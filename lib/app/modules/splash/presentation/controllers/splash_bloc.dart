@@ -1,13 +1,12 @@
-import '../../../../core/services/network_service.dart';
-
-import '../../../../core/presentation/controller/app_state.dart';
-import '../../domain/usecases/logged_user.dart';
-import 'splash_event.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../core/error/failure.dart';
+import '../../../../core/presentation/controller/app_state.dart';
+import '../../../../core/services/network_service.dart';
 import '../../../../core/usecases/usecase.dart';
+import '../../domain/usecases/logged_user.dart';
+import 'splash_event.dart';
 
 class SplashBloc extends Bloc<SplashEvent, AppState> implements Disposable {
   final LoggedUser _logged;

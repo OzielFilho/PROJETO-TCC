@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:app/app/modules/home/domain/entities/current_position.dart';
+import '../../domain/entities/current_position.dart';
 
 class CurrentPositionModel extends CurrentPosition {
   final double lat;

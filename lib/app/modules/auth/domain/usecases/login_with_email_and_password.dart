@@ -1,10 +1,11 @@
+import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
+
 import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/utils/validations/validations.dart';
-import '../repositories/login_repository.dart';
-import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 import '../entities/auth_result.dart';
+import '../repositories/login_repository.dart';
 
 class LoginWithEmailAndPassword implements Usecase<AuthResult, Params> {
   final LoginRepository repository;

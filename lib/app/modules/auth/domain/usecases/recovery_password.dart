@@ -1,10 +1,10 @@
-import '../repositories/recovery_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/utils/validations/validations.dart';
+import '../repositories/recovery_repository.dart';
 
 class RecoveryPassword implements Usecase<bool, Params> {
   final RecoveryRepository repository;

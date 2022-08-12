@@ -1,7 +1,7 @@
-import 'package:app/app/core/presentation/controller/app_state.dart';
-import 'package:app/app/core/usecases/usecase.dart';
-import 'package:app/app/modules/home/domain/usecases/get_user_home.dart';
-import 'package:app/app/modules/home/presentation/controllers/events/home_event.dart';
+import '../../../../../core/presentation/controller/app_state.dart';
+import '../../../../../core/usecases/usecase.dart';
+import '../../../domain/usecases/get_user_home.dart';
+import '../events/home_event.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 

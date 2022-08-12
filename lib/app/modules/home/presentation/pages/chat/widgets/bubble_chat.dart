@@ -1,5 +1,5 @@
-import 'package:app/app/core/theme/theme_app.dart';
-import 'package:app/app/core/utils/colors/colors_utils.dart';
+import '../../../../../../core/theme/theme_app.dart';
+import '../../../../../../core/utils/colors/colors_utils.dart';
 import 'package:flutter/material.dart';
 
 class BubbleChat extends StatelessWidget {
@@ -11,15 +11,15 @@ class BubbleChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
-      width: MediaQuery.of(context).size.width * .45,
-      padding: const EdgeInsets.all(8.0),
+      width: MediaQuery.of(context).size.width * .42,
+      padding: const EdgeInsets.all(4.0),
       decoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(35), color: color),
+          BoxDecoration(borderRadius: BorderRadius.circular(25), color: color),
       child: Text(
         message,
         textAlign: TextAlign.right,
-        maxLines: 3,
+        maxLines: 10,
+        overflow: TextOverflow.ellipsis,
         style: ThemeApp.theme.textTheme.subtitle1!
             .copyWith(color: ColorUtils.primaryColor),
       ),

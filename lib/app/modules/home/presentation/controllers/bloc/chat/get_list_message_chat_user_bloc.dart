@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:app/app/core/presentation/controller/app_state.dart';
-import 'package:app/app/modules/home/domain/usecases/get_list_message_chat_user.dart';
-import 'package:app/app/modules/home/presentation/controllers/events/home_event.dart';
+import '../../../../../../core/presentation/controller/app_state.dart';
+import '../../events/home_event.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../domain/entities/message_chat.dart';
+import '../../../../domain/entities/message_chat.dart';
+import '../../../../domain/usecases/chat/get_list_message_chat_user.dart';
 
 class GetListMessageChatUserBloc extends Bloc<HomeEvent, AppState>
     implements Disposable {

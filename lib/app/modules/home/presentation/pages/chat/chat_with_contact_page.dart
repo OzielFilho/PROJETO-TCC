@@ -1,16 +1,16 @@
-import 'package:app/app/core/presentation/controller/app_state.dart';
-import 'package:app/app/core/presentation/widgets/form_desing.dart';
-import 'package:app/app/core/utils/colors/colors_utils.dart';
-import 'package:app/app/modules/home/domain/entities/message_chat.dart';
-import 'package:app/app/modules/home/presentation/controllers/events/home_event.dart';
-import 'package:app/app/modules/home/presentation/pages/chat/widgets/bubble_chat.dart';
+import '../../../../../core/presentation/controller/app_state.dart';
+import '../../../../../core/presentation/widgets/form_desing.dart';
+import '../../../../../core/utils/colors/colors_utils.dart';
+import '../../../domain/entities/message_chat.dart';
+import '../../controllers/events/home_event.dart';
+import 'widgets/bubble_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../../core/presentation/widgets/loading_desing.dart';
 import '../../../../../core/theme/theme_app.dart';
-import '../../controllers/bloc/get_list_message_chat_user_bloc.dart';
+import '../../controllers/bloc/chat/get_list_message_chat_user_bloc.dart';
 
 class ChatWithContactPage extends StatefulWidget {
   final String name;
@@ -35,10 +35,16 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
 
   @override
   void initState() {
+    super.initState();
     _blocChatListUser.add(GetListMessageChatUserEvent(
         tokenIdUser: widget.tokenIdUser,
         tokenIdContact: widget.tokenIdContact));
-    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _blocChatListUser.streamGetList = Stream<List<MessageChat>>.empty();
+    super.dispose();
   }
 
   @override
@@ -81,63 +87,67 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                     if (snapshot.hasData) {
                       final result = snapshot.data!;
 
-                      return Stack(
-                        alignment: Alignment.bottomCenter,
-                        children: [
-                          SingleChildScrollView(
-                            controller: _controller,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 12.0,
-                                  right: 12.0,
-                                  top: 12.0,
-                                  bottom:
-                                      MediaQuery.of(context).size.height * .08),
-                              child: ListView.builder(
-                                controller: _controller,
-                                itemBuilder: (context, index) {
-                                  bool isContact = result[index].tokenId ==
-                                      widget.tokenIdContact;
-                                  return Container(
-                                    alignment: isContact
-                                        ? Alignment.centerLeft
-                                        : Alignment.centerRight,
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 12.0),
-                                    child: BubbleChat(
-                                      message: result[index].text,
-                                      color: isContact
-                                          ? ColorUtils.whiteColor
-                                          : ColorUtils.whiteColor
-                                              .withOpacity(0.7),
-                                    ),
-                                  );
-                                },
-                                itemCount: result.length,
-                                shrinkWrap: true,
+                      return Container(
+                        height: MediaQuery.of(context).size.height,
+                        child: Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            SingleChildScrollView(
+                              controller: _controller,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: 12.0,
+                                    right: 12.0,
+                                    top: 12.0,
+                                    bottom: MediaQuery.of(context).size.height *
+                                        .08),
+                                child: ListView.builder(
+                                  controller: _controller,
+                                  itemBuilder: (context, index) {
+                                    bool isContact = result[index].tokenId ==
+                                        widget.tokenIdContact;
+                                    return Container(
+                                      alignment: isContact
+                                          ? Alignment.centerLeft
+                                          : Alignment.centerRight,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 12.0),
+                                      child: BubbleChat(
+                                        message: result[index].text,
+                                        color: isContact
+                                            ? ColorUtils.whiteColor
+                                            : ColorUtils.whiteColor
+                                                .withOpacity(0.7),
+                                      ),
+                                    );
+                                  },
+                                  itemCount: result.length,
+                                  shrinkWrap: true,
+                                ),
                               ),
                             ),
-                          ),
-                          Container(
-                            color: ColorUtils.primaryColor,
-                            padding: const EdgeInsets.only(
-                                bottom: 12, left: 12.0, right: 12.0),
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * .08,
-                            child: FormsDesign(
-                              prefixIcon: null,
-                              filled: true,
-                              suffixIcon: Icon(
-                                Icons.arrow_forward_outlined,
-                                color: ColorUtils.primaryColor,
+                            Container(
+                              alignment: Alignment.bottomCenter,
+                              color: ColorUtils.primaryColor,
+                              padding: const EdgeInsets.only(
+                                  bottom: 6, left: 12.0, right: 12.0, top: 6.0),
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * .08,
+                              child: FormsDesign(
+                                prefixIcon: null,
+                                filled: true,
+                                suffixIcon: Icon(
+                                  Icons.arrow_forward_outlined,
+                                  color: ColorUtils.primaryColor,
+                                ),
+                                borderRadius: 35,
+                                title: 'Insira uma mensagem',
+                                visibility: false,
+                                controller: _messageController,
                               ),
-                              borderRadius: 35,
-                              title: 'Insira uma mensagem',
-                              visibility: false,
-                              controller: _messageController,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     }
                     return Container();

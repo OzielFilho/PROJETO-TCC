@@ -34,6 +34,10 @@ class FormsDesign extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
+        textAlignVertical: TextAlignVertical.top,
+        cursorColor: ColorUtils.secondaryColor,
+        style: ThemeApp.theme.textTheme.overline!.copyWith(
+            color: filled ? ColorUtils.secondaryColor : ColorUtils.whiteColor),
         maxLength: maxLen,
         inputFormatters: formatter ?? [],
         keyboardType: type,
@@ -68,9 +72,7 @@ class FormsDesign extends StatelessWidget {
           errorStyle: ThemeApp.theme.textTheme.overline!.copyWith(
               color:
                   filled ? ColorUtils.secondaryColor : ColorUtils.whiteColor),
-          floatingLabelStyle: ThemeApp.theme.textTheme.overline!.copyWith(
-              color:
-                  filled ? ColorUtils.secondaryColor : ColorUtils.whiteColor),
+          floatingLabelBehavior: FloatingLabelBehavior.never,
           suffixIcon: suffixIcon,
           labelText: title,
         ),

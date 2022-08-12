@@ -1,10 +1,11 @@
 import 'dart:async';
 
-import 'package:app/app/core/presentation/controller/app_state.dart';
-import 'package:app/app/modules/home/domain/usecases/get_list_contacts_message.dart';
-import 'package:app/app/modules/home/presentation/controllers/events/home_event.dart';
+import '../../../../../../core/presentation/controller/app_state.dart';
+import '../../events/home_event.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../../../domain/usecases/chat/get_list_contacts_message.dart';
 
 class GetListContactsMessageBloc extends Bloc<HomeEvent, AppState>
     implements Disposable {

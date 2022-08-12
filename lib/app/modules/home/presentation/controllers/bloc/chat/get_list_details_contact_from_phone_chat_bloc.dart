@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../../core/presentation/controller/app_state.dart';
-import '../../../domain/entities/details_contact_chat.dart';
-import '../../../domain/usecases/get_list_details_contact_from_phone_chat.dart';
-import '../events/home_event.dart';
+import '../../../../../../core/presentation/controller/app_state.dart';
+import '../../../../domain/entities/details_contact_chat.dart';
+import '../../../../domain/usecases/chat/get_list_details_contact_from_phone_chat.dart';
+import '../../events/home_event.dart';
 
 class GetListDetailsContactFromPhoneChatBloc extends Bloc<HomeEvent, AppState>
     implements Disposable {

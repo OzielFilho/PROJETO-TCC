@@ -1,4 +1,4 @@
-import 'package:app/app/modules/home/infra/models/message_chat_model.dart';
+import '../models/message_chat_model.dart';
 
 import '../models/details_contact_chat_model.dart';
 

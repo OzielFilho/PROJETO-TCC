@@ -1,8 +1,8 @@
-import '../../../../../core/presentation/controller/app_state.dart';
-import '../../../../../core/utils/validations/validations.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../../core/presentation/controller/app_state.dart';
+import '../../../../../core/utils/validations/validations.dart';
 import '../event/welcome_event.dart';
 
 class UserPhoneIsEmptyBloc extends Bloc<WelcomeEvent, AppState>

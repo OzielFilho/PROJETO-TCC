@@ -1,7 +1,7 @@
-import 'package:app/app/core/error/failure.dart';
-import 'package:app/app/modules/home/domain/entities/current_position.dart';
-import 'package:app/app/modules/home/domain/repositories/home_repository.dart';
-import 'package:app/app/modules/home/infra/datasources/home_datasource.dart';
+import '../../../../core/error/failure.dart';
+import '../../domain/entities/current_position.dart';
+import '../../domain/repositories/home_repository.dart';
+import '../datasources/home_datasource.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';

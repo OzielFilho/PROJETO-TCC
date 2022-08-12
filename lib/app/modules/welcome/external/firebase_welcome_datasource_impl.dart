@@ -1,10 +1,9 @@
 import '../../../core/services/firebase_auth_service.dart';
 import '../../../core/services/firestore_service.dart';
+import '../../../core/utils/constants/encrypt_data.dart';
 import '../../auth/infra/models/auth_result_model.dart';
 import '../infra/datasources/welcome_datasource.dart';
 import '../infra/models/update_user_model.dart';
-
-import '../../../core/utils/constants/encrypt_data.dart';
 
 class FirebaseWelcomeDatasourceImpl implements WelcomeDatasource {
   final FirestoreService store;

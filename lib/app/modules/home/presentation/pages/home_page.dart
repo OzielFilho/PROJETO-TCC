@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:app/app/core/presentation/controller/app_state.dart';
-import 'package:app/app/core/presentation/widgets/svg_design.dart';
-import 'package:app/app/core/services/volume_actions_service.dart';
-import 'package:app/app/core/theme/theme_app.dart';
-import 'package:app/app/core/utils/colors/colors_utils.dart';
-import 'package:app/app/core/utils/constants/encrypt_data.dart';
-import 'package:app/app/core/utils/widgets_utils.dart';
-import 'package:app/app/modules/home/presentation/controllers/bloc/get_user_home_bloc.dart';
+import '../../../../core/presentation/controller/app_state.dart';
+import '../../../../core/presentation/widgets/svg_design.dart';
+import '../../../../core/services/volume_actions_service.dart';
+import '../../../../core/theme/theme_app.dart';
+import '../../../../core/utils/colors/colors_utils.dart';
+import '../../../../core/utils/constants/encrypt_data.dart';
+import '../../../../core/utils/widgets_utils.dart';
+import '../controllers/bloc/get_user_home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';

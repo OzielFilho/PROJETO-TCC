@@ -1,6 +1,6 @@
-import 'package:app/app/modules/home/infra/models/contacts_with_message_model.dart';
-import 'package:app/app/modules/home/infra/models/details_contact_chat_model.dart';
-import 'package:app/app/modules/home/infra/models/message_chat_model.dart';
+import '../infra/models/contacts_with_message_model.dart';
+import '../infra/models/details_contact_chat_model.dart';
+import '../infra/models/message_chat_model.dart';
 
 import '../../../core/services/firebase_auth_service.dart';
 import '../../../core/services/firestore_service.dart';

@@ -1,4 +1,4 @@
-import 'package:app/app/modules/home/domain/repositories/chat_home_repository.dart';
+import '../../repositories/chat_home_repository.dart';
 
 class GetListContactsMessage {
   final ChatHomeRepository repository;

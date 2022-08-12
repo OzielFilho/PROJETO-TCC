@@ -1,4 +1,4 @@
-import 'package:app/app/modules/home/domain/entities/details_contact_chat.dart';
+import '../../domain/entities/details_contact_chat.dart';
 
 class DetailsContactChatModel extends DetailsContactChat {
   final String name;

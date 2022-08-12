@@ -1,12 +1,12 @@
-import 'package:app/app/core/presentation/controller/app_state.dart';
-import 'package:app/app/modules/home/presentation/controllers/events/home_event.dart';
+import '../../../../../core/presentation/controller/app_state.dart';
+import '../../controllers/events/home_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../../../../../core/presentation/widgets/loading_desing.dart';
 import '../../../../../core/theme/theme_app.dart';
 import '../../../infra/models/contacts_with_message_model.dart';
-import '../../controllers/bloc/get_list_contacts_message_bloc.dart';
+import '../../controllers/bloc/chat/get_list_contacts_message_bloc.dart';
 
 class ChatConversationHomePage extends StatefulWidget {
   final String tokenId;
@@ -100,6 +100,8 @@ class _ChatConversationHomePageState extends State<ChatConversationHomePage> {
                           leading: CircleAvatar(),
                           subtitle: Text(
                             '${result[index].messages.last.text}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: ThemeApp.theme.textTheme.subtitle1,
                           ),
                           title: Text(

@@ -1,12 +1,12 @@
-import '../../domain/entities/update_user.dart';
-import '../../../auth/domain/entities/auth_result.dart';
-import '../../../../core/error/failure.dart';
-import '../../domain/repositories/welcome_repository.dart';
-import '../datasources/welcome_datasource.dart';
-import '../models/update_user_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failure.dart';
+import '../../../auth/domain/entities/auth_result.dart';
+import '../../domain/entities/update_user.dart';
+import '../../domain/repositories/welcome_repository.dart';
+import '../datasources/welcome_datasource.dart';
+import '../models/update_user_model.dart';
 
 class WelcomeRepositoryImpl implements WelcomeRepository {
   final WelcomeDatasource datasource;

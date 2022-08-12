@@ -1,5 +1,5 @@
-import 'package:app/app/core/error/failure.dart';
-import 'package:app/app/core/usecases/usecase.dart';
+import '../../../../core/error/failure.dart';
+import '../../../../core/usecases/usecase.dart';
 import 'package:dartz/dartz.dart';
 
 import '../entities/user_result_home.dart';

@@ -156,24 +156,32 @@ class _WelcomePageState extends State<WelcomePage> {
                                         const SizedBox(
                                           height: 20.0,
                                         ),
-                                        ButtonDesign(
-                                            text: 'Finalizar Conta',
-                                            action: () {
-                                              _contactsText = _formsContacts
-                                                  .map((e) => e.controller.text)
-                                                  .toList();
-                                              _updateUserCreateBloc.add(
-                                                  UpdateUserCreateEvent(
-                                                      contacts: _contactsText,
-                                                      email: _getUserBloc
-                                                          .user!.email,
-                                                      name: _getUserBloc
-                                                          .user!.name,
-                                                      phone: _getUserBloc
-                                                          .user!.phone,
-                                                      welcomePage: !_getUserBloc
-                                                          .user!.welcomePage));
-                                            }),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.7,
+                                          child: ButtonDesign(
+                                              text: 'Finalizar Conta',
+                                              action: () {
+                                                _contactsText = _formsContacts
+                                                    .map((e) =>
+                                                        e.controller.text)
+                                                    .toList();
+                                                _updateUserCreateBloc.add(
+                                                    UpdateUserCreateEvent(
+                                                        contacts: _contactsText,
+                                                        email: _getUserBloc
+                                                            .user!.email,
+                                                        name: _getUserBloc
+                                                            .user!.name,
+                                                        phone: _getUserBloc
+                                                            .user!.phone,
+                                                        welcomePage:
+                                                            !_getUserBloc.user!
+                                                                .welcomePage));
+                                              }),
+                                        ),
                                         const SizedBox(
                                           height: 20.0,
                                         ),

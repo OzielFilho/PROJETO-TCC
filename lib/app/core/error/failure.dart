@@ -24,6 +24,11 @@ class ParamsEmptyUserFailure extends Failure {
   List<Object?> get props => const <dynamic>[];
 }
 
+class ParamsEmptyFailure extends Failure {
+  @override
+  List<Object?> get props => const <dynamic>[];
+}
+
 class PasswordAndConfirmePasswordDifferenceFailure extends Failure {
   @override
   List<Object?> get props => const <dynamic>[];
@@ -100,6 +105,11 @@ class GetCurrentLocationFailure extends Failure {
 }
 
 class GetDetailsContactFromPhoneFailure extends Failure {
+  @override
+  List<Object?> get props => const <dynamic>[];
+}
+
+class SendMessageUserFailure extends Failure {
   @override
   List<Object?> get props => const <dynamic>[];
 }

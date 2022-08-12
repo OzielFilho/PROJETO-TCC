@@ -7,6 +7,7 @@ class ButtonDesign extends StatelessWidget {
   final String text;
   final VoidCallback action;
   final Widget? content;
+
   const ButtonDesign(
       {Key? key, required this.text, required this.action, this.content})
       : super(key: key);
@@ -17,12 +18,14 @@ class ButtonDesign extends StatelessWidget {
       onPressed: action,
       color: ColorUtils.whiteColor,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          content != null
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6),
-                  child: content)
-              : Container(),
+          if (content != null) ...[
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                child: content)
+          ],
           Text(
             text,
             style: ThemeApp.theme.textTheme.button,

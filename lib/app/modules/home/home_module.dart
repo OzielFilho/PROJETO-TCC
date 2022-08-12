@@ -1,9 +1,11 @@
+import 'domain/usecases/chat/send_message_to_user.dart';
 import 'domain/usecases/get_current_position.dart';
 import 'domain/usecases/get_user_home.dart';
 import 'domain/usecases/logout_user.dart';
 import 'infra/repositories/home_repository_impl.dart';
 import 'presentation/controllers/bloc/chat/get_list_details_contact_from_phone_chat_bloc.dart';
 import 'presentation/controllers/bloc/chat/get_list_message_chat_user_bloc.dart';
+import 'presentation/controllers/bloc/chat/send_message_user_bloc.dart';
 import 'presentation/controllers/bloc/get_user_home_bloc.dart';
 import 'presentation/controllers/bloc/logout_user_bloc.dart';
 import 'presentation/pages/chat/chat_with_contact_page.dart';
@@ -40,6 +42,8 @@ class HomeModule extends Module {
         Bind((i) => GetListContactsMessageBloc(i())),
         Bind((i) => GetListMessageChatUser(i())),
         Bind((i) => GetListMessageChatUserBloc(i())),
+        Bind((i) => SendMessageToUser(i())),
+        Bind((i) => SendMessageUserBloc(i())),
       ];
 
   @override

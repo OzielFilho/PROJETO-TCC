@@ -1,3 +1,6 @@
+import 'package:app/app/core/utils/widgets_utils.dart';
+import 'package:app/app/modules/home/presentation/controllers/bloc/chat/send_message_user_bloc.dart';
+
 import '../../../../../core/presentation/controller/app_state.dart';
 import '../../../../../core/presentation/widgets/form_desing.dart';
 import '../../../../../core/utils/colors/colors_utils.dart';
@@ -32,7 +35,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
 
   ScrollController _controller = ScrollController();
   final _messageController = TextEditingController();
-
+  final _sendMessageBloc = Modular.get<SendMessageUserBloc>();
   @override
   void initState() {
     super.initState();
@@ -136,9 +139,73 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                               child: FormsDesign(
                                 prefixIcon: null,
                                 filled: true,
-                                suffixIcon: Icon(
-                                  Icons.arrow_forward_outlined,
-                                  color: ColorUtils.primaryColor,
+                                suffixIcon:
+                                    BlocConsumer<SendMessageUserBloc, AppState>(
+                                  bloc: _sendMessageBloc,
+                                  listener: (context, state) {
+                                    if (state is ErrorState) {
+                                      WidgetUtils.showSnackBar(
+                                          context, state.message!,
+                                          actionText: 'Fechar', onTap: () {
+                                        Modular.to.pop(context);
+                                      });
+                                    }
+                                    if (state
+                                        is SuccessSendMessageUserChatState) {
+                                      _messageController.clear();
+                                      FocusScope.of(context).unfocus();
+                                    }
+                                  },
+                                  builder: (context, state) {
+                                    if (state is ProcessingState) {
+                                      return Center(
+                                        child: LoadingDesign(),
+                                      );
+                                    }
+
+                                    return IconButton(
+                                      icon: Icon(
+                                        Icons.arrow_forward_outlined,
+                                        color: ColorUtils.primaryColor,
+                                      ),
+                                      onPressed: () {
+                                        if (!(state is ProcessingState)) {
+                                          _sendMessageBloc
+                                              .add(SendMessageToUserEvent(
+                                                  message: MessageChat(
+                                                      date:
+                                                          DateTime.now()
+                                                              .toUtc()
+                                                              .toString(),
+                                                      text:
+                                                          _messageController
+                                                              .text,
+                                                      tokenId:
+                                                          widget.tokenIdUser),
+                                                  tokenIdContact:
+                                                      widget.tokenIdContact,
+                                                  tokenIdUser:
+                                                      widget.tokenIdUser,
+                                                  name: widget.name));
+                                          _sendMessageBloc.add(
+                                              SendMessageToUserEvent(
+                                                  message: MessageChat(
+                                                      date: DateTime.now()
+                                                          .toUtc()
+                                                          .toString(),
+                                                      text: _messageController
+                                                          .text,
+                                                      tokenId:
+                                                          widget.tokenIdUser),
+                                                  tokenIdContact:
+                                                      widget.tokenIdUser,
+                                                  tokenIdUser:
+                                                      widget.tokenIdContact,
+                                                  name: widget.name));
+                                        }
+                                      },
+                                    );
+                                  },
                                 ),
                                 borderRadius: 35,
                                 title: 'Insira uma mensagem',

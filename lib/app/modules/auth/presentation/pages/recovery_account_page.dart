@@ -90,14 +90,17 @@ class RecoveryAccountPage extends StatelessWidget {
                           ],
                         ],
                       ),
-                      ButtonDesign(
-                          text: 'Recuperar Senha',
-                          action: () {
-                            if (!(state is SuccessState)) {
-                              _recoveryBloc.add(RecoveryAccountWithEmailEvent(
-                                  email: _emailRecoveryController.text));
-                            }
-                          })
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: ButtonDesign(
+                            text: 'Recuperar Senha',
+                            action: () {
+                              if (!(state is SuccessState)) {
+                                _recoveryBloc.add(RecoveryAccountWithEmailEvent(
+                                    email: _emailRecoveryController.text));
+                              }
+                            }),
+                      )
                     ],
                   ),
                 ),

@@ -1,3 +1,5 @@
+import 'package:app/app/modules/home/domain/entities/message_chat.dart';
+
 abstract class HomeEvent {}
 
 class GetUserHomeEvent implements HomeEvent {}
@@ -6,6 +8,19 @@ class GetListDetailsContactFromPhoneChatEvent implements HomeEvent {
   final List<String> contacts;
 
   GetListDetailsContactFromPhoneChatEvent({required this.contacts});
+}
+
+class SendMessageToUserEvent implements HomeEvent {
+  final MessageChat message;
+  final String tokenIdContact;
+  final String tokenIdUser;
+  final String name;
+
+  SendMessageToUserEvent(
+      {required this.message,
+      required this.tokenIdContact,
+      required this.tokenIdUser,
+      required this.name});
 }
 
 class GetListContactsMessageEvent implements HomeEvent {

@@ -58,6 +58,8 @@ class FirebaseAuthDatasourceImpl
       if (!existUser) {
         await firestore.createDocument('users', userCredential.uid,
             UserCreateModel.fromUser(userCredential).toMap());
+        await firestore
+            .createDocument('chat', userCredential.uid, {'contacts': []});
       }
 
       final user = await firestore.getDocument('users', userCredential.uid);
@@ -89,6 +91,8 @@ class FirebaseAuthDatasourceImpl
           user.email!, user.uid, false, phoneCrypt, userCreate.name);
       await firestore.createDocument(
           'contacts', phoneCrypt, {'tokenId': userResult.tokenId});
+      await firestore
+          .createDocument('chat', userResult.tokenId!, {'contacts': []});
     }
     await firestore.createDocument(
         'users', userResult.tokenId!, userCreate.toMap());

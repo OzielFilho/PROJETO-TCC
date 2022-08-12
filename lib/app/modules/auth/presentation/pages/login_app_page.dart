@@ -118,18 +118,21 @@ class _LoginAppPageState extends State<LoginAppPage> {
                                 ),
                               )
                             ],
-                            ButtonDesign(
-                                text: 'Entrar',
-                                action: () {
-                                  if (!(stateGoogle is ProcessingState) ||
-                                      !(stateEmail is ProcessingState)) {
-                                    _loginBloc.add(
-                                        LoginWithEmailAndPasswordEvent(
-                                            email: _emailController.text,
-                                            password:
-                                                _passwordController.text));
-                                  }
-                                }),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              child: ButtonDesign(
+                                  text: 'Entrar',
+                                  action: () {
+                                    if (!(stateGoogle is ProcessingState) ||
+                                        !(stateEmail is ProcessingState)) {
+                                      _loginBloc.add(
+                                          LoginWithEmailAndPasswordEvent(
+                                              email: _emailController.text,
+                                              password:
+                                                  _passwordController.text));
+                                    }
+                                  }),
+                            ),
                             if (stateEmail is ProcessingState) ...[
                               LoadingDesign(),
                             ],

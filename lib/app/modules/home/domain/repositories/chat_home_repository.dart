@@ -10,4 +10,9 @@ abstract class ChatHomeRepository {
       {String tokenIdUserActual, String tokenIdContact});
   Future<Either<Failure, List<DetailsContactChat>>>
       getListDetailsContactFromPhoneChat({List<String> phones});
+  Future<Either<Failure, void>> sendMessageToUser(
+      {MessageChat message,
+      String tokenIdUser,
+      String tokenIdContact,
+      String name});
 }

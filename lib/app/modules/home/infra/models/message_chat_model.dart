@@ -26,6 +26,22 @@ class MessageChatModel extends MessageChat {
     );
   }
 
+  factory MessageChatModel.fromMessageChat(MessageChat message) {
+    return MessageChatModel(
+      message.text,
+      message.date,
+      message.tokenId,
+    );
+  }
+
+  MessageChat toMessageChat(Map<String, dynamic> map) {
+    return MessageChatModel(
+      map['text'] ?? '',
+      map['date'] ?? '',
+      map['tokenId'] ?? '',
+    );
+  }
+
   String toJson() => json.encode(toMap());
 
   factory MessageChatModel.fromJson(String source) =>

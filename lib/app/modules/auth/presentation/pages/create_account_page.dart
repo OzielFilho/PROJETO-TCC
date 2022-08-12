@@ -165,24 +165,27 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                               ),
                             )
                           ],
-                          ButtonDesign(
-                              text: 'Criar Conta',
-                              action: () {
-                                if (!(state is ProcessingState)) {
-                                  _createAccount.add(
-                                      CreateAccountWithEmailAndPasswordEvent(
-                                          contacts: [],
-                                          welcomePage: false,
-                                          phone: _phoneControllerNew.text,
-                                          confirmePassword:
-                                              _confirmPasswordControllerNew
-                                                  .text,
-                                          email: _emailControllerNew.text,
-                                          name: _nameControllerNew.text,
-                                          password:
-                                              _passwordControllerNew.text));
-                                }
-                              }),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            child: ButtonDesign(
+                                text: 'Criar Conta',
+                                action: () {
+                                  if (!(state is ProcessingState)) {
+                                    _createAccount.add(
+                                        CreateAccountWithEmailAndPasswordEvent(
+                                            contacts: [],
+                                            welcomePage: false,
+                                            phone: _phoneControllerNew.text,
+                                            confirmePassword:
+                                                _confirmPasswordControllerNew
+                                                    .text,
+                                            email: _emailControllerNew.text,
+                                            name: _nameControllerNew.text,
+                                            password:
+                                                _passwordControllerNew.text));
+                                  }
+                                }),
+                          ),
                           if (state is ProcessingState) ...[
                             LoadingDesign(),
                           ],

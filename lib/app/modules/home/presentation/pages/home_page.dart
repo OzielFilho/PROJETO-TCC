@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:app/app/core/services/audio_service.dart';
+
 import '../../../../core/presentation/controller/app_state.dart';
 import '../../../../core/presentation/widgets/svg_design.dart';
 import '../../../../core/services/volume_actions_service.dart';
@@ -28,13 +30,20 @@ class _HomePageState extends State<HomePage> {
   final _blocGetUserHome = Modular.get<GetUserHomeBloc>();
   final _blocCurrentPositionHome = Modular.get<GetCurrentLocationBloc>();
   bool _optionsShow = false;
-
+  bool _volumeOptionsShow = false;
   void _updateOptionsShow() {
     _optionsShow = !_optionsShow;
     setState(() {});
   }
 
+  void _updateVolumeOptionsShow() {
+    _volumeOptionsShow = !_volumeOptionsShow;
+    setState(() {});
+  }
+
   Completer<GoogleMapController> _controller = Completer();
+
+  final _controllerAudioAssets = Modular.get<AudioService>();
 
   @override
   void initState() {
@@ -177,46 +186,124 @@ class _HomePageState extends State<HomePage> {
               ),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.startTop,
-              body: BlocConsumer<GetCurrentLocationBloc, AppState>(
-                  listener: (context, state) {
-                    if (state is ErrorState) {
-                      WidgetUtils.showOkDialog(context, 'Localização',
-                          state.message!, 'Reload', () {});
-                    }
-                    if (state is NetworkErrorState) {
-                      WidgetUtils.showOkDialog(context, 'Internet Indisponível',
-                          state.message!, 'Reload', () {
-                        Modular.to.pop(context);
-                        _blocCurrentPositionHome.add(GetCurrentLocationEvent());
-                      }, permanentDialog: false);
-                    }
-                  },
-                  bloc: _blocCurrentPositionHome,
-                  builder: (context, stateMap) {
-                    if (stateMap is ProcessingState) {
-                      return Scaffold(body: Center(child: LoadingDesign()));
-                    }
-                    if (stateMap is SuccessGetCurrentLocationState) {
-                      return GoogleMap(
-                        zoomControlsEnabled: false,
-                        myLocationEnabled: true,
-                        mapToolbarEnabled: false,
-                        myLocationButtonEnabled: false,
-                        buildingsEnabled: false,
-                        indoorViewEnabled: false,
-                        compassEnabled: false,
-                        mapType: MapType.normal,
-                        initialCameraPosition:
-                            _blocCurrentPositionHome.position!,
-                        onMapCreated: (GoogleMapController controller) {
-                          _controller.complete(controller);
-                        },
-                      );
-                    }
-                    return Scaffold(
-                      body: Container(),
-                    );
-                  }),
+              body: Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  BlocConsumer<GetCurrentLocationBloc, AppState>(
+                      listener: (context, state) {
+                        if (state is ErrorState) {
+                          WidgetUtils.showOkDialog(context, 'Localização',
+                              state.message!, 'Reload', () {});
+                        }
+                        if (state is NetworkErrorState) {
+                          WidgetUtils.showOkDialog(
+                              context,
+                              'Internet Indisponível',
+                              state.message!,
+                              'Reload', () {
+                            Modular.to.pop(context);
+                            _blocCurrentPositionHome
+                                .add(GetCurrentLocationEvent());
+                          }, permanentDialog: false);
+                        }
+                      },
+                      bloc: _blocCurrentPositionHome,
+                      builder: (context, stateMap) {
+                        if (stateMap is ProcessingState) {
+                          return Scaffold(body: Center(child: LoadingDesign()));
+                        }
+                        if (stateMap is SuccessGetCurrentLocationState) {
+                          return GoogleMap(
+                            zoomControlsEnabled: false,
+                            myLocationEnabled: true,
+                            mapToolbarEnabled: false,
+                            myLocationButtonEnabled: false,
+                            buildingsEnabled: false,
+                            indoorViewEnabled: false,
+                            compassEnabled: false,
+                            mapType: MapType.normal,
+                            initialCameraPosition:
+                                _blocCurrentPositionHome.position!,
+                            onMapCreated: (GoogleMapController controller) {
+                              _controller.complete(controller);
+                            },
+                          );
+                        }
+                        return Scaffold(
+                          body: Container(),
+                        );
+                      }),
+                  Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: AnimatedContainer(
+                        duration: Duration(milliseconds: 500),
+                        alignment: Alignment.bottomRight,
+                        child: _volumeOptionsShow
+                            ? Container(
+                                height: 55,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                decoration: BoxDecoration(
+                                    color: ColorUtils.primaryColor,
+                                    borderRadius: BorderRadius.circular(60.0)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    InkWell(
+                                        onTap: () async {
+                                          await _controllerAudioAssets.play(
+                                              path: 'assets/audios/police.wav');
+                                        },
+                                        child: SvgDesign(
+                                          path:
+                                              'assets/images/svg/button_police_icon.svg',
+                                        )),
+                                    InkWell(
+                                        onTap: () async {
+                                          await _controllerAudioAssets.play(
+                                              path: 'assets/audios/sirene.mp3');
+                                        },
+                                        child: SvgDesign(
+                                          path:
+                                              'assets/images/svg/button_sound_icon.svg',
+                                        )),
+                                    InkWell(
+                                        onTap: () async {
+                                          await _controllerAudioAssets.play(
+                                              path: 'assets/audios/bomb.mp3');
+                                        },
+                                        child: SvgDesign(
+                                          path:
+                                              'assets/images/svg/button_bomb_icon.svg',
+                                        )),
+                                    InkWell(
+                                        onTap: _updateVolumeOptionsShow,
+                                        child: SvgDesign(
+                                          path:
+                                              'assets/images/svg/button_arrow_back_rigth.svg',
+                                        )),
+                                  ],
+                                ),
+                              )
+                            : GestureDetector(
+                                onTap: _updateVolumeOptionsShow,
+                                child: Container(
+                                    height: 55,
+                                    width: 55,
+                                    alignment: Alignment.bottomRight,
+                                    decoration: BoxDecoration(
+                                      color: ColorUtils.primaryColor,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: SvgDesign(
+                                      path:
+                                          'assets/images/svg/button_volume.svg',
+                                    )),
+                              ),
+                      )),
+                ],
+              ),
             );
           }
 

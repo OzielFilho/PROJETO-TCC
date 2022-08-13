@@ -1,3 +1,4 @@
+import '../../../../../core/error/failure.dart';
 import '../../../../../core/usecases/usecase.dart';
 import '../../../domain/usecases/get_user_create.dart';
 import '../event/welcome_event.dart';
@@ -17,8 +18,14 @@ class GetUserWelcomeBloc extends Bloc<WelcomeEvent, AppState>
   _onGetUserEvent(GetUserEvent event, Emitter<AppState> emit) async {
     emit(ProcessingState());
     final result = await _userCreate.call(NoParams());
-    emit(result.fold((failure) => ErrorState('Serviço indisponível no momento'),
-        (success) {
+    emit(result.fold((failure) {
+      switch (failure.runtimeType) {
+        case NetworkFailure:
+          return NetworkErrorState('Sem conexão com a internet');
+        default:
+          return ErrorState('Serviço indisponível no momento');
+      }
+    }, (success) {
       user = success;
 
       return SuccessGetUserState();

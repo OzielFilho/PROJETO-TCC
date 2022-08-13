@@ -10,6 +10,7 @@ import '../../../../core/presentation/widgets/form_desing.dart';
 import '../../../../core/presentation/widgets/loading_desing.dart';
 import '../../../../core/theme/theme_app.dart';
 import '../../../../core/utils/colors/colors_utils.dart';
+import '../../../../core/utils/widgets_utils.dart';
 import '../controllers/bloc/get_user_welcome_bloc.dart';
 import '../controllers/bloc/update_user_create_bloc.dart';
 import '../controllers/bloc/user_phone_is_empty_bloc.dart';
@@ -66,6 +67,13 @@ class _WelcomePageState extends State<WelcomePage> {
     return BlocConsumer<GetUserWelcomeBloc, AppState>(
       bloc: _getUserBloc,
       listener: (context, state) {
+        if (state is NetworkErrorState) {
+          WidgetUtils.showOkDialog(
+              context, 'Internet Indisponível', state.message!, 'Reload', () {
+            Modular.to.pop(context);
+            _getUserBloc.add(GetUserEvent());
+          }, permanentDialog: false);
+        }
         if (state is SuccessGetUserState) {
           SchedulerBinding.instance.addPostFrameCallback((_) {
             if (_controllerPage!.hasClients) {
@@ -123,6 +131,15 @@ class _WelcomePageState extends State<WelcomePage> {
                             Center(child: LoadingDesign()),
                             BlocConsumer<UpdateUserCreateBloc, AppState>(
                                 listener: (context, state) {
+                                  if (state is NetworkErrorState) {
+                                    WidgetUtils.showOkDialog(
+                                        context,
+                                        'Internet Indisponível',
+                                        state.message!,
+                                        'Reload', () {
+                                      Modular.to.pop(context);
+                                    }, permanentDialog: false);
+                                  }
                                   if (state is SuccessUpdateUserCreateState) {
                                     Modular.to.pushReplacementNamed('/home/');
                                   }
@@ -164,6 +181,9 @@ class _WelcomePageState extends State<WelcomePage> {
                                           child: ButtonDesign(
                                               text: 'Finalizar Conta',
                                               action: () {
+                                                FocusScope.of(context)
+                                                    .unfocus();
+
                                                 _contactsText = _formsContacts
                                                     .map((e) =>
                                                         e.controller.text)
@@ -261,7 +281,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                         child: ButtonDesign(
                                             text: 'Continuar',
                                             action: () {
-                                              FocusNode().unfocus();
+                                              FocusScope.of(context).unfocus();
                                               if (!(eventPhoneEmpty
                                                   is ProcessingState)) {
                                                 _userPhoneEmptyBloc.add(

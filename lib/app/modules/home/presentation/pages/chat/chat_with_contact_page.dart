@@ -155,6 +155,15 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                       _messageController.clear();
                                       FocusScope.of(context).unfocus();
                                     }
+                                    if (state is NetworkErrorState) {
+                                      WidgetUtils.showOkDialog(
+                                          context,
+                                          'Internet Indisponível',
+                                          state.message!,
+                                          'Reload', () {
+                                        Modular.to.pop(context);
+                                      }, permanentDialog: false);
+                                    }
                                   },
                                   builder: (context, state) {
                                     if (state is ProcessingState) {
@@ -169,6 +178,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                         color: ColorUtils.primaryColor,
                                       ),
                                       onPressed: () {
+                                        FocusScope.of(context).unfocus();
                                         if (!(state is ProcessingState)) {
                                           _sendMessageBloc
                                               .add(SendMessageToUserEvent(

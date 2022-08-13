@@ -1,3 +1,4 @@
+import 'package:app/app/core/services/network_service.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';
@@ -7,12 +8,16 @@ import '../../domain/repositories/login_repository.dart';
 import '../datasources/login_datasource.dart';
 
 class LoginRepositoryImpl extends LoginRepository {
+  final NetworkService _networkService;
   final LoginDatasource datasource;
 
-  LoginRepositoryImpl(this.datasource);
+  LoginRepositoryImpl(this.datasource, this._networkService);
 
   @override
   Future<Either<Failure, AuthResult>> loginGoogleUser() async {
+    if (!(await _networkService.hasConnection)) {
+      return left(NetworkFailure());
+    }
     try {
       final result = await datasource.loginWithGoogle();
       return right(result);
@@ -26,6 +31,9 @@ class LoginRepositoryImpl extends LoginRepository {
   @override
   Future<Either<Failure, AuthResult>> loginWithEmailAndPassword(
       String email, String password) async {
+    if (!(await _networkService.hasConnection)) {
+      return left(NetworkFailure());
+    }
     try {
       final result =
           await datasource.loginWithEmailAndPassword(email, password);

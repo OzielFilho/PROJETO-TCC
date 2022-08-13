@@ -24,6 +24,8 @@ class LoginWithEmailAndPasswordBloc extends Bloc<LoginEvent, AppState>
           return EmailOrPasswordEmptyErrorState('Email ou Senha estão vazios');
         case ParamsInvalidUserFailure:
           return EmailOrPasswordInvalidErrorState('Email ou Senha inválidos');
+        case NetworkFailure:
+          return NetworkErrorState('Sem conexão com a internet');
         case UserNotFoundFailure:
           return UserNotFoundErrorState('Usuário não existe');
         default:

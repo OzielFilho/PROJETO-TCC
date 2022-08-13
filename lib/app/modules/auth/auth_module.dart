@@ -21,19 +21,19 @@ class AuthModule extends Module {
   @override
   final List<Bind> binds = [
     //LOGIN
-    Bind((i) => LoginRepositoryImpl(i())),
+    Bind((i) => LoginRepositoryImpl(i(), i())),
     Bind((i) => LoginWithEmailAndPassword(i())),
     Bind((i) => LoginWithEmailAndPasswordBloc(i())),
     Bind((i) => LoginWithGoogle(i())),
     Bind((i) => LoginWithGoogleBloc(i())),
 
     //CREATE ACCOUNT
-    Bind((i) => CreateAccountRepositoryImpl(i())),
+    Bind((i) => CreateAccountRepositoryImpl(i(), i())),
     Bind((i) => CreateAccountWithEmailAndPassword(i())),
     Bind((i) => CreateAccountBloc(i())),
 
     //RECOVERY ACCOUNT
-    Bind((i) => RecoveryRepositoryImpl(i())),
+    Bind((i) => RecoveryRepositoryImpl(i(), i())),
     Bind((i) => RecoveryPassword(i())),
     Bind((i) => RecoveryAccountBloc(i())),
   ];

@@ -35,6 +35,8 @@ class UpdateUserCreateBloc extends Bloc<WelcomeEvent, AppState>
       switch (failure.runtimeType) {
         case PhoneEmptyFailure:
           return PhoneEmptyErrorState('Telefone não pode está vazio');
+        case NetworkFailure:
+          return NetworkErrorState('Sem conexão com a internet');
         case PhoneInvalidFailure:
           return PhoneInvalidErrorState('Telefone inserido inválido');
         case ListContactsEmptyFailure:

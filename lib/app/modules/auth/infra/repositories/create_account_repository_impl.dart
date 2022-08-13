@@ -1,3 +1,4 @@
+import 'package:app/app/core/services/network_service.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';
@@ -10,12 +11,15 @@ import '../models/user_create_model.dart';
 
 class CreateAccountRepositoryImpl extends CreateAccountRepository {
   final CreateAccountDatasource datasource;
-
-  CreateAccountRepositoryImpl(this.datasource);
+  final NetworkService _networkService;
+  CreateAccountRepositoryImpl(this.datasource, this._networkService);
 
   @override
   Future<Either<Failure, AuthResult>> createAccountWithEmailAndPassword(
       UserCreate user) async {
+    if (!(await _networkService.hasConnection)) {
+      return left(NetworkFailure());
+    }
     try {
       final result = await datasource.createAccountWithEmailAndPassword(
           UserCreateModel.fromUserCreate(user));

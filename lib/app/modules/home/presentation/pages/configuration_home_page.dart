@@ -51,6 +51,15 @@ class _ConfigurationsHomePageState extends State<ConfigurationsHomePage> {
               children: [
                 BlocConsumer<LogoutUserBloc, AppState>(
                     listener: (context, state) {
+                      if (state is NetworkErrorState) {
+                        WidgetUtils.showOkDialog(
+                            context,
+                            'Internet Indisponível',
+                            state.message!,
+                            'Reload', () {
+                          Modular.to.pop(context);
+                        }, permanentDialog: false);
+                      }
                       if (state is ErrorState) {
                         WidgetUtils.showOkDialog(
                             context,

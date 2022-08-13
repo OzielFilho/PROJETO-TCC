@@ -1,3 +1,4 @@
+import 'package:app/app/core/services/network_service.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';
@@ -8,11 +9,14 @@ import '../models/user_logged_info_model.dart';
 
 class RefreshAccountRepositoryImpl implements RefreshAccountRepository {
   final RefreshAccountDatasource datasource;
-
-  RefreshAccountRepositoryImpl(this.datasource);
+  final NetworkService _networkService;
+  RefreshAccountRepositoryImpl(this.datasource, this._networkService);
 
   @override
   Future<Either<Failure, UserLoggedInfoModel>> loggedUser() async {
+    if (!(await _networkService.hasConnection)) {
+      return left(NetworkFailure());
+    }
     try {
       final result = await datasource.loggedUser();
       return right(result);

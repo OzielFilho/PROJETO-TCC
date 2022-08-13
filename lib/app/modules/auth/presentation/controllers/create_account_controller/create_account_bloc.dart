@@ -39,6 +39,8 @@ class CreateAccountBloc
               'As senhas não correspondem');
         case PhoneInvalidFailure:
           return PhoneInvalidErrorState('Telefone inválido');
+        case NetworkFailure:
+          return NetworkErrorState('Sem conexão com a internet');
         case PhoneExistFailure:
           return PhoneInvalidErrorState('Telefone já existe');
         case ParamsInvalidUserFailure:

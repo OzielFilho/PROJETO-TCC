@@ -1,3 +1,4 @@
+import '../../../../../core/error/failure.dart';
 import '../../../../../core/presentation/controller/app_state.dart';
 import '../../../../../core/usecases/usecase.dart';
 import '../../../domain/usecases/logout_user.dart';
@@ -20,8 +21,13 @@ class LogoutUserBloc extends Bloc<HomeEvent, AppState> implements Disposable {
     emit(ProcessingState());
 
     final result = await _usecase.call(NoParams());
-    emit(result.fold(
-        (failure) => ErrorState('Não foi possível deslogar o seu usuário'),
-        (success) => SuccessLogoutUserState()));
+    emit(result.fold((failure) {
+      switch (failure.runtimeType) {
+        case NetworkFailure:
+          return NetworkErrorState('Sem conexão com a internet');
+        default:
+          return ErrorState('Não foi possível deslogar o seu usuário');
+      }
+    }, (success) => SuccessLogoutUserState()));
   }
 }

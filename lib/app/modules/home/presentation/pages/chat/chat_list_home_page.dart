@@ -1,3 +1,4 @@
+import '../../../../../core/utils/widgets_utils.dart';
 import '../../controllers/events/home_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,7 +34,18 @@ class _ChatListHomePageState extends State<ChatListHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<GetListDetailsContactFromPhoneChatBloc, AppState>(
+      body: BlocConsumer<GetListDetailsContactFromPhoneChatBloc, AppState>(
+          listener: (context, state) {
+            if (state is NetworkErrorState) {
+              WidgetUtils.showOkDialog(
+                  context, 'Internet Indisponível', state.message!, 'Reload',
+                  () {
+                Modular.to.pop(context);
+                _blocGetContacts.add(GetListDetailsContactFromPhoneChatEvent(
+                    contacts: widget.contacts));
+              }, permanentDialog: false);
+            }
+          },
           bloc: _blocGetContacts,
           builder: (context, state) {
             if (state is ProcessingState) {

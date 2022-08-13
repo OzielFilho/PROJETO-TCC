@@ -9,6 +9,7 @@ import '../../../../core/presentation/widgets/form_desing.dart';
 import '../../../../core/presentation/widgets/loading_desing.dart';
 import '../../../../core/theme/theme_app.dart';
 import '../../../../core/utils/colors/colors_utils.dart';
+import '../../../../core/utils/widgets_utils.dart';
 import '../controllers/create_account_controller/create_account_bloc.dart';
 import '../controllers/create_account_controller/create_account_event.dart';
 
@@ -41,6 +42,12 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       listener: (context, state) {
         if (state is SuccessCreateAccountState) {
           Modular.to.pushReplacementNamed('/welcome/');
+        }
+        if (state is NetworkErrorState) {
+          WidgetUtils.showOkDialog(
+              context, 'Internet Indisponível', state.message!, 'Reload', () {
+            Modular.to.pop(context);
+          }, permanentDialog: false);
         }
       },
       builder: (context, state) {
@@ -170,6 +177,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                             child: ButtonDesign(
                                 text: 'Criar Conta',
                                 action: () {
+                                  FocusScope.of(context).unfocus();
                                   if (!(state is ProcessingState)) {
                                     _createAccount.add(
                                         CreateAccountWithEmailAndPasswordEvent(

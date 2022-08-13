@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../../core/error/failure.dart';
 import '../../../../../core/presentation/controller/app_state.dart';
 import '../../../../../core/usecases/usecase.dart';
 import '../../../domain/usecases/login_with_google_user.dart';
@@ -18,9 +19,14 @@ class LoginWithGoogleBloc extends Bloc<LoginWithGoogleEvent, AppState>
     emit(ProcessingState());
 
     final result = await _loginGoogleUser.call(NoParams());
-    emit(result
-        .fold((failure) => ErrorState('Não foi possível realizar o login'),
-            (success) {
+    emit(result.fold((failure) {
+      switch (failure.runtimeType) {
+        case NetworkFailure:
+          return NetworkErrorState('Sem conexão com a internet');
+        default:
+          return ErrorState('Não foi possível realizar o login');
+      }
+    }, (success) {
       return !success.welcomePage ? SuccessWelcomeState() : SuccessHomeState();
     }));
   }

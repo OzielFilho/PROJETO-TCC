@@ -8,6 +8,7 @@ import '../../../../core/presentation/widgets/form_desing.dart';
 import '../../../../core/presentation/widgets/loading_desing.dart';
 import '../../../../core/theme/theme_app.dart';
 import '../../../../core/utils/colors/colors_utils.dart';
+import '../../../../core/utils/widgets_utils.dart';
 import '../controllers/login_controller/login_bloc.dart';
 import '../controllers/login_controller/login_event.dart';
 import '../controllers/login_google_controller/login_google_bloc.dart';
@@ -38,6 +39,13 @@ class _LoginAppPageState extends State<LoginAppPage> {
           }
           if (state is SuccessWelcomeState) {
             Modular.to.pushReplacementNamed('/welcome/');
+          }
+
+          if (state is NetworkErrorState) {
+            WidgetUtils.showOkDialog(
+                context, 'Internet Indisponível', state.message!, 'Reload', () {
+              Modular.to.pop(context);
+            }, permanentDialog: false);
           }
         },
         builder: (context, stateEmail) {
@@ -123,6 +131,7 @@ class _LoginAppPageState extends State<LoginAppPage> {
                               child: ButtonDesign(
                                   text: 'Entrar',
                                   action: () {
+                                    FocusScope.of(context).unfocus();
                                     if (!(stateGoogle is ProcessingState) ||
                                         !(stateEmail is ProcessingState)) {
                                       _loginBloc.add(
@@ -216,14 +225,21 @@ class _LoginAppPageState extends State<LoginAppPage> {
                         ))),
               );
             },
-            listener: (context, state) {
-              if (state is SuccessHomeState) {
+            listener: (context, stateGoogle) {
+              if (stateGoogle is SuccessHomeState) {
                 Modular.to.pushReplacementNamed(
                   '/home/',
                 );
               }
-              if (state is SuccessWelcomeState) {
+              if (stateGoogle is SuccessWelcomeState) {
                 Modular.to.pushReplacementNamed('/welcome/');
+              }
+
+              if (stateGoogle is NetworkErrorState) {
+                WidgetUtils.showOkDialog(context, 'Internet Indisponível',
+                    stateGoogle.message!, 'Reload', () {
+                  Modular.to.pop(context);
+                }, permanentDialog: false);
               }
             },
             bloc: _loginGoogleBloc,

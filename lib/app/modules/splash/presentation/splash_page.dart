@@ -35,7 +35,9 @@ class _SplashPageState extends State<SplashPage> {
         if (state is ErrorState) {
           WidgetUtils.showOkDialog(context, 'Não foi possível entrar no app',
               state.message!, 'Reload', () {
-            Modular.to.pushReplacementNamed('/');
+            Modular.to.pop(context);
+            _splashBloc.close();
+            _splashBloc.add(LoggedUserEvent());
           }, permanentDialog: false);
         }
         if (!(state is NetworkErrorState)) {
@@ -55,7 +57,8 @@ class _SplashPageState extends State<SplashPage> {
         if (state is NetworkErrorState) {
           WidgetUtils.showOkDialog(
               context, 'Internet Indisponível', state.message!, 'Reload', () {
-            Modular.to.pushReplacementNamed('/');
+            Modular.to.pop(context);
+            _splashBloc.add(LoggedUserEvent());
           }, permanentDialog: false);
         }
       },

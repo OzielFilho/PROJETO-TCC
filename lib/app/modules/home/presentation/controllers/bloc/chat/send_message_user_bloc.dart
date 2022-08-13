@@ -2,6 +2,7 @@ import 'package:app/app/modules/home/domain/usecases/chat/send_message_to_user.d
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../../../core/error/failure.dart';
 import '../../../../../../core/presentation/controller/app_state.dart';
 import '../../events/home_event.dart';
 
@@ -22,9 +23,14 @@ class SendMessageUserBloc extends Bloc<HomeEvent, AppState>
         message: event.message,
         name: event.name);
     final result = await _usecase.call(params);
-    emit(result.fold(
-        (failure) => SendMessageToUserErrorState('Não foi enviar a mensagem'),
-        (success) => SuccessSendMessageUserChatState()));
+    emit(result.fold((failure) {
+      switch (failure.runtimeType) {
+        case NetworkFailure:
+          return NetworkErrorState('Sem conexão com a internet');
+        default:
+          return SendMessageToUserErrorState('Não foi enviar a mensagem');
+      }
+    }, (success) => SuccessSendMessageUserChatState()));
   }
 
   @override

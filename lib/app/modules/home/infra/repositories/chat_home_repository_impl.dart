@@ -1,3 +1,5 @@
+import 'package:app/app/core/services/network_service.dart';
+
 import '../../domain/entities/details_contact_chat.dart';
 import '../../../../core/error/failure.dart';
 import '../../domain/entities/message_chat.dart';
@@ -10,12 +12,15 @@ import '../../../../core/error/exceptions.dart';
 
 class ChatHomeRepositoryImpl implements ChatHomeRepository {
   final ChatHomeDatasource datasource;
-
-  ChatHomeRepositoryImpl(this.datasource);
+  final NetworkService _networkService;
+  ChatHomeRepositoryImpl(this.datasource, this._networkService);
 
   @override
   Future<Either<Failure, List<DetailsContactChat>>>
       getListDetailsContactFromPhoneChat({List<String>? phones}) async {
+    if (!(await _networkService.hasConnection)) {
+      return left(NetworkFailure());
+    }
     try {
       final result =
           await datasource.getListDetailsContactFromPhoneChat(phones: phones);
@@ -45,6 +50,9 @@ class ChatHomeRepositoryImpl implements ChatHomeRepository {
       String? tokenIdUser,
       String? tokenIdContact,
       String? name}) async {
+    if (!(await _networkService.hasConnection)) {
+      return left(NetworkFailure());
+    }
     try {
       final result = await datasource.sendMessageToUser(
           message: message,

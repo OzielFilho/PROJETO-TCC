@@ -1,3 +1,4 @@
+import '../../../../../core/error/failure.dart';
 import '../../../../../core/presentation/controller/app_state.dart';
 import '../../../../../core/usecases/usecase.dart';
 import '../../../domain/usecases/get_current_position.dart';
@@ -21,9 +22,14 @@ class GetCurrentLocationBloc extends Bloc<HomeEvent, AppState>
       GetCurrentLocationEvent event, Emitter<AppState> emit) async {
     emit(ProcessingState());
     final result = await _usecase.call(NoParams());
-    emit(result.fold(
-        (failure) => ErrorState('Não foi possível capturar sua localização'),
-        (success) {
+    emit(result.fold((failure) {
+      switch (failure.runtimeType) {
+        case NetworkFailure:
+          return NetworkErrorState('Sem conexão com a internet');
+        default:
+          return ErrorState('Não foi possível capturar sua localização');
+      }
+    }, (success) {
       _location = success;
       position = CameraPosition(
         target: LatLng(_location!.lat, _location!.long),

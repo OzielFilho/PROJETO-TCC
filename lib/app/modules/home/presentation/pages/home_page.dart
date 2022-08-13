@@ -54,6 +54,13 @@ class _HomePageState extends State<HomePage> {
                 .toList();
             _actionsServiceImpl.initialization(contacts);
           }
+          if (state is NetworkErrorState) {
+            WidgetUtils.showOkDialog(
+                context, 'Internet Indisponível', state.message!, 'Reload', () {
+              Modular.to.pop(context);
+              _blocGetUserHome.add(GetUserHomeEvent());
+            }, permanentDialog: false);
+          }
         },
         bloc: _blocGetUserHome,
         builder: (context, stateGetUser) {
@@ -175,6 +182,13 @@ class _HomePageState extends State<HomePage> {
                     if (state is ErrorState) {
                       WidgetUtils.showOkDialog(context, 'Localização',
                           state.message!, 'Reload', () {});
+                    }
+                    if (state is NetworkErrorState) {
+                      WidgetUtils.showOkDialog(context, 'Internet Indisponível',
+                          state.message!, 'Reload', () {
+                        Modular.to.pop(context);
+                        _blocCurrentPositionHome.add(GetCurrentLocationEvent());
+                      }, permanentDialog: false);
                     }
                   },
                   bloc: _blocCurrentPositionHome,

@@ -24,6 +24,8 @@ class RecoveryAccountBloc extends Bloc<RecoveryAccountWithEmailEvent, AppState>
           return EmailOrPasswordEmptyErrorState('Email está vazio');
         case ParamsInvalidUserFailure:
           return EmailOrPasswordInvalidErrorState('Email inválido');
+        case NetworkFailure:
+          return NetworkErrorState('Sem conexão com a internet');
         case RecoveryPasswordFailure:
           return ErrorState('Usuário não encotrado');
         default:

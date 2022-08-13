@@ -13,7 +13,7 @@ class WelcomeModule extends Module {
   @override
   final List<Bind> binds = [
     Bind((i) => FirebaseWelcomeDatasourceImpl(i(), i())),
-    Bind((i) => WelcomeRepositoryImpl(i())),
+    Bind((i) => WelcomeRepositoryImpl(i(), i())),
     Bind((i) => GetUserCreate(i())),
     Bind((i) => GetUserWelcomeBloc(i())),
     Bind((i) => UpdateUserCreate(i())),

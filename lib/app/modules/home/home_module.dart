@@ -28,8 +28,8 @@ class HomeModule extends Module {
   List<Bind> get binds => [
         Bind((i) => HomeInformation(i(), i(), i())),
         Bind((i) => ChatHomeFromFirebase(i(), i())),
-        Bind((i) => HomeRepositoryImpl(i())),
-        Bind((i) => ChatHomeRepositoryImpl(i())),
+        Bind((i) => HomeRepositoryImpl(i(), i())),
+        Bind((i) => ChatHomeRepositoryImpl(i(), i())),
         Bind((i) => LogoutUser(i())),
         Bind((i) => GetUserHome(i())),
         Bind((i) => GetCurrentPosition(i())),

@@ -8,6 +8,7 @@ import '../../../../core/presentation/widgets/form_desing.dart';
 import '../../../../core/presentation/widgets/loading_desing.dart';
 import '../../../../core/theme/theme_app.dart';
 import '../../../../core/utils/colors/colors_utils.dart';
+import '../../../../core/utils/widgets_utils.dart';
 import '../controllers/recovery_account_controller/recovery_account_bloc.dart';
 import '../controllers/recovery_account_controller/recovery_account_event.dart';
 
@@ -19,7 +20,15 @@ class RecoveryAccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RecoveryAccountBloc, AppState>(
+    return BlocConsumer<RecoveryAccountBloc, AppState>(
+      listener: (context, state) {
+        if (state is NetworkErrorState) {
+          WidgetUtils.showOkDialog(
+              context, 'Internet Indisponível', state.message!, 'Reload', () {
+            Modular.to.pop(context);
+          }, permanentDialog: false);
+        }
+      },
       bloc: _recoveryBloc,
       builder: (context, state) {
         return Scaffold(
@@ -95,6 +104,7 @@ class RecoveryAccountPage extends StatelessWidget {
                         child: ButtonDesign(
                             text: 'Recuperar Senha',
                             action: () {
+                              FocusScope.of(context).unfocus();
                               if (!(state is SuccessState)) {
                                 _recoveryBloc.add(RecoveryAccountWithEmailEvent(
                                     email: _emailRecoveryController.text));

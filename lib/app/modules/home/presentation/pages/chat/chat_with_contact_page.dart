@@ -1,3 +1,4 @@
+import 'package:app/app/core/services/locations_service.dart';
 import 'package:app/app/core/utils/widgets_utils.dart';
 import 'package:app/app/modules/home/presentation/controllers/bloc/chat/send_message_user_bloc.dart';
 
@@ -36,10 +37,17 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
   ScrollController _controller = ScrollController();
   final _messageController = TextEditingController();
   final _sendMessageBloc = Modular.get<SendMessageUserBloc>();
+  String _localtion = '';
   _sendToLastElement() {
-    Future.delayed(Duration(milliseconds: 500), () {
+    Future.delayed(Duration(milliseconds: 100), () {
       _controller.jumpTo(_controller.position.maxScrollExtent);
     });
+  }
+
+  _currentLocation() async {
+    final locaiton = await LocationsServiceImpl().getCurrentLocation();
+    _localtion =
+        'Olá, minha localização atual é ${locaiton.latitude},${locaiton.longitude}';
   }
 
   @override
@@ -175,47 +183,99 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                     );
                                   }
 
-                                  return IconButton(
-                                    icon: Icon(
-                                      Icons.arrow_forward_outlined,
-                                      color: ColorUtils.primaryColor,
+                                  return SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.25,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(
+                                            Icons.location_on_outlined,
+                                            color: ColorUtils.primaryColor,
+                                          ),
+                                          onPressed: () async {
+                                            FocusScope.of(context).unfocus();
+                                            if (!(state is ProcessingState)) {
+                                              await _currentLocation();
+                                              _sendMessageBloc.add(
+                                                  SendMessageToUserEvent(
+                                                      message: MessageChat(
+                                                          date: DateTime.now()
+                                                              .toUtc()
+                                                              .toString(),
+                                                          text: _localtion,
+                                                          tokenId: widget
+                                                              .tokenIdUser),
+                                                      tokenIdContact:
+                                                          widget.tokenIdContact,
+                                                      tokenIdUser:
+                                                          widget.tokenIdUser,
+                                                      name: widget.name));
+                                              _sendMessageBloc.add(
+                                                  SendMessageToUserEvent(
+                                                      message: MessageChat(
+                                                          date: DateTime.now()
+                                                              .toUtc()
+                                                              .toString(),
+                                                          text: _localtion,
+                                                          tokenId: widget
+                                                              .tokenIdUser),
+                                                      tokenIdContact:
+                                                          widget.tokenIdUser,
+                                                      tokenIdUser:
+                                                          widget.tokenIdContact,
+                                                      name: widget.name));
+                                            }
+                                          },
+                                        ),
+                                        IconButton(
+                                          icon: Icon(
+                                            Icons.arrow_forward_outlined,
+                                            color: ColorUtils.primaryColor,
+                                          ),
+                                          onPressed: () {
+                                            FocusScope.of(context).unfocus();
+                                            if (!(state is ProcessingState)) {
+                                              _sendMessageBloc.add(
+                                                  SendMessageToUserEvent(
+                                                      message: MessageChat(
+                                                          date: DateTime.now()
+                                                              .toUtc()
+                                                              .toString(),
+                                                          text:
+                                                              _messageController
+                                                                  .text,
+                                                          tokenId: widget
+                                                              .tokenIdUser),
+                                                      tokenIdContact:
+                                                          widget.tokenIdContact,
+                                                      tokenIdUser:
+                                                          widget.tokenIdUser,
+                                                      name: widget.name));
+                                              _sendMessageBloc.add(
+                                                  SendMessageToUserEvent(
+                                                      message: MessageChat(
+                                                          date: DateTime.now()
+                                                              .toUtc()
+                                                              .toString(),
+                                                          text:
+                                                              _messageController
+                                                                  .text,
+                                                          tokenId: widget
+                                                              .tokenIdUser),
+                                                      tokenIdContact:
+                                                          widget.tokenIdUser,
+                                                      tokenIdUser:
+                                                          widget.tokenIdContact,
+                                                      name: widget.name));
+                                            }
+                                          },
+                                        ),
+                                      ],
                                     ),
-                                    onPressed: () {
-                                      FocusScope.of(context).unfocus();
-                                      if (!(state is ProcessingState)) {
-                                        _sendMessageBloc.add(
-                                            SendMessageToUserEvent(
-                                                message:
-                                                    MessageChat(
-                                                        date: DateTime.now()
-                                                            .toUtc()
-                                                            .toString(),
-                                                        text:
-                                                            _messageController
-                                                                .text,
-                                                        tokenId:
-                                                            widget.tokenIdUser),
-                                                tokenIdContact:
-                                                    widget.tokenIdContact,
-                                                tokenIdUser: widget.tokenIdUser,
-                                                name: widget.name));
-                                        _sendMessageBloc.add(
-                                            SendMessageToUserEvent(
-                                                message: MessageChat(
-                                                    date: DateTime.now()
-                                                        .toUtc()
-                                                        .toString(),
-                                                    text:
-                                                        _messageController.text,
-                                                    tokenId:
-                                                        widget.tokenIdUser),
-                                                tokenIdContact:
-                                                    widget.tokenIdUser,
-                                                tokenIdUser:
-                                                    widget.tokenIdContact,
-                                                name: widget.name));
-                                      }
-                                    },
                                   );
                                 },
                               ),

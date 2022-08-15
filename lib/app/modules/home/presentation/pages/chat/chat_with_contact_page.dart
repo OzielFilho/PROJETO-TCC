@@ -36,6 +36,12 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
   ScrollController _controller = ScrollController();
   final _messageController = TextEditingController();
   final _sendMessageBloc = Modular.get<SendMessageUserBloc>();
+  _sendToLastElement() {
+    Future.delayed(Duration(milliseconds: 500), () {
+      _controller.jumpTo(_controller.position.maxScrollExtent);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -90,141 +96,136 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                     if (snapshot.hasData) {
                       final result = snapshot.data!;
 
-                      return Container(
-                        height: MediaQuery.of(context).size.height,
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            SingleChildScrollView(
+                      return Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: 12.0,
+                                right: 12.0,
+                                top: 12.0,
+                                bottom:
+                                    MediaQuery.of(context).size.height * .08),
+                            child: ListView.builder(
                               controller: _controller,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: 12.0,
-                                    right: 12.0,
-                                    top: 12.0,
-                                    bottom: MediaQuery.of(context).size.height *
-                                        .08),
-                                child: ListView.builder(
-                                  controller: _controller,
-                                  itemBuilder: (context, index) {
-                                    bool isContact = result[index].tokenId ==
-                                        widget.tokenIdContact;
-                                    return Container(
-                                      alignment: isContact
-                                          ? Alignment.centerLeft
-                                          : Alignment.centerRight,
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 12.0),
-                                      child: BubbleChat(
-                                        message: result[index].text,
-                                        color: isContact
-                                            ? ColorUtils.whiteColor
-                                            : ColorUtils.whiteColor
-                                                .withOpacity(0.7),
-                                      ),
-                                    );
-                                  },
-                                  itemCount: result.length,
-                                  shrinkWrap: true,
-                                ),
-                              ),
+                              physics: BouncingScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                bool isContact = result[index].tokenId ==
+                                    widget.tokenIdContact;
+                                _sendToLastElement();
+                                return Container(
+                                  alignment: isContact
+                                      ? Alignment.centerLeft
+                                      : Alignment.centerRight,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12.0),
+                                  child: BubbleChat(
+                                    message: result[index].text,
+                                    color: isContact
+                                        ? ColorUtils.whiteColor
+                                        : ColorUtils.whiteColor
+                                            .withOpacity(0.7),
+                                  ),
+                                );
+                              },
+                              itemCount: result.length,
+                              shrinkWrap: true,
                             ),
-                            Container(
-                              alignment: Alignment.bottomCenter,
-                              color: ColorUtils.primaryColor,
-                              padding: const EdgeInsets.only(
-                                  bottom: 6, left: 12.0, right: 12.0, top: 6.0),
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * .08,
-                              child: FormsDesign(
-                                prefixIcon: null,
-                                filled: true,
-                                suffixIcon:
-                                    BlocConsumer<SendMessageUserBloc, AppState>(
-                                  bloc: _sendMessageBloc,
-                                  listener: (context, state) {
-                                    if (state is ErrorState) {
-                                      WidgetUtils.showSnackBar(
-                                          context, state.message!,
-                                          actionText: 'Fechar', onTap: () {
-                                        Modular.to.pop(context);
-                                      });
-                                    }
-                                    if (state
-                                        is SuccessSendMessageUserChatState) {
-                                      _messageController.clear();
-                                      FocusScope.of(context).unfocus();
-                                    }
-                                    if (state is NetworkErrorState) {
-                                      WidgetUtils.showOkDialog(
-                                          context,
-                                          'Internet Indisponível',
-                                          state.message!,
-                                          'Reload', () {
-                                        Modular.to.pop(context);
-                                      }, permanentDialog: false);
-                                    }
-                                  },
-                                  builder: (context, state) {
-                                    if (state is ProcessingState) {
-                                      return Center(
-                                        child: LoadingDesign(),
-                                      );
-                                    }
+                          ),
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                            color: ColorUtils.primaryColor,
+                            padding: const EdgeInsets.only(
+                                bottom: 6, left: 12.0, right: 12.0, top: 6.0),
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * .08,
+                            child: FormsDesign(
+                              prefixIcon: null,
+                              filled: true,
+                              suffixIcon:
+                                  BlocConsumer<SendMessageUserBloc, AppState>(
+                                bloc: _sendMessageBloc,
+                                listener: (context, state) {
+                                  if (state is ErrorState) {
+                                    WidgetUtils.showSnackBar(
+                                        context, state.message!,
+                                        actionText: 'Fechar', onTap: () {
+                                      Modular.to.pop(context);
+                                    });
+                                  }
+                                  if (state
+                                      is SuccessSendMessageUserChatState) {
+                                    _messageController.clear();
+                                    FocusScope.of(context).unfocus();
+                                  }
+                                  if (state is NetworkErrorState) {
+                                    WidgetUtils.showOkDialog(
+                                        context,
+                                        'Internet Indisponível',
+                                        state.message!,
+                                        'Reload', () {
+                                      Modular.to.pop(context);
+                                    }, permanentDialog: false);
+                                  }
+                                },
+                                builder: (context, state) {
+                                  if (state is ProcessingState) {
+                                    return Center(
+                                      child: LoadingDesign(),
+                                    );
+                                  }
 
-                                    return IconButton(
-                                      icon: Icon(
-                                        Icons.arrow_forward_outlined,
-                                        color: ColorUtils.primaryColor,
-                                      ),
-                                      onPressed: () {
-                                        FocusScope.of(context).unfocus();
-                                        if (!(state is ProcessingState)) {
-                                          _sendMessageBloc
-                                              .add(SendMessageToUserEvent(
-                                                  message: MessageChat(
-                                                      date:
-                                                          DateTime.now()
-                                                              .toUtc()
-                                                              .toString(),
-                                                      text:
-                                                          _messageController
-                                                              .text,
-                                                      tokenId:
-                                                          widget.tokenIdUser),
-                                                  tokenIdContact:
-                                                      widget.tokenIdContact,
-                                                  tokenIdUser:
-                                                      widget.tokenIdUser,
-                                                  name: widget.name));
-                                          _sendMessageBloc.add(
-                                              SendMessageToUserEvent(
-                                                  message: MessageChat(
-                                                      date: DateTime.now()
-                                                          .toUtc()
-                                                          .toString(),
-                                                      text: _messageController
-                                                          .text,
-                                                      tokenId:
-                                                          widget.tokenIdUser),
-                                                  tokenIdContact:
-                                                      widget.tokenIdUser,
-                                                  tokenIdUser:
-                                                      widget.tokenIdContact,
-                                                  name: widget.name));
-                                        }
-                                      },
-                                    );
-                                  },
-                                ),
-                                borderRadius: 35,
-                                title: 'Insira uma mensagem',
-                                visibility: false,
-                                controller: _messageController,
+                                  return IconButton(
+                                    icon: Icon(
+                                      Icons.arrow_forward_outlined,
+                                      color: ColorUtils.primaryColor,
+                                    ),
+                                    onPressed: () {
+                                      FocusScope.of(context).unfocus();
+                                      if (!(state is ProcessingState)) {
+                                        _sendMessageBloc.add(
+                                            SendMessageToUserEvent(
+                                                message:
+                                                    MessageChat(
+                                                        date: DateTime.now()
+                                                            .toUtc()
+                                                            .toString(),
+                                                        text:
+                                                            _messageController
+                                                                .text,
+                                                        tokenId:
+                                                            widget.tokenIdUser),
+                                                tokenIdContact:
+                                                    widget.tokenIdContact,
+                                                tokenIdUser: widget.tokenIdUser,
+                                                name: widget.name));
+                                        _sendMessageBloc.add(
+                                            SendMessageToUserEvent(
+                                                message: MessageChat(
+                                                    date: DateTime.now()
+                                                        .toUtc()
+                                                        .toString(),
+                                                    text:
+                                                        _messageController.text,
+                                                    tokenId:
+                                                        widget.tokenIdUser),
+                                                tokenIdContact:
+                                                    widget.tokenIdUser,
+                                                tokenIdUser:
+                                                    widget.tokenIdContact,
+                                                name: widget.name));
+                                      }
+                                    },
+                                  );
+                                },
                               ),
+                              borderRadius: 35,
+                              title: 'Insira uma mensagem',
+                              visibility: false,
+                              controller: _messageController,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       );
                     }
                     return Container();

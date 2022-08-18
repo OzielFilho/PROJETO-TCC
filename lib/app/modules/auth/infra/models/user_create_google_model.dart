@@ -1,25 +1,27 @@
 import 'dart:convert';
-import 'dart:io';
+
+import 'package:app/app/modules/auth/domain/entities/user_create_google.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../../core/utils/constants/encrypt_data.dart';
-import '../../domain/entities/user_create.dart';
 
-class UserCreateModel extends UserCreate {
+class UserCreateGoogleModel extends UserCreateGoogle {
   final String email;
   final String password;
   final String name;
   final List<String> contacts;
   final String confirmePassword;
   final bool welcomePage;
+
+  String? photo;
   final String phone;
-  final File? photo;
-  UserCreateModel(this.email, this.password, this.name, this.contacts,
-      this.phone, this.confirmePassword, this.welcomePage, this.photo)
+  UserCreateGoogleModel(this.email, this.password, this.name, this.contacts,
+      this.photo, this.phone, this.confirmePassword, this.welcomePage)
       : super(
             email: email,
             password: password,
-            name: name,
             photo: photo,
+            name: name,
             confirmePassword: confirmePassword,
             contacts: contacts,
             phone: phone);
@@ -36,16 +38,8 @@ class UserCreateModel extends UserCreate {
     };
   }
 
-  factory UserCreateModel.fromUserCreate(UserCreate userCreate) =>
-      UserCreateModel(
-          userCreate.email,
-          userCreate.password,
-          userCreate.name,
-          userCreate.contacts!,
-          userCreate.phone,
-          userCreate.confirmePassword,
-          userCreate.welcomePage!,
-          userCreate.photo);
+  factory UserCreateGoogleModel.fromUser(User user) => UserCreateGoogleModel(
+      user.email!, '', user.displayName!, [], user.photoURL, '', '', false);
 
   String toJson() => json.encode(toMap());
 }

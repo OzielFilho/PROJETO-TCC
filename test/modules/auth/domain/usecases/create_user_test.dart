@@ -26,8 +26,14 @@ void main() {
   });
 
   group('Create User Group', () {
-    final resultAuth =
-        AuthResult('osos@osso.com', '1212151', true, '(85)98828-6381', 'ozzy');
+    final resultAuth = AuthResult(
+        email: 'oziel@hotmail.com',
+        tokenId: 'afafafafaf',
+        welcomePage: false,
+        phone: '2545gsgsgs85',
+        name: 'Oziel',
+        contacts: [],
+        photo: 'www.com');
     final inputAuth = UserCreate(
         email: 'jose@hotmail.com',
         password: '1234567',

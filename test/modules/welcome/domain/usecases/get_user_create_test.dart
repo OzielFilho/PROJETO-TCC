@@ -16,7 +16,13 @@ void main() {
     repository = WelcomeRepositoryImpl();
     usecase = GetUserCreate(repository!);
     authResult = AuthResult(
-        'oziel@hotmail.com', 'afafafafaf', false, '2545gsgsgs85', 'Oziel');
+        email: 'oziel@hotmail.com',
+        tokenId: 'afafafafaf',
+        welcomePage: false,
+        phone: '2545gsgsgs85',
+        name: 'Oziel',
+        contacts: [],
+        photo: 'www.com');
   });
 
   test('Should return AuthResult if usecase returns success', () async {

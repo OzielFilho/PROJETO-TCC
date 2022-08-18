@@ -1,4 +1,6 @@
+import 'package:app/app/core/services/firestorage_service.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'core/services/audio_service.dart';
 import 'core/services/locations_service.dart';
@@ -25,8 +27,12 @@ class AppModule extends Module {
     Bind((i) => NetworkServiceImpl()),
     Bind((i) => LocationsServiceImpl()),
     Bind((i) => AudioServiceImpl(AssetsAudioPlayer())),
+    Bind((i) => FirestorageServiceImpl(FirebaseStorage.instance)),
     Bind((i) => FirebaseAuthDatasourceImpl(
-        authService: i(), googleSignIn: GoogleSignIn(), firestore: i())),
+        authService: i(),
+        googleSignIn: GoogleSignIn(),
+        firestore: i(),
+        firestorageService: i())),
   ];
 
   @override

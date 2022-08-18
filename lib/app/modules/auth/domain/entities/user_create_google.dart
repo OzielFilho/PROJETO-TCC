@@ -1,16 +1,14 @@
-import 'dart:io';
-
-class UserCreate {
+class UserCreateGoogle {
   final String email;
   final String password;
   final String name;
   List<String>? contacts;
   final String phone;
+  String? photo;
   bool? welcomePage;
-  File? photo;
   final String confirmePassword;
 
-  UserCreate(
+  UserCreateGoogle(
       {required this.email,
       required this.password,
       required this.confirmePassword,

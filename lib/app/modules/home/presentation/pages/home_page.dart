@@ -142,8 +142,10 @@ class _HomePageState extends State<HomePage> {
                                         onTap: () {
                                           _updateOptionsShow();
                                           Modular.to.pushNamed(
-                                            'configurations_home',
-                                          );
+                                              'configurations_home',
+                                              arguments: {
+                                                'user': _blocGetUserHome.user!
+                                              });
                                         },
                                         child: SvgDesign(
                                           height: 25,

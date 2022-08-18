@@ -1,3 +1,5 @@
+import 'package:app/app/modules/home/presentation/pages/edit_profile_home_page.dart';
+
 import 'domain/usecases/chat/send_message_to_user.dart';
 import 'domain/usecases/get_current_position.dart';
 import 'domain/usecases/get_user_home.dart';
@@ -53,7 +55,8 @@ class HomeModule extends Module {
             transition: TransitionType.leftToRight,
             duration: Duration(milliseconds: 500)),
         ChildRoute('/configurations_home',
-            child: (context, args) => ConfigurationsHomePage(),
+            child: (context, args) =>
+                ConfigurationsHomePage(user: args.data['user']),
             transition: TransitionType.leftToRight,
             duration: Duration(milliseconds: 500)),
         ChildRoute('/chat_home',
@@ -71,6 +74,11 @@ class HomeModule extends Module {
             duration: Duration(milliseconds: 500)),
         ChildRoute('/emergence_phones_home',
             child: (context, args) => EmergencePhonesHome(),
+            transition: TransitionType.leftToRight,
+            duration: Duration(milliseconds: 500)),
+        ChildRoute('/edit_profile_home',
+            child: (context, args) =>
+                EditProfileHomePage(user: args.data['user']),
             transition: TransitionType.leftToRight,
             duration: Duration(milliseconds: 500)),
       ];

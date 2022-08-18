@@ -15,7 +15,7 @@ class FirebaseWelcomeDatasourceImpl implements WelcomeDatasource {
     final token = await auth.getToken();
     final document = await store.getDocument('users', token);
 
-    final userAuth = AuthResultModel.fromDocument(document);
+    final userAuth = AuthResultModel.fromMap(document);
     if (userAuth.phone.isNotEmpty) {
       final phoneCrypt = EncryptData().encrypty(user.phone).base16;
       if (!await store.existDocument('contacts', phoneCrypt)) {
@@ -36,7 +36,14 @@ class FirebaseWelcomeDatasourceImpl implements WelcomeDatasource {
     final token = await auth.getToken();
     final document = await store.getDocument('users', token);
 
-    final userAuth = AuthResultModel.fromDocument(document);
+    final userAuth = AuthResultModel(
+        email: document['email'],
+        name: document['name'],
+        phone: document['phone'],
+        welcomePage: document['welcomePage'],
+        contacts: [],
+        photo: document['photo'],
+        tokenId: '');
     return userAuth;
   }
 }

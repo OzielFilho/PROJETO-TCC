@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:app/app/core/services/image_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../../../core/presentation/controller/app_state.dart';
@@ -27,6 +31,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   final _phoneControllerNew = TextEditingController();
   final _passwordControllerNew = TextEditingController();
   final _createAccount = Modular.get<CreateAccountBloc>();
+  File? _file;
 
   bool _visibilityConfirmPassword = true;
   bool _visibilityPassword = true;
@@ -72,6 +77,37 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       alignment: Alignment.centerLeft,
                       child: Text('Insira suas credenciais',
                           style: ThemeApp.theme.textTheme.subtitle1),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    InkWell(
+                      borderRadius: BorderRadius.circular(50.0),
+                      onTap: () async {
+                        final file = await ImageServiceImpl(ImagePicker())
+                            .getImage(isCamera: false);
+                        _file = file;
+                        setState(() {});
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 110,
+                        width: 110,
+                        decoration: BoxDecoration(
+                            image: _file != null
+                                ? DecorationImage(
+                                    image: FileImage(_file!), fit: BoxFit.cover)
+                                : null,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: ColorUtils.whiteColor)),
+                        child: _file != null
+                            ? Container()
+                            : Icon(
+                                Icons.photo_camera_outlined,
+                                size: 40,
+                                color: ColorUtils.whiteColor,
+                              ),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 25.0),
@@ -182,6 +218,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                                     _createAccount.add(
                                         CreateAccountWithEmailAndPasswordEvent(
                                             contacts: [],
+                                            photo: _file,
                                             welcomePage: false,
                                             phone: _phoneControllerNew.text,
                                             confirmePassword:

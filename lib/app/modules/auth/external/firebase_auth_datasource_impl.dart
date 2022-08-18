@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../core/error/exceptions.dart';
 import '../../../core/services/firebase_auth_service.dart';
+import '../../../core/services/firestorage_service.dart';
 import '../../../core/services/firestore_service.dart';
 import '../../../core/utils/constants/encrypt_data.dart';
 import '../domain/entities/auth_result.dart';
@@ -10,14 +11,17 @@ import '../infra/datasources/create_account_datasource.dart';
 import '../infra/datasources/login_datasource.dart';
 import '../infra/datasources/recovery_datasource.dart';
 import '../infra/models/auth_result_model.dart';
+import '../infra/models/user_create_google_model.dart';
 import '../infra/models/user_create_model.dart';
 
 class FirebaseAuthDatasourceImpl
     implements LoginDatasource, CreateAccountDatasource, RecoveryDatasource {
   final FirebaseAuthServiceImpl authService;
   final GoogleSignIn googleSignIn;
+  final FirestorageServiceImpl firestorageService;
   final FirestoreServiceImpl firestore;
   FirebaseAuthDatasourceImpl({
+    required this.firestorageService,
     required this.authService,
     required this.googleSignIn,
     required this.firestore,
@@ -31,7 +35,7 @@ class FirebaseAuthDatasourceImpl
         await authService.signInWithEmailAndPassword(email, password);
     final user = await firestore.getDocument('users', userLogin.uid);
 
-    userResult = AuthResultModel.fromDocument(user);
+    userResult = AuthResultModel.fromMap(user);
     return userResult;
   }
 
@@ -57,14 +61,14 @@ class FirebaseAuthDatasourceImpl
 
       if (!existUser) {
         await firestore.createDocument('users', userCredential.uid,
-            UserCreateModel.fromUser(userCredential).toMap());
+            UserCreateGoogleModel.fromUser(userCredential).toMap());
         await firestore
             .createDocument('chat', userCredential.uid, {'contacts': []});
       }
 
       final user = await firestore.getDocument('users', userCredential.uid);
 
-      userResult = AuthResultModel.fromDocument(user);
+      userResult = AuthResultModel.fromMap(user);
       return userResult;
     }
     return userResult;
@@ -73,7 +77,8 @@ class FirebaseAuthDatasourceImpl
   @override
   Future<AuthResult> createAccountWithEmailAndPassword(
       UserCreateModel userCreate) async {
-    late AuthResult userResult;
+    String urlPhoto = '';
+    late AuthResultModel userResult;
 
     final phoneCrypt = EncryptData().encrypty(userCreate.phone).base16;
 
@@ -87,15 +92,28 @@ class FirebaseAuthDatasourceImpl
     if (!(existInContact)) {
       final user =
           await authService.createUser(userCreate.email, userCreate.password);
+      if (userCreate.photo != null) {
+        await firestorageService.saveArchive(
+            path: 'image_user/${user.uid}.jpg', data: userCreate.photo);
+        urlPhoto = await firestorageService.getArchive(
+            path: 'image_user/${user.uid}.jpg');
+      }
+
       userResult = AuthResultModel(
-          user.email!, user.uid, false, phoneCrypt, userCreate.name);
+          email: user.email!,
+          tokenId: user.uid,
+          welcomePage: false,
+          phone: phoneCrypt,
+          contacts: userCreate.contacts,
+          name: userCreate.name,
+          photo: urlPhoto);
       await firestore.createDocument(
           'contacts', phoneCrypt, {'tokenId': userResult.tokenId});
       await firestore
           .createDocument('chat', userResult.tokenId!, {'contacts': []});
     }
     await firestore.createDocument(
-        'users', userResult.tokenId!, userCreate.toMap());
+        'users', userResult.tokenId!, userResult.toMap());
 
     return userResult;
   }

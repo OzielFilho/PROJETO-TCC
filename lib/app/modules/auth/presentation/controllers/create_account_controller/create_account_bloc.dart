@@ -28,6 +28,7 @@ class CreateAccountBloc
         welcomePage: event.welcomePage,
         confirmePassword: event.confirmePassword,
         contacts: event.contacts,
+        photo: event.photo,
         phone: event.phone));
     emit(result.fold((failure) {
       switch (failure.runtimeType) {

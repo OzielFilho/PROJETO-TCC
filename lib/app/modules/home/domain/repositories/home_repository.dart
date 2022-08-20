@@ -8,4 +8,6 @@ abstract class HomeRepository {
   Future<Either<Failure, void>> logoutUser();
   Future<Either<Failure, CurrentPosition>> getCurrentLocation();
   Future<Either<Failure, UserResultHome>> getUserHome();
+  Future<Either<Failure, UserResultHome>> updateUser(
+      {UserResultHome userUpdate});
 }

@@ -32,4 +32,13 @@ class HomeInformation implements HomeDatasource {
   Future<void> logoutUser() async {
     await authService.signOut();
   }
+
+  @override
+  Future<UserResultHomeModel> updateUser(
+      {UserResultHomeModel? updateUser}) async {
+    await firestoreService.updateDocument(
+        'users', updateUser!.tokenId, updateUser.toMap());
+    final doc = await firestoreService.getDocument('users', updateUser.tokenId);
+    return UserResultHomeModel.fromDocument(doc);
+  }
 }

@@ -2,6 +2,7 @@ import '../../../../core/presentation/controller/app_state.dart';
 import '../../../../core/theme/theme_app.dart';
 import '../../../../core/utils/widgets_utils.dart';
 import '../../domain/entities/user_result_home.dart';
+import '../controllers/bloc/get_user_home_bloc.dart';
 import '../controllers/bloc/logout_user_bloc.dart';
 import '../controllers/events/home_event.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class ConfigurationsHomePage extends StatefulWidget {
   final UserResultHome? user;
+  final GetUserHomeBloc? blocGetUser;
 
-  const ConfigurationsHomePage({Key? key, this.user}) : super(key: key);
+  const ConfigurationsHomePage({Key? key, this.user, required this.blocGetUser})
+      : super(key: key);
 
   @override
   State<ConfigurationsHomePage> createState() => _ConfigurationsHomePageState();
@@ -44,7 +47,10 @@ class _ConfigurationsHomePageState extends State<ConfigurationsHomePage> {
               children: [
                 TextButton(
                     onPressed: () => Modular.to.pushNamed('edit_profile_home',
-                        arguments: {'user': widget.user}),
+                            arguments: {
+                              'user': widget.user,
+                              'bloc': widget.blocGetUser
+                            }),
                     child: Text(
                       'Editar Perfil',
                       style: ThemeApp.theme.textTheme.headline2,

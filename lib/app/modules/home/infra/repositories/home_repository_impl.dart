@@ -8,6 +8,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../domain/entities/user_result_home.dart';
+import '../models/user_result_home_model.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   final HomeDatasource datasource;
@@ -51,6 +52,23 @@ class HomeRepositoryImpl implements HomeRepository {
     }
     try {
       final result = await datasource.getUserHome();
+      return right(result);
+    } on InformationsUserException {
+      return left(GetUserFailure());
+    } catch (e) {
+      return left(GetUserFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserResultHome>> updateUser(
+      {UserResultHome? userUpdate}) async {
+    if (!(await _networkService.hasConnection)) {
+      return left(NetworkFailure());
+    }
+    try {
+      final result = await datasource.updateUser(
+          updateUser: UserResultHomeModel.fromUserResultHome(userUpdate!));
       return right(result);
     } on InformationsUserException {
       return left(GetUserFailure());

@@ -83,11 +83,48 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     ),
                     InkWell(
                       borderRadius: BorderRadius.circular(50.0),
-                      onTap: () async {
-                        final file = await ImageServiceImpl(ImagePicker())
-                            .getImage(isCamera: false);
-                        _file = file;
-                        setState(() {});
+                      onTap: () {
+                        WidgetUtils.showOkDialog(
+                            context,
+                            'Escolha uma Imagem',
+                            'Escolha uma imagem para o seu perfil',
+                            'Fechar',
+                            () => Modular.to.pop(),
+                            content: Column(
+                              children: [
+                                InkWell(
+                                  child: Text(
+                                    '1. Câmera',
+                                    style: ThemeApp.theme.textTheme.headline2,
+                                  ),
+                                  onTap: () async {
+                                    final file =
+                                        await ImageServiceImpl(ImagePicker())
+                                            .getImage();
+                                    _file = file;
+                                    setState(() {});
+                                    Modular.to.pop();
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                InkWell(
+                                  child: Text(
+                                    '2. Galeria',
+                                    style: ThemeApp.theme.textTheme.headline2,
+                                  ),
+                                  onTap: () async {
+                                    final file =
+                                        await ImageServiceImpl(ImagePicker())
+                                            .getImage(isCamera: false);
+                                    _file = file;
+                                    setState(() {});
+                                    Modular.to.pop();
+                                  },
+                                ),
+                              ],
+                            ));
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -100,13 +137,13 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                                 : null,
                             shape: BoxShape.circle,
                             border: Border.all(color: ColorUtils.whiteColor)),
-                        child: _file != null
-                            ? Container()
-                            : Icon(
-                                Icons.photo_camera_outlined,
-                                size: 40,
-                                color: ColorUtils.whiteColor,
-                              ),
+                        child: Icon(
+                          Icons.photo_camera_outlined,
+                          size: 40,
+                          color: _file != null
+                              ? ColorUtils.whiteColor.withOpacity(.5)
+                              : ColorUtils.whiteColor,
+                        ),
                       ),
                     ),
                     Padding(

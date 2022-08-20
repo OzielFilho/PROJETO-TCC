@@ -1,3 +1,5 @@
+import 'package:app/app/modules/home/domain/usecases/update_user_home.dart';
+import 'package:app/app/modules/home/presentation/controllers/bloc/update_user_home_bloc.dart';
 import 'package:app/app/modules/home/presentation/pages/edit_profile_home_page.dart';
 
 import 'domain/usecases/chat/send_message_to_user.dart';
@@ -46,6 +48,8 @@ class HomeModule extends Module {
         Bind((i) => GetListMessageChatUserBloc(i())),
         Bind((i) => SendMessageToUser(i())),
         Bind((i) => SendMessageUserBloc(i())),
+        Bind((i) => UpdateUserHome(i())),
+        Bind((i) => UpdateUserHomeBloc(i(), i()))
       ];
 
   @override
@@ -55,8 +59,8 @@ class HomeModule extends Module {
             transition: TransitionType.leftToRight,
             duration: Duration(milliseconds: 500)),
         ChildRoute('/configurations_home',
-            child: (context, args) =>
-                ConfigurationsHomePage(user: args.data['user']),
+            child: (context, args) => ConfigurationsHomePage(
+                user: args.data['user'], blocGetUser: args.data['bloc']),
             transition: TransitionType.leftToRight,
             duration: Duration(milliseconds: 500)),
         ChildRoute('/chat_home',
@@ -81,8 +85,8 @@ class HomeModule extends Module {
             transition: TransitionType.leftToRight,
             duration: Duration(milliseconds: 500)),
         ChildRoute('/edit_profile_home',
-            child: (context, args) =>
-                EditProfileHomePage(user: args.data['user']),
+            child: (context, args) => EditProfileHomePage(
+                user: args.data['user'], blocGetUser: args.data['bloc']),
             transition: TransitionType.leftToRight,
             duration: Duration(milliseconds: 500)),
       ];

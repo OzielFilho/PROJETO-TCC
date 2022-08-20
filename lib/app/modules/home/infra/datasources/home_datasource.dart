@@ -5,4 +5,5 @@ abstract class HomeDatasource {
   Future<void> logoutUser();
   Future<CurrentPositionModel> getCurrentLocation();
   Future<UserResultHomeModel> getUserHome();
+  Future<UserResultHomeModel> updateUser({UserResultHomeModel updateUser});
 }

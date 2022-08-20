@@ -14,4 +14,18 @@ class UserResultHomeModel extends UserResultHome {
     return UserResultHomeModel(data['email'], data['phone'], data['name'],
         formatterListContacts, data['tokenId'], data['photo']);
   }
+
+  factory UserResultHomeModel.fromUserResultHome(UserResultHome user) {
+    return UserResultHomeModel(user.email, user.phone, user.name, user.contacts,
+        user.tokenId, user.photo);
+  }
+
+  Map<String, dynamic> toMap() => {
+        'email': email,
+        'phone': phone,
+        'name': name,
+        'contacts': contacts,
+        'tokenId': tokenId,
+        'photo': photo,
+      };
 }

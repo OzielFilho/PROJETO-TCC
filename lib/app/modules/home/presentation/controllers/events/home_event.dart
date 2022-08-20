@@ -1,4 +1,5 @@
 import 'package:app/app/modules/home/domain/entities/message_chat.dart';
+import 'package:app/app/modules/home/domain/entities/user_result_home.dart';
 
 abstract class HomeEvent {}
 
@@ -41,3 +42,9 @@ class GetListMessageChatUserEvent implements HomeEvent {
 class GetCurrentLocationEvent implements HomeEvent {}
 
 class LogoutUserEvent implements HomeEvent {}
+
+class UpdateUserHomeEvent implements HomeEvent {
+  final UserResultHome user;
+
+  UpdateUserHomeEvent(this.user);
+}

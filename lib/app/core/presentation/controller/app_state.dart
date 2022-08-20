@@ -89,3 +89,5 @@ class UserNotFoundErrorState extends ErrorState {
 }
 
 class UserNotLoggedState extends AppState {}
+
+class SuccessUpdateUserState extends AppState {}

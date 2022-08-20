@@ -146,7 +146,8 @@ class _HomePageState extends State<HomePage> {
                                           Modular.to.pushNamed(
                                               'configurations_home',
                                               arguments: {
-                                                'user': _blocGetUserHome.user!
+                                                'user': _blocGetUserHome.user!,
+                                                'bloc': _blocGetUserHome
                                               });
                                         },
                                         child: SvgDesign(
@@ -229,7 +230,9 @@ class _HomePageState extends State<HomePage> {
                             initialCameraPosition:
                                 _blocCurrentPositionHome.position!,
                             onMapCreated: (GoogleMapController controller) {
-                              _controller.complete(controller);
+                              if (!_controller.isCompleted) {
+                                _controller.complete(controller);
+                              }
                             },
                           );
                         }

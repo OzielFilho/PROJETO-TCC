@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import '../../../../../core/utils/colors/colors_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -28,7 +26,6 @@ class _ChatPageHomeState extends State<ChatPageHome>
   late TabController _tabController;
   @override
   void initState() {
-    log('image ${widget.photoUser}');
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }

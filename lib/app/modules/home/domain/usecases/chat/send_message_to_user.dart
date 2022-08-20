@@ -23,6 +23,7 @@ class SendMessageToUser extends Usecase<void, Params> {
     return await repository.sendMessageToUser(
         message: params.message,
         name: params.name,
+        photo: params.photo,
         tokenIdContact: params.idTokenContact,
         tokenIdUser: params.idTokenUser);
   }

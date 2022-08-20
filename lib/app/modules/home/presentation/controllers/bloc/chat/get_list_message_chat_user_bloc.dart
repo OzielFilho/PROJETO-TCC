@@ -17,12 +17,14 @@ class GetListMessageChatUserBloc extends Bloc<HomeEvent, AppState>
   Stream<List<MessageChat>>? streamGetList;
 
   _onGetListContactsMessage(
-      GetListMessageChatUserEvent event, Emitter<AppState> emit) {
+      GetListMessageChatUserEvent event, Emitter<AppState> emit) async {
+    streamGetList = Stream<List<MessageChat>>.empty();
     emit(ProcessingState());
 
     if (event.tokenIdContact.isEmpty || event.tokenIdUser.isEmpty) {
       emit(ErrorState('Não foi possível carregar as mensagens'));
     }
+    await Future.delayed(Duration(seconds: 1));
 
     final result = _usecase.call(event.tokenIdUser, event.tokenIdContact);
     streamGetList = result;

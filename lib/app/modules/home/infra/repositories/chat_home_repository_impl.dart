@@ -59,6 +59,7 @@ class ChatHomeRepositoryImpl implements ChatHomeRepository {
           message: message,
           tokenIdContact: tokenIdContact!,
           tokenIdUser: tokenIdUser!,
+          photo: photo!,
           name: name!);
       return right(result);
     } on ChatHomeException {

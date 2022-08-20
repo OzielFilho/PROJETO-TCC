@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:app/app/core/services/locations_service.dart';
 import 'package:app/app/core/utils/widgets_utils.dart';
 import 'package:app/app/modules/home/presentation/controllers/bloc/chat/send_message_user_bloc.dart';
@@ -59,7 +57,6 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
   @override
   void initState() {
     super.initState();
-    log('image ${widget.photoUser} -- ${widget.photoContact}');
     _blocChatListUser.add(GetListMessageChatUserEvent(
         tokenIdUser: widget.tokenIdUser,
         tokenIdContact: widget.tokenIdContact));
@@ -87,7 +84,6 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
         body: BlocBuilder<GetListMessageChatUserBloc, AppState>(
             bloc: _blocChatListUser,
             builder: (context, state) {
-              print(state);
               if (state is ProcessingState) {
                 return Center(child: LoadingDesign());
               }
@@ -110,12 +106,10 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                       return Center(child: LoadingDesign());
                     }
                     if (snapshot.hasData) {
-                      final result = snapshot.data!;
-
                       return Stack(
                         alignment: Alignment.bottomCenter,
                         children: [
-                          result.isNotEmpty
+                          snapshot.data!.isNotEmpty
                               ? Center(
                                   child: Padding(
                                     padding: EdgeInsets.only(
@@ -130,7 +124,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                       physics: BouncingScrollPhysics(),
                                       itemBuilder: (context, index) {
                                         bool isContact =
-                                            result[index].tokenId ==
+                                            snapshot.data![index].tokenId ==
                                                 widget.tokenIdContact;
                                         _sendToLastElement();
                                         return Container(
@@ -140,7 +134,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 12.0),
                                           child: BubbleChat(
-                                            message: result[index].text,
+                                            message: snapshot.data![index].text,
                                             color: isContact
                                                 ? ColorUtils.whiteColor
                                                 : ColorUtils.whiteColor
@@ -148,7 +142,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                           ),
                                         );
                                       },
-                                      itemCount: result.length,
+                                      itemCount: snapshot.data!.length,
                                       shrinkWrap: true,
                                     ),
                                   ),
@@ -219,24 +213,9 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                             color: ColorUtils.primaryColor,
                                           ),
                                           onPressed: () async {
+                                            await _currentLocation();
                                             FocusScope.of(context).unfocus();
                                             if (!(state is ProcessingState)) {
-                                              await _currentLocation();
-                                              _sendMessageBloc.add(
-                                                  SendMessageToUserEvent(
-                                                      photo: widget.photoUser,
-                                                      message: MessageChat(
-                                                          date: DateTime.now()
-                                                              .toUtc()
-                                                              .toString(),
-                                                          text: _localtion,
-                                                          tokenId: widget
-                                                              .tokenIdUser),
-                                                      tokenIdContact:
-                                                          widget.tokenIdContact,
-                                                      tokenIdUser:
-                                                          widget.tokenIdUser,
-                                                      name: widget.name));
                                               _sendMessageBloc.add(
                                                   SendMessageToUserEvent(
                                                       photo:
@@ -249,11 +228,26 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                                           tokenId: widget
                                                               .tokenIdUser),
                                                       tokenIdContact:
+                                                          widget.tokenIdContact,
+                                                      tokenIdUser:
+                                                          widget.tokenIdUser,
+                                                      name: widget.name));
+                                              _sendMessageBloc.add(
+                                                  SendMessageToUserEvent(
+                                                      photo: widget.photoUser,
+                                                      message: MessageChat(
+                                                          date: DateTime.now()
+                                                              .toUtc()
+                                                              .toString(),
+                                                          text: _localtion,
+                                                          tokenId: widget
+                                                              .tokenIdUser),
+                                                      tokenIdContact:
                                                           widget.tokenIdUser,
                                                       tokenIdUser:
                                                           widget.tokenIdContact,
                                                       name: widget.name));
-                                              if (result.isEmpty) {
+                                              if (snapshot.data!.isEmpty) {
                                                 _blocChatListUser.add(
                                                     GetListMessageChatUserEvent(
                                                         tokenIdUser:
@@ -274,7 +268,8 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                             if (!(state is ProcessingState)) {
                                               _sendMessageBloc.add(
                                                   SendMessageToUserEvent(
-                                                      photo: widget.photoUser,
+                                                      photo:
+                                                          widget.photoContact,
                                                       message: MessageChat(
                                                           date: DateTime.now()
                                                               .toUtc()
@@ -291,8 +286,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                                       name: widget.name));
                                               _sendMessageBloc.add(
                                                   SendMessageToUserEvent(
-                                                      photo:
-                                                          widget.photoContact,
+                                                      photo: widget.photoUser,
                                                       message: MessageChat(
                                                           date: DateTime.now()
                                                               .toUtc()
@@ -307,7 +301,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                                       tokenIdUser:
                                                           widget.tokenIdContact,
                                                       name: widget.name));
-                                              if (result.isEmpty) {
+                                              if (snapshot.data!.isEmpty) {
                                                 _blocChatListUser.add(
                                                     GetListMessageChatUserEvent(
                                                         tokenIdUser:

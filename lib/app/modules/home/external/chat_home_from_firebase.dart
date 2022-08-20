@@ -57,15 +57,13 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
         Stream<List<MessageChatModel>>.value([]);
     final existDocument =
         await firestoreService.existDocument('chat', tokenIdUserActual!);
-    if (existDocument) {
-      final snapshot =
-          firestoreService.getDocumentSnapshot('chat', tokenIdUserActual);
-      final existSnapshot = (await snapshot
-              .map((event) => event.data()!['contacts'])
-              .first as List)
-          .isNotEmpty;
 
-      if (existSnapshot) {
+    if (existDocument) {
+      final docChat =
+          await firestoreService.getDocument('chat', tokenIdUserActual);
+      if (docChat['contacts'].isNotEmpty) {
+        final snapshot =
+            firestoreService.getDocumentSnapshot('chat', tokenIdUserActual);
         doc = snapshot.map((event) => event.data()!['contacts']).map(
             (contacts) => (contacts
                     .map((contact) => ContactsWithMessageModel.fromMap(contact))

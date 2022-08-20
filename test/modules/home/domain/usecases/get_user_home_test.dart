@@ -16,8 +16,8 @@ void main() {
   setUp(() {
     repository = HomeRepositoryImpl();
     usecase = GetUserHome(repository!);
-    userResult = UserResultHome(
-        'osos@osso.com', '(85)98828-6381', 'ozzy', ['154545645'], 's151515');
+    userResult = UserResultHome('osos@osso.com', '(85)98828-6381', 'ozzy',
+        ['154545645'], 's151515', 'www.do');
   });
 
   test('Should return an AuthResult if usecase GetUserHome return success',

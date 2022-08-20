@@ -33,9 +33,11 @@ class Params {
   final String idTokenContact;
   final MessageChat message;
   final String name;
+  final String photo;
 
   Params(
       {required this.idTokenUser,
+      required this.photo,
       required this.name,
       required this.idTokenContact,
       required this.message});

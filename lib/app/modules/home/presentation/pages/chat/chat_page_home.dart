@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../../../../core/utils/colors/colors_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -9,7 +11,12 @@ import 'chat_list_home_page.dart';
 class ChatPageHome extends StatefulWidget {
   final List<String> contacts;
   final String tokenId;
-  ChatPageHome({Key? key, required this.contacts, required this.tokenId})
+  final String photoUser;
+  ChatPageHome(
+      {Key? key,
+      required this.contacts,
+      required this.tokenId,
+      required this.photoUser})
       : super(key: key);
 
   @override
@@ -21,6 +28,7 @@ class _ChatPageHomeState extends State<ChatPageHome>
   late TabController _tabController;
   @override
   void initState() {
+    log('image ${widget.photoUser}');
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -55,8 +63,13 @@ class _ChatPageHomeState extends State<ChatPageHome>
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
-          ChatConversationHomePage(tokenId: widget.tokenId),
-          ChatListHomePage(contacts: widget.contacts, tokenId: widget.tokenId)
+          ChatConversationHomePage(
+              tokenId: widget.tokenId, photo: widget.photoUser),
+          ChatListHomePage(
+            contacts: widget.contacts,
+            tokenId: widget.tokenId,
+            photo: widget.photoUser,
+          )
         ],
       ),
     );

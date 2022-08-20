@@ -14,5 +14,6 @@ abstract class ChatHomeDatasource {
       {MessageChat? message,
       String tokenIdUser,
       String tokenIdContact,
-      String name});
+      String name,
+      String photo});
 }

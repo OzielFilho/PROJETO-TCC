@@ -1,3 +1,5 @@
+import 'package:app/app/modules/home/presentation/pages/chat/widgets/header_chat_user.dart';
+
 import '../../../../../core/presentation/controller/app_state.dart';
 import '../../controllers/events/home_event.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,10 @@ import '../../controllers/bloc/chat/get_list_contacts_message_bloc.dart';
 
 class ChatConversationHomePage extends StatefulWidget {
   final String tokenId;
-  ChatConversationHomePage({Key? key, required this.tokenId}) : super(key: key);
+  final String photo;
+  ChatConversationHomePage(
+      {Key? key, required this.tokenId, required this.photo})
+      : super(key: key);
 
   @override
   State<ChatConversationHomePage> createState() =>
@@ -90,25 +95,21 @@ class _ChatConversationHomePageState extends State<ChatConversationHomePage> {
                         );
                       }
                       return ListView.builder(
-                        itemBuilder: (context, index) => ListTile(
-                          onTap: () => Modular.to
-                              .pushNamed('chat_with_contact_home', arguments: {
-                            'tokenIdContact': result[index].tokenId,
-                            'tokenIdUser': widget.tokenId,
-                            'name': result[index].name
-                          }),
-                          leading: CircleAvatar(),
-                          subtitle: Text(
-                            '${result[index].messages.last.text}',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: ThemeApp.theme.textTheme.subtitle1,
-                          ),
-                          title: Text(
-                            '${result[index].name}',
-                            style: ThemeApp.theme.textTheme.headline2,
-                          ),
-                        ),
+                        itemBuilder: (context, index) => InkWell(
+                            onTap: () => Modular.to.pushNamed(
+                                    'chat_with_contact_home',
+                                    arguments: {
+                                      'tokenIdContact': result[index].tokenId,
+                                      'tokenIdUser': widget.tokenId,
+                                      'photoContact': result[index].photo,
+                                      'photoUser': widget.photo,
+                                      'name': result[index].name
+                                    }),
+                            child: HeaderChatUser(
+                              title: '${result[index].name}',
+                              body: '${result[index].messages.last.text}',
+                              image: '${result[index].photo}',
+                            )),
                         itemCount: result.length,
                         shrinkWrap: true,
                       );

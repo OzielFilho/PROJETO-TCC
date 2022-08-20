@@ -7,24 +7,26 @@ class ContactsWithMessageModel extends ContactsWithMessage {
   final List<MessageChatModel> messages;
   final String tokenId;
   final String name;
-  ContactsWithMessageModel(this.messages, this.tokenId, this.name)
-      : super(messages, tokenId, name);
+  final String? photo;
+  ContactsWithMessageModel(this.messages, this.tokenId, this.name, this.photo)
+      : super(messages, tokenId, name, photo);
 
   Map<String, dynamic> toMap() {
     return {
       'messages': messages.map((x) => x.toMap()).toList(),
       'tokenId': tokenId,
-      'name': name
+      'name': name,
+      'photo': photo
     };
   }
 
   factory ContactsWithMessageModel.fromMap(Map<String, dynamic> map) {
     return ContactsWithMessageModel(
-      List<MessageChatModel>.from(
-          map['messages']?.map((x) => MessageChatModel.fromMap(x))),
-      map['tokenId'] ?? '',
-      map['name'] ?? '',
-    );
+        List<MessageChatModel>.from(
+            map['messages']?.map((x) => MessageChatModel.fromMap(x))),
+        map['tokenId'] ?? '',
+        map['name'] ?? '',
+        map['photo'] ?? '');
   }
 
   String toJson() => json.encode(toMap());

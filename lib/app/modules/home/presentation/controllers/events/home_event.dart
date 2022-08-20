@@ -15,9 +15,10 @@ class SendMessageToUserEvent implements HomeEvent {
   final String tokenIdContact;
   final String tokenIdUser;
   final String name;
-
+  final String photo;
   SendMessageToUserEvent(
       {required this.message,
+      required this.photo,
       required this.tokenIdContact,
       required this.tokenIdUser,
       required this.name});

@@ -4,6 +4,6 @@ class ContactsWithMessage {
   final List<MessageChat> messages;
   final String tokenId;
   final String name;
-
-  ContactsWithMessage(this.messages, this.tokenId, this.name);
+  final String? photo;
+  ContactsWithMessage(this.messages, this.tokenId, this.name, this.photo);
 }

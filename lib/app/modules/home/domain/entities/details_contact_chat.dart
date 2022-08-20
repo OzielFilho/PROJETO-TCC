@@ -3,8 +3,10 @@ class DetailsContactChat {
   final String tokenId;
   final String email;
   final String phone;
+  final String? photo;
 
   DetailsContactChat({
+    required this.photo,
     required this.name,
     required this.tokenId,
     required this.email,

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:app/app/core/services/locations_service.dart';
 import 'package:app/app/core/utils/widgets_utils.dart';
 import 'package:app/app/modules/home/presentation/controllers/bloc/chat/send_message_user_bloc.dart';
@@ -20,11 +22,15 @@ class ChatWithContactPage extends StatefulWidget {
   final String name;
   final String tokenIdUser;
   final String tokenIdContact;
+  final String photoUser;
+  final String photoContact;
   ChatWithContactPage({
     Key? key,
     required this.name,
     required this.tokenIdUser,
     required this.tokenIdContact,
+    required this.photoUser,
+    required this.photoContact,
   }) : super(key: key);
 
   @override
@@ -53,6 +59,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
   @override
   void initState() {
     super.initState();
+    log('image ${widget.photoUser} -- ${widget.photoContact}');
     _blocChatListUser.add(GetListMessageChatUserEvent(
         tokenIdUser: widget.tokenIdUser,
         tokenIdContact: widget.tokenIdContact));
@@ -80,6 +87,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
         body: BlocBuilder<GetListMessageChatUserBloc, AppState>(
             bloc: _blocChatListUser,
             builder: (context, state) {
+              print(state);
               if (state is ProcessingState) {
                 return Center(child: LoadingDesign());
               }
@@ -107,39 +115,53 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                       return Stack(
                         alignment: Alignment.bottomCenter,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: 12.0,
-                                right: 12.0,
-                                top: 12.0,
-                                bottom:
-                                    MediaQuery.of(context).size.height * .08),
-                            child: ListView.builder(
-                              controller: _controller,
-                              physics: BouncingScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                bool isContact = result[index].tokenId ==
-                                    widget.tokenIdContact;
-                                _sendToLastElement();
-                                return Container(
-                                  alignment: isContact
-                                      ? Alignment.centerLeft
-                                      : Alignment.centerRight,
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 12.0),
-                                  child: BubbleChat(
-                                    message: result[index].text,
-                                    color: isContact
-                                        ? ColorUtils.whiteColor
-                                        : ColorUtils.whiteColor
-                                            .withOpacity(0.7),
+                          result.isNotEmpty
+                              ? Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 12.0,
+                                        right: 12.0,
+                                        top: 12.0,
+                                        bottom:
+                                            MediaQuery.of(context).size.height *
+                                                .08),
+                                    child: ListView.builder(
+                                      controller: _controller,
+                                      physics: BouncingScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        bool isContact =
+                                            result[index].tokenId ==
+                                                widget.tokenIdContact;
+                                        _sendToLastElement();
+                                        return Container(
+                                          alignment: isContact
+                                              ? Alignment.centerLeft
+                                              : Alignment.centerRight,
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 12.0),
+                                          child: BubbleChat(
+                                            message: result[index].text,
+                                            color: isContact
+                                                ? ColorUtils.whiteColor
+                                                : ColorUtils.whiteColor
+                                                    .withOpacity(0.7),
+                                          ),
+                                        );
+                                      },
+                                      itemCount: result.length,
+                                      shrinkWrap: true,
+                                    ),
                                   ),
-                                );
-                              },
-                              itemCount: result.length,
-                              shrinkWrap: true,
-                            ),
-                          ),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Center(
+                                      child: Text(
+                                    'Você não possui mensagens com esse usuário. Inicie enviado uma mensagem',
+                                    style: ThemeApp.theme.textTheme.subtitle1,
+                                    textAlign: TextAlign.center,
+                                  )),
+                                ),
                           Container(
                             alignment: Alignment.bottomCenter,
                             color: ColorUtils.primaryColor,
@@ -202,6 +224,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                               await _currentLocation();
                                               _sendMessageBloc.add(
                                                   SendMessageToUserEvent(
+                                                      photo: widget.photoUser,
                                                       message: MessageChat(
                                                           date: DateTime.now()
                                                               .toUtc()
@@ -216,6 +239,8 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                                       name: widget.name));
                                               _sendMessageBloc.add(
                                                   SendMessageToUserEvent(
+                                                      photo:
+                                                          widget.photoContact,
                                                       message: MessageChat(
                                                           date: DateTime.now()
                                                               .toUtc()
@@ -228,6 +253,14 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                                       tokenIdUser:
                                                           widget.tokenIdContact,
                                                       name: widget.name));
+                                              if (result.isEmpty) {
+                                                _blocChatListUser.add(
+                                                    GetListMessageChatUserEvent(
+                                                        tokenIdUser:
+                                                            widget.tokenIdUser,
+                                                        tokenIdContact: widget
+                                                            .tokenIdContact));
+                                              }
                                             }
                                           },
                                         ),
@@ -241,6 +274,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                             if (!(state is ProcessingState)) {
                                               _sendMessageBloc.add(
                                                   SendMessageToUserEvent(
+                                                      photo: widget.photoUser,
                                                       message: MessageChat(
                                                           date: DateTime.now()
                                                               .toUtc()
@@ -257,6 +291,8 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                                       name: widget.name));
                                               _sendMessageBloc.add(
                                                   SendMessageToUserEvent(
+                                                      photo:
+                                                          widget.photoContact,
                                                       message: MessageChat(
                                                           date: DateTime.now()
                                                               .toUtc()
@@ -271,6 +307,14 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                                       tokenIdUser:
                                                           widget.tokenIdContact,
                                                       name: widget.name));
+                                              if (result.isEmpty) {
+                                                _blocChatListUser.add(
+                                                    GetListMessageChatUserEvent(
+                                                        tokenIdUser:
+                                                            widget.tokenIdUser,
+                                                        tokenIdContact: widget
+                                                            .tokenIdContact));
+                                              }
                                             }
                                           },
                                         ),

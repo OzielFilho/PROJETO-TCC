@@ -60,13 +60,19 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
     if (existDocument) {
       final snapshot =
           firestoreService.getDocumentSnapshot('chat', tokenIdUserActual);
+      final existSnapshot = (await snapshot
+              .map((event) => event.data()!['contacts'])
+              .first as List)
+          .isNotEmpty;
 
-      doc = snapshot.map((event) => event.data()!['contacts']).map((contacts) =>
-          (contacts
-                  .map((contact) => ContactsWithMessageModel.fromMap(contact))
-                  .toList())
-              .firstWhere((item) => item.tokenId == tokenIdContact)
-              .messages);
+      if (existSnapshot) {
+        doc = snapshot.map((event) => event.data()!['contacts']).map(
+            (contacts) => (contacts
+                    .map((contact) => ContactsWithMessageModel.fromMap(contact))
+                    .toList())
+                .firstWhere((item) => item.tokenId == tokenIdContact)
+                .messages);
+      }
     }
 
     yield* doc;
@@ -77,7 +83,8 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
       {MessageChat? message,
       String? tokenIdUser,
       String? tokenIdContact,
-      String? name}) async {
+      String? name,
+      String? photo}) async {
     final existDocument =
         await firestoreService.existDocument('chat', tokenIdUser!);
     if (!existDocument) {
@@ -94,7 +101,7 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
       (element) => element.tokenId == tokenIdContact,
     );
     if (existContact == null) {
-      contacts.add(ContactsWithMessageModel([], tokenIdContact!, name!));
+      contacts.add(ContactsWithMessageModel([], tokenIdContact!, name!, photo));
     }
     contacts
         .firstWhere((element) => element.tokenId == tokenIdContact)

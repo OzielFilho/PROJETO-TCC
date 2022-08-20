@@ -1,3 +1,5 @@
+import 'package:app/app/modules/home/presentation/pages/chat/widgets/header_chat_user.dart';
+
 import '../../../../../core/utils/widgets_utils.dart';
 import '../../controllers/events/home_event.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +14,12 @@ import '../../controllers/bloc/chat/get_list_details_contact_from_phone_chat_blo
 class ChatListHomePage extends StatefulWidget {
   final List<String> contacts;
   final String tokenId;
+  final String photo;
   const ChatListHomePage(
-      {Key? key, required this.contacts, required this.tokenId})
+      {Key? key,
+      required this.contacts,
+      required this.tokenId,
+      required this.photo})
       : super(key: key);
 
   @override
@@ -71,23 +77,16 @@ class _ChatListHomePageState extends State<ChatListHomePage> {
                           .pushNamed('chat_with_contact_home', arguments: {
                         'tokenIdContact':
                             _blocGetContacts.contacts![index].tokenId,
+                        'photoContact': _blocGetContacts.contacts![index].photo,
+                        'photoUser': widget.photo,
                         'tokenIdUser': widget.tokenId,
                         'name': _blocGetContacts.contacts![index].name
                       }),
-                      child: Container(
-                          child: ListTile(
-                        leading: CircleAvatar(),
-                        subtitle: Text(
-                          '${_blocGetContacts.contacts![index].email}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: ThemeApp.theme.textTheme.subtitle1,
-                        ),
-                        title: Text(
-                          '${_blocGetContacts.contacts![index].name}',
-                          style: ThemeApp.theme.textTheme.headline2,
-                        ),
-                      )),
+                      child: HeaderChatUser(
+                        body: '${_blocGetContacts.contacts![index].email}',
+                        title: '${_blocGetContacts.contacts![index].name}',
+                        image: _blocGetContacts.contacts![index].photo!,
+                      ),
                     ),
                     itemCount: _blocGetContacts.contacts!.length,
                     shrinkWrap: true,

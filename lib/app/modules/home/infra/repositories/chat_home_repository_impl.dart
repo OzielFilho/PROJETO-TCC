@@ -49,7 +49,8 @@ class ChatHomeRepositoryImpl implements ChatHomeRepository {
       {MessageChat? message,
       String? tokenIdUser,
       String? tokenIdContact,
-      String? name}) async {
+      String? name,
+      String? photo}) async {
     if (!(await _networkService.hasConnection)) {
       return left(NetworkFailure());
     }

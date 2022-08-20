@@ -130,6 +130,8 @@ class _HomePageState extends State<HomePage> {
                                                     .user!.contacts,
                                                 'tokenId': _blocGetUserHome
                                                     .user!.tokenId,
+                                                'photoUser': _blocGetUserHome
+                                                    .user!.photo,
                                               });
                                         },
                                         child: SvgDesign(

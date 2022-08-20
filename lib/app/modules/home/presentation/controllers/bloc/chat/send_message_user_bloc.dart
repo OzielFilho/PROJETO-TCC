@@ -18,6 +18,7 @@ class SendMessageUserBloc extends Bloc<HomeEvent, AppState>
     emit(ProcessingState());
 
     Params params = Params(
+        photo: event.photo,
         idTokenContact: event.tokenIdContact,
         idTokenUser: event.tokenIdUser,
         message: event.message,

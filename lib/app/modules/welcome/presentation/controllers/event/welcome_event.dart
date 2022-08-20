@@ -14,9 +14,10 @@ class UpdateUserCreateEvent implements WelcomeEvent {
   final String email;
   final List<String> contacts;
   final bool welcomePage;
-
+  final String photo;
   UpdateUserCreateEvent(
       {required this.name,
+      required this.photo,
       required this.phone,
       required this.email,
       required this.contacts,

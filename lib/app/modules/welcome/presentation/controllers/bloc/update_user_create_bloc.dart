@@ -27,6 +27,7 @@ class UpdateUserCreateBloc extends Bloc<WelcomeEvent, AppState>
         contacts: event.contacts,
         email: event.email,
         name: event.name,
+        photo: event.photo,
         phone: phone,
         welcomePage: event.welcomePage);
 

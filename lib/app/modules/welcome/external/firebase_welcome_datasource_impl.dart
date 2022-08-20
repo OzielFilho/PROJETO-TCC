@@ -18,15 +18,13 @@ class FirebaseWelcomeDatasourceImpl implements WelcomeDatasource {
     final userAuth = AuthResultModel.fromMap(document);
     if (userAuth.phone.isNotEmpty) {
       final phoneCrypt = EncryptData().encrypty(user.phone).base16;
-      if (!await store.existDocument('contacts', phoneCrypt)) {
+      final existeDoc = await store.existDocument('contacts', phoneCrypt);
+      if (!(existeDoc)) {
         await store.createDocument('contacts', phoneCrypt, {'tokenId': token});
       }
     }
     user.contacts =
         user.contacts.map((e) => EncryptData().encrypty(e).base16).toList();
-
-    user.name = userAuth.name;
-    user.email = userAuth.email;
 
     await store.updateDocument('users', token, user.toMap());
   }
@@ -35,15 +33,7 @@ class FirebaseWelcomeDatasourceImpl implements WelcomeDatasource {
   Future<AuthResultModel> getUserCreate() async {
     final token = await auth.getToken();
     final document = await store.getDocument('users', token);
-
-    final userAuth = AuthResultModel(
-        email: document['email'],
-        name: document['name'],
-        phone: document['phone'],
-        welcomePage: document['welcomePage'],
-        contacts: [],
-        photo: document['photo'],
-        tokenId: '');
+    final userAuth = AuthResultModel.fromMap(document);
     return userAuth;
   }
 }

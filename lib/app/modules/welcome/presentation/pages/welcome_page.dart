@@ -191,8 +191,12 @@ class _WelcomePageState extends State<WelcomePage> {
                                                 _updateUserCreateBloc.add(
                                                     UpdateUserCreateEvent(
                                                         contacts: _contactsText,
-                                                        email: _getUserBloc
-                                                            .user!.email,
+                                                        email:
+                                                            _getUserBloc
+                                                                .user!.email,
+                                                        photo: _getUserBloc
+                                                                .user!.photo ??
+                                                            '',
                                                         name: _getUserBloc
                                                             .user!.name,
                                                         phone: _getUserBloc

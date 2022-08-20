@@ -17,6 +17,7 @@ void main() {
         contacts: ['(85)98845-1235'],
         email: 'oziel@hotmail.com',
         name: 'Oziel',
+        photo: 'ww.com',
         phone: '(85)98828-6381',
         welcomePage: true));
   });
@@ -27,6 +28,7 @@ void main() {
         contacts: ['(85)98845-1235'],
         email: 'oziel@hotmail.com',
         name: 'Oziel',
+        photo: 'ww.com',
         phone: '(85)98828-6381',
         welcomePage: true);
   });
@@ -50,6 +52,7 @@ void main() {
         contacts: ['(85)98845-1235'],
         email: 'oziel@hotmail.com',
         name: 'Oziel',
+        photo: 'ww.com',
         phone: '',
         welcomePage: true));
 
@@ -64,6 +67,7 @@ void main() {
         contacts: ['(85)98845-1235'],
         email: 'oziel@hotmail.com',
         name: 'Oziel',
+        photo: 'ww.com',
         phone: '(85)28828-6381',
         welcomePage: true));
 
@@ -78,6 +82,7 @@ void main() {
         contacts: [],
         email: 'oziel@hotmail.com',
         name: 'Oziel',
+        photo: 'ww.com',
         phone: '(85)98828-6381',
         welcomePage: true));
 

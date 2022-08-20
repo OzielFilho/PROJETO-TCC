@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import '../../../../../core/error/failure.dart';
 import '../../../../../core/usecases/usecase.dart';
 import '../../../domain/usecases/get_user_create.dart';
@@ -20,7 +18,6 @@ class GetUserWelcomeBloc extends Bloc<WelcomeEvent, AppState>
   _onGetUserEvent(GetUserEvent event, Emitter<AppState> emit) async {
     emit(ProcessingState());
     final result = await _userCreate.call(NoParams());
-    log('result $result');
     emit(result.fold((failure) {
       switch (failure.runtimeType) {
         case NetworkFailure:

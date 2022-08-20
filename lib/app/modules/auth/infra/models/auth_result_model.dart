@@ -8,9 +8,9 @@ class AuthResultModel extends AuthResult {
       required bool welcomePage,
       required String phone,
       required String name,
-      List<String>? contacts,
-      String? photo,
-      String? tokenId})
+      required List<String> contacts,
+      required String photo,
+      required String tokenId})
       : super(
             email: email,
             welcomePage: welcomePage,
@@ -39,15 +39,19 @@ class AuthResultModel extends AuthResult {
     };
   }
 
-  factory AuthResultModel.fromMap(Map<String, dynamic> data) => AuthResultModel(
-        email: data['email'],
-        name: data['name'],
-        phone: data['phone'],
-        welcomePage: data['welcomePage'],
-        contacts: data['contacts'],
-        photo: data['photo'],
-        tokenId: '',
-      );
+  factory AuthResultModel.fromMap(Map<String, dynamic> data) {
+    final contactsConvert =
+        data['contacts'].map<String>((contact) => contact.toString()).toList();
+    return AuthResultModel(
+      email: data['email'] ?? '',
+      name: data['name'] ?? '',
+      phone: data['phone'] ?? '',
+      welcomePage: data['welcomePage'] ?? false,
+      contacts: contactsConvert ?? [],
+      photo: data['photo'] ?? '',
+      tokenId: '',
+    );
+  }
 
   String toJson() => json.encode(toMap());
 }

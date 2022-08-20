@@ -7,14 +7,17 @@ class UpdateUserWelcomeModel extends UpdateUserWelcome {
   final String phone;
   String email;
   String name;
+  String photo;
   UpdateUserWelcomeModel(
       {required this.name,
       required this.contacts,
       required this.welcomePage,
       required this.phone,
+      required this.photo,
       required this.email})
       : super(
             name: name,
+            photo: photo,
             contacts: contacts,
             phone: phone,
             welcomePage: welcomePage,
@@ -25,6 +28,7 @@ class UpdateUserWelcomeModel extends UpdateUserWelcome {
           contacts: user.contacts,
           name: user.name,
           phone: user.phone,
+          photo: user.photo,
           email: user.email,
           welcomePage: user.welcomePage);
 
@@ -36,6 +40,7 @@ class UpdateUserWelcomeModel extends UpdateUserWelcome {
       'phone': cryptPhone,
       'email': email,
       'name': name,
+      'photo': photo,
     };
   }
 }

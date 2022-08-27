@@ -1,4 +1,4 @@
-import 'package:app/app/core/services/locations_service.dart';
+import 'package:app/app/core/utils/functions_utils.dart';
 import 'package:app/app/core/utils/widgets_utils.dart';
 import 'package:app/app/modules/home/presentation/controllers/bloc/chat/send_message_user_bloc.dart';
 
@@ -41,17 +41,10 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
   ScrollController _controller = ScrollController();
   final _messageController = TextEditingController();
   final _sendMessageBloc = Modular.get<SendMessageUserBloc>();
-  String _localtion = '';
   _sendToLastElement() {
     Future.delayed(Duration(milliseconds: 100), () {
-      _controller.jumpTo(_controller.position.maxScrollExtent);
+      _controller.jumpTo(_controller.position.maxScrollExtent + 150);
     });
-  }
-
-  _currentLocation() async {
-    final locaiton = await LocationsServiceImpl().getCurrentLocation();
-    _localtion =
-        'Olá, minha localização atual é ${locaiton.latitude},${locaiton.longitude}';
   }
 
   @override
@@ -102,6 +95,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                 return StreamBuilder<List<MessageChat>>(
                   stream: _blocChatListUser.streamGetList,
                   builder: (context, snapshot) {
+                    _sendToLastElement();
                     if (!snapshot.hasData) {
                       return Center(child: LoadingDesign());
                     }
@@ -126,7 +120,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                         bool isContact =
                                             snapshot.data![index].tokenId ==
                                                 widget.tokenIdContact;
-                                        _sendToLastElement();
+
                                         return Container(
                                           alignment: isContact
                                               ? Alignment.centerLeft
@@ -213,7 +207,6 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                             color: ColorUtils.primaryColor,
                                           ),
                                           onPressed: () async {
-                                            await _currentLocation();
                                             FocusScope.of(context).unfocus();
                                             if (!(state is ProcessingState)) {
                                               _sendMessageBloc.add(
@@ -224,7 +217,8 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                                           date: DateTime.now()
                                                               .toUtc()
                                                               .toString(),
-                                                          text: _localtion,
+                                                          text: await FunctionUtils
+                                                              .currentLocationMessage,
                                                           tokenId: widget
                                                               .tokenIdUser),
                                                       tokenIdContact:
@@ -239,7 +233,8 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                                           date: DateTime.now()
                                                               .toUtc()
                                                               .toString(),
-                                                          text: _localtion,
+                                                          text: await FunctionUtils
+                                                              .currentLocationMessage,
                                                           tokenId: widget
                                                               .tokenIdUser),
                                                       tokenIdContact:

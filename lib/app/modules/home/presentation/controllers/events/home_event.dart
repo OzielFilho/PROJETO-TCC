@@ -25,6 +25,13 @@ class SendMessageToUserEvent implements HomeEvent {
       required this.name});
 }
 
+class SendMessageEmergenceWithChatEvent implements HomeEvent {
+  final List<String> contacts;
+  final String tokenId;
+
+  SendMessageEmergenceWithChatEvent(this.contacts, this.tokenId);
+}
+
 class GetListContactsMessageEvent implements HomeEvent {
   final String tokenId;
 

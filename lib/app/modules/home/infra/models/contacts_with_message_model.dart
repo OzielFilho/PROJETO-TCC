@@ -6,8 +6,8 @@ import 'message_chat_model.dart';
 class ContactsWithMessageModel extends ContactsWithMessage {
   final List<MessageChatModel> messages;
   final String tokenId;
-  final String name;
-  final String? photo;
+  String name;
+  String? photo;
   ContactsWithMessageModel(this.messages, this.tokenId, this.name, this.photo)
       : super(messages, tokenId, name, photo);
 

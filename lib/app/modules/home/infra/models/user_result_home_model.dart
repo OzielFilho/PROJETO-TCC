@@ -12,7 +12,7 @@ class UserResultHomeModel extends UserResultHome {
     final formatterListContacts =
         (data['contacts'] as List).map<String>((e) => e).toList();
     return UserResultHomeModel(data['email'], data['phone'], data['name'],
-        formatterListContacts, data['tokenId'], data['photo']);
+        formatterListContacts, data['tokenId'] ?? '', data['photo'] ?? '');
   }
 
   factory UserResultHomeModel.fromUserResultHome(UserResultHome user) {

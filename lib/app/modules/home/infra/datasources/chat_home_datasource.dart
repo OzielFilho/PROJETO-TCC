@@ -16,4 +16,6 @@ abstract class ChatHomeDatasource {
       String tokenIdContact,
       String name,
       String photo});
+  Future<void> sendMessageEmergenceWithChat(
+      {List<String> phones, String tokenId});
 }

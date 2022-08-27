@@ -2,6 +2,7 @@ import 'package:app/app/modules/home/domain/usecases/update_user_home.dart';
 import 'package:app/app/modules/home/presentation/controllers/bloc/update_user_home_bloc.dart';
 import 'package:app/app/modules/home/presentation/pages/edit_profile_home_page.dart';
 
+import 'domain/usecases/chat/send_message_emergence_with_chat.dart';
 import 'domain/usecases/chat/send_message_to_user.dart';
 import 'domain/usecases/get_current_position.dart';
 import 'domain/usecases/get_user_home.dart';
@@ -9,6 +10,7 @@ import 'domain/usecases/logout_user.dart';
 import 'infra/repositories/home_repository_impl.dart';
 import 'presentation/controllers/bloc/chat/get_list_details_contact_from_phone_chat_bloc.dart';
 import 'presentation/controllers/bloc/chat/get_list_message_chat_user_bloc.dart';
+import 'presentation/controllers/bloc/chat/send_message_emergence_with_chat_bloc.dart';
 import 'presentation/controllers/bloc/chat/send_message_user_bloc.dart';
 import 'presentation/controllers/bloc/get_user_home_bloc.dart';
 import 'presentation/controllers/bloc/logout_user_bloc.dart';
@@ -31,7 +33,7 @@ class HomeModule extends Module {
   @override
   List<Bind> get binds => [
         Bind((i) => HomeInformation(i(), i(), i())),
-        Bind((i) => ChatHomeFromFirebase(i(), i())),
+        Bind((i) => ChatHomeFromFirebase(i(), i(), i())),
         Bind((i) => HomeRepositoryImpl(i(), i())),
         Bind((i) => ChatHomeRepositoryImpl(i(), i())),
         Bind((i) => LogoutUser(i())),
@@ -49,7 +51,9 @@ class HomeModule extends Module {
         Bind((i) => SendMessageToUser(i())),
         Bind((i) => SendMessageUserBloc(i())),
         Bind((i) => UpdateUserHome(i())),
-        Bind((i) => UpdateUserHomeBloc(i(), i()))
+        Bind((i) => UpdateUserHomeBloc(i(), i())),
+        Bind((i) => SendMessageEmergenceWithChat(i())),
+        Bind((i) => SendMessageEmergenceWithChatBloc(i())),
       ];
 
   @override

@@ -16,7 +16,7 @@ class GetCurrentLocationBloc extends Bloc<HomeEvent, AppState>
   GetCurrentLocationBloc(this._usecase) : super(InitialState()) {
     on<GetCurrentLocationEvent>(_onGetCurrentLocation);
   }
-  CurrentPosition? _location;
+  CurrentPosition? location;
   CameraPosition? position;
   _onGetCurrentLocation(
       GetCurrentLocationEvent event, Emitter<AppState> emit) async {
@@ -30,9 +30,9 @@ class GetCurrentLocationBloc extends Bloc<HomeEvent, AppState>
           return ErrorState('Não foi possível capturar sua localização');
       }
     }, (success) {
-      _location = success;
+      location = success;
       position = CameraPosition(
-        target: LatLng(_location!.lat, _location!.long),
+        target: LatLng(location!.lat, location!.long),
         zoom: 17,
       );
       return SuccessGetCurrentLocationState();

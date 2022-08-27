@@ -20,6 +20,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.media.VolumeProviderCompat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.plugin.common.MethodCall;
@@ -47,6 +48,14 @@ public class MainActivity extends FlutterActivity {
                     start();
                     result.success(actionsActive);
                 }
+                else if(call.method.equals("sendSms")){
+                    Log.d("SMS","CONTATOS "+call.argument("contacts"));
+                    sendSMS(Objects.requireNonNull(call.argument("contacts")));
+
+                }
+                else{
+                    result.notImplemented();
+                }
             }
         });
     }
@@ -63,7 +72,7 @@ public class MainActivity extends FlutterActivity {
                     if (directionList.toString().contains("1, 0, 1, 0, 1, 0") || directionList.toString().contains("1, 0, 1, 0, 1, 0, 1, 0")) {
                         actionsActive = true;
                         Log.d("VOLUME_STATUS", "DEU BOM");
-                        if(actionsActive){sendSMS();}
+
                         directionList.clear();                     
                     }
 
@@ -90,16 +99,10 @@ public class MainActivity extends FlutterActivity {
         mediaSession.setActive(true);
     }
 
-    private void sendSMS(){
-        for (int i = 0; i < phones.size(); i++) {
+    public void sendSMS(List<String> contacts){
+        for (int i = 0; i < contacts.size(); i++) {
             SmsManager mySmsManager = SmsManager.getDefault();
-            try {
-                mySmsManager.sendTextMessage(phones.get(i),null, "Olá"+phones.get(i), null, null);
-                toastCreate("Mensagem Enviada com sucesso");
-            } catch (Exception e) {
-                toastCreate("Não foi possível enviar a mensagem");
-            }
-
+            mySmsManager.sendTextMessage("55085997563129",null, "Olá"+contacts.get(i), null, null);
         }
     }
 

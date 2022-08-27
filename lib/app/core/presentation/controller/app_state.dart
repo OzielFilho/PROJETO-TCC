@@ -22,6 +22,8 @@ class SuccessGetListDetailsContactFromPhoneChatState extends AppState {}
 
 class SuccessSendMessageUserChatState extends AppState {}
 
+class SuccessSendMessageEmergenceWithChatState extends AppState {}
+
 class SuccessGetListContactMessageState extends AppState {}
 
 class SuccessGetListMessageChatUserState extends AppState {}
@@ -54,6 +56,10 @@ class GetListContactsErrorState extends ErrorState {
 
 class SendMessageToUserErrorState extends ErrorState {
   SendMessageToUserErrorState(String? message) : super(message);
+}
+
+class SendMessageEmergenceWithChatErrorState extends ErrorState {
+  SendMessageEmergenceWithChatErrorState(String? message) : super(message);
 }
 
 class PhoneEmptyErrorState extends ErrorState {

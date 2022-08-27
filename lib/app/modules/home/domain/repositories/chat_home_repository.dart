@@ -16,4 +16,6 @@ abstract class ChatHomeRepository {
       String tokenIdContact,
       String name,
       String photo});
+  Future<Either<Failure, void>> sendMessageEmergenceWithChat(
+      {List<String> phones, String tokenId});
 }

@@ -1,4 +1,5 @@
 import 'package:app/app/core/services/firestorage_service.dart';
+import 'package:app/app/core/services/sms_service.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -33,6 +34,7 @@ class AppModule extends Module {
         googleSignIn: GoogleSignIn(),
         firestore: i(),
         firestorageService: i())),
+    Bind((i) => SmsServiceImpl()),
   ];
 
   @override

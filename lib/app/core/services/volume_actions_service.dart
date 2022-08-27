@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:perfect_volume_control/perfect_volume_control.dart';
 
 abstract class VolumeActionsService {
-  Future<bool> initialization(List<String> contacts);
+  initialization(VoidCallback action);
 }
 
 class VolumeActionsServiceImpl implements VolumeActionsService {
-  final _methodChannel = MethodChannel("com.lum.volume");
-
   @override
-  Future<bool> initialization(List<String> contacts) async {
-    try {
-      final bool result = await _methodChannel
-          .invokeMethod("startService", {'phones': contacts});
-      print('SEU RESULT $result');
-      return result;
-    } catch (e) {
-      debugPrint('Error $e');
-      return false;
-    }
+  initialization(VoidCallback action) {
+    List<int> volume = [];
+    PerfectVolumeControl.stream.listen((event) {
+      volume.add(1);
+      if (volume.toString() == '[1, 1, 1, 1, 1, 1]') {
+        action();
+        volume.clear();
+      }
+    });
   }
 }

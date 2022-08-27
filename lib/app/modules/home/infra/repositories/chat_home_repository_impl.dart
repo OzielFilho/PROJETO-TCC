@@ -68,4 +68,21 @@ class ChatHomeRepositoryImpl implements ChatHomeRepository {
       return left(SendMessageUserFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, void>> sendMessageEmergenceWithChat(
+      {List<String>? phones, String? tokenId}) async {
+    if (!(await _networkService.hasConnection)) {
+      return left(NetworkFailure());
+    }
+    try {
+      final result = await datasource.sendMessageEmergenceWithChat(
+          tokenId: tokenId!, phones: phones!);
+      return right(result);
+    } on ChatHomeException {
+      return left(SendMessageUserFailure());
+    } catch (e) {
+      return left(SendMessageUserFailure());
+    }
+  }
 }

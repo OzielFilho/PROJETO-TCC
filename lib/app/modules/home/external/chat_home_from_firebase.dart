@@ -1,3 +1,8 @@
+import 'package:app/app/core/services/sms_service.dart';
+import 'package:app/app/modules/home/infra/models/user_result_home_model.dart';
+
+import '../../../core/utils/constants/encrypt_data.dart';
+import '../../../core/utils/functions_utils.dart';
 import '../domain/entities/message_chat.dart';
 import '../infra/models/contacts_with_message_model.dart';
 import '../infra/models/details_contact_chat_model.dart';
@@ -10,8 +15,9 @@ import '../infra/datasources/chat_home_datasource.dart';
 class ChatHomeFromFirebase implements ChatHomeDatasource {
   final FirebaseAuthService authService;
   final FirestoreService firestoreService;
-
-  ChatHomeFromFirebase(this.authService, this.firestoreService);
+  final SmsService smsService;
+  ChatHomeFromFirebase(
+      this.authService, this.firestoreService, this.smsService);
 
   @override
   Future<List<DetailsContactChatModel>> getListDetailsContactFromPhoneChat(
@@ -101,14 +107,72 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
     if (existContact == null) {
       contacts.add(ContactsWithMessageModel([], tokenIdContact!, name!, photo));
     }
-    contacts
-        .firstWhere((element) => element.tokenId == tokenIdContact)
-        .messages
-        .add(MessageChatModel.fromMessageChat(message!));
+    ContactsWithMessageModel contactUser =
+        contacts.firstWhere((element) => element.tokenId == tokenIdContact);
+    contactUser.name = name!;
+    contactUser.photo = photo;
 
+    contactUser.messages.add(MessageChatModel.fromMessageChat(message!));
     await firestoreService.updateDocument('chat', tokenIdUser,
         {'contacts': contacts.map((e) => e.toMap()).toList()});
 
     return;
+  }
+
+  @override
+  Future<void> sendMessageEmergenceWithChat(
+      {List<String>? phones, String? tokenId}) async {
+    List<String> idsContacts = [];
+    final userDoc = await firestoreService.getDocument('users', tokenId!);
+    UserResultHomeModel user = UserResultHomeModel.fromDocument(userDoc);
+    List<String> nonExistentContacts = [];
+    for (String contact in phones!) {
+      final contactCript = EncryptData().encrypty(contact).base16;
+      final exist =
+          await firestoreService.existDocument('contacts', contactCript);
+      if (exist) {
+        final doc =
+            await firestoreService.getDocument('contacts', contactCript);
+        idsContacts.add(doc['tokenId']);
+      }
+      if (!exist) {
+        nonExistentContacts.add(contact);
+      }
+    }
+    if (nonExistentContacts.isNotEmpty) {
+      await smsService.sendSms(nonExistentContacts);
+    }
+    if (idsContacts.isNotEmpty) {
+      for (String tokenIdContact in idsContacts) {
+        final doc = await firestoreService.getDocument('chat', tokenIdContact);
+        List listChat = doc['contacts'];
+        final chat =
+            listChat.firstWhereOrNull((chat) => chat['tokenId'] == tokenId);
+        if (chat != null) {
+          final userDocContact =
+              await firestoreService.getDocument('users', tokenIdContact);
+          UserResultHomeModel contactUserResult =
+              UserResultHomeModel.fromDocument(userDocContact);
+          sendMessageToUser(
+              message: MessageChat(
+                  date: DateTime.now().toString(),
+                  text: await FunctionUtils.currentLocationMessage,
+                  tokenId: user.tokenId),
+              name: contactUserResult.name,
+              photo: contactUserResult.photo,
+              tokenIdContact: contactUserResult.tokenId,
+              tokenIdUser: user.tokenId);
+          sendMessageToUser(
+              message: MessageChat(
+                  date: DateTime.now().toString(),
+                  text: await FunctionUtils.currentLocationMessage,
+                  tokenId: user.tokenId),
+              name: user.name,
+              photo: user.photo,
+              tokenIdContact: user.tokenId,
+              tokenIdUser: tokenIdContact);
+        }
+      }
+    }
   }
 }

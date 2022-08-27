@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/app/core/services/audio_service.dart';
+import 'package:app/app/modules/home/presentation/controllers/bloc/chat/send_message_emergence_with_chat_bloc.dart';
 
 import '../../../../core/presentation/controller/app_state.dart';
 import '../../../../core/presentation/widgets/svg_design.dart';
@@ -41,10 +42,15 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
+  List<int> a = [];
+
   Completer<GoogleMapController> _controller = Completer();
 
   final _controllerAudioAssets = Modular.get<AudioService>();
-
+  double currentvol = 0.5;
+  String buttontype = "none";
+  final _blocSendMessageEmergence =
+      Modular.get<SendMessageEmergenceWithChatBloc>();
   @override
   void initState() {
     _blocGetUserHome.add(GetUserHomeEvent());
@@ -61,7 +67,11 @@ class _HomePageState extends State<HomePage> {
             List<String> contacts = _blocGetUserHome.user!.contacts
                 .map((e) => EncryptData().decrypty(e))
                 .toList();
-            _actionsServiceImpl.initialization(contacts);
+
+            _actionsServiceImpl.initialization(() {
+              _blocSendMessageEmergence.add(SendMessageEmergenceWithChatEvent(
+                  contacts, _blocGetUserHome.user!.tokenId));
+            });
           }
           if (state is NetworkErrorState) {
             WidgetUtils.showOkDialog(

@@ -58,6 +58,7 @@ class _ChatPageHomeState extends State<ChatPageHome>
         ),
       ),
       body: TabBarView(
+        physics: NeverScrollableScrollPhysics(),
         controller: _tabController,
         children: <Widget>[
           ChatConversationHomePage(

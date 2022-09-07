@@ -1,3 +1,4 @@
+import 'package:app/app/core/utils/colors/colors_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/theme/theme_app.dart';
@@ -18,6 +19,7 @@ class HeaderChatUser extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
+        backgroundColor: ColorUtils.secondaryColor,
         backgroundImage:
             image != null && image!.isNotEmpty ? NetworkImage(image!) : null,
       ),

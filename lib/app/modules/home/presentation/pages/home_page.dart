@@ -67,10 +67,11 @@ class _HomePageState extends State<HomePage> {
             List<String> contacts = _blocGetUserHome.user!.contacts
                 .map((e) => EncryptData().decrypty(e))
                 .toList();
-
             _actionsServiceImpl.initialization(() {
               _blocSendMessageEmergence.add(SendMessageEmergenceWithChatEvent(
-                  contacts, _blocGetUserHome.user!.tokenId));
+                  contacts,
+                  _blocGetUserHome.user!.tokenId,
+                  _blocCurrentPositionHome.location!));
             });
           }
           if (state is NetworkErrorState) {

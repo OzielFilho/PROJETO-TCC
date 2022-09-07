@@ -43,7 +43,11 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
   final _sendMessageBloc = Modular.get<SendMessageUserBloc>();
   _sendToLastElement() {
     Future.delayed(Duration(milliseconds: 100), () {
-      _controller.jumpTo(_controller.position.maxScrollExtent + 150);
+      _controller.animateTo(
+          _controller.position.maxScrollExtent +
+              MediaQuery.of(context).size.height * 0.85,
+          duration: Duration(milliseconds: 500),
+          curve: Curves.decelerate);
     });
   }
 
@@ -209,39 +213,40 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                           onPressed: () async {
                                             FocusScope.of(context).unfocus();
                                             if (!(state is ProcessingState)) {
-                                              _sendMessageBloc.add(
-                                                  SendMessageToUserEvent(
-                                                      photo:
-                                                          widget.photoContact,
-                                                      message: MessageChat(
-                                                          date: DateTime.now()
-                                                              .toUtc()
-                                                              .toString(),
-                                                          text: await FunctionUtils
-                                                              .currentLocationMessage,
-                                                          tokenId: widget
-                                                              .tokenIdUser),
-                                                      tokenIdContact:
-                                                          widget.tokenIdContact,
-                                                      tokenIdUser:
-                                                          widget.tokenIdUser,
-                                                      name: widget.name));
-                                              _sendMessageBloc.add(
-                                                  SendMessageToUserEvent(
-                                                      photo: widget.photoUser,
-                                                      message: MessageChat(
-                                                          date: DateTime.now()
-                                                              .toUtc()
-                                                              .toString(),
-                                                          text: await FunctionUtils
-                                                              .currentLocationMessage,
-                                                          tokenId: widget
-                                                              .tokenIdUser),
-                                                      tokenIdContact:
-                                                          widget.tokenIdUser,
-                                                      tokenIdUser:
-                                                          widget.tokenIdContact,
-                                                      name: widget.name));
+                                              _sendMessageBloc.add(SendMessageToUserEvent(
+                                                  photo: widget.photoContact,
+                                                  message: MessageChat(
+                                                      date: DateTime.now()
+                                                          .toUtc()
+                                                          .toString(),
+                                                      text: FunctionUtils
+                                                          .currentLocationMessage(
+                                                              await FunctionUtils
+                                                                  .getLocation()),
+                                                      tokenId:
+                                                          widget.tokenIdUser),
+                                                  tokenIdContact:
+                                                      widget.tokenIdContact,
+                                                  tokenIdUser:
+                                                      widget.tokenIdUser,
+                                                  name: widget.name));
+                                              _sendMessageBloc.add(SendMessageToUserEvent(
+                                                  photo: widget.photoUser,
+                                                  message: MessageChat(
+                                                      date: DateTime.now()
+                                                          .toUtc()
+                                                          .toString(),
+                                                      text: FunctionUtils
+                                                          .currentLocationMessage(
+                                                              await FunctionUtils
+                                                                  .getLocation()),
+                                                      tokenId:
+                                                          widget.tokenIdUser),
+                                                  tokenIdContact:
+                                                      widget.tokenIdUser,
+                                                  tokenIdUser:
+                                                      widget.tokenIdContact,
+                                                  name: widget.name));
                                               if (snapshot.data!.isEmpty) {
                                                 _blocChatListUser.add(
                                                     GetListMessageChatUserEvent(

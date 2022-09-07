@@ -1,3 +1,4 @@
+import 'package:app/app/modules/home/domain/entities/current_position.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failure.dart';
@@ -17,5 +18,5 @@ abstract class ChatHomeRepository {
       String name,
       String photo});
   Future<Either<Failure, void>> sendMessageEmergenceWithChat(
-      {List<String> phones, String tokenId});
+      {List<String> phones, String tokenId, CurrentPosition position});
 }

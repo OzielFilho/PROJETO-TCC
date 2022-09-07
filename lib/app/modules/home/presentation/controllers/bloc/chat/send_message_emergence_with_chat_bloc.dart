@@ -17,8 +17,10 @@ class SendMessageEmergenceWithChatBloc extends Bloc<HomeEvent, AppState>
       SendMessageEmergenceWithChatEvent event, Emitter<AppState> emit) async {
     emit(ProcessingState());
 
-    final result = await _usecase
-        .call(Params(idTokenUser: event.tokenId, contacts: event.contacts));
+    final result = await _usecase.call(Params(
+        idTokenUser: event.tokenId,
+        contacts: event.contacts,
+        position: event.position));
 
     emit(result.fold((failure) {
       switch (failure.runtimeType) {

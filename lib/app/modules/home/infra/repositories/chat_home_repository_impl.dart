@@ -1,4 +1,5 @@
 import 'package:app/app/core/services/network_service.dart';
+import 'package:app/app/modules/home/domain/entities/current_position.dart';
 
 import '../../domain/entities/details_contact_chat.dart';
 import '../../../../core/error/failure.dart';
@@ -71,13 +72,15 @@ class ChatHomeRepositoryImpl implements ChatHomeRepository {
 
   @override
   Future<Either<Failure, void>> sendMessageEmergenceWithChat(
-      {List<String>? phones, String? tokenId}) async {
+      {List<String>? phones,
+      String? tokenId,
+      CurrentPosition? position}) async {
     if (!(await _networkService.hasConnection)) {
       return left(NetworkFailure());
     }
     try {
       final result = await datasource.sendMessageEmergenceWithChat(
-          tokenId: tokenId!, phones: phones!);
+          tokenId: tokenId!, phones: phones!, position: position!);
       return right(result);
     } on ChatHomeException {
       return left(SendMessageUserFailure());

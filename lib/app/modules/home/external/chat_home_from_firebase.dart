@@ -1,4 +1,5 @@
 import 'package:app/app/core/services/sms_service.dart';
+import 'package:app/app/modules/home/domain/entities/current_position.dart';
 import 'package:app/app/modules/home/infra/models/user_result_home_model.dart';
 
 import '../../../core/utils/constants/encrypt_data.dart';
@@ -121,7 +122,9 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
 
   @override
   Future<void> sendMessageEmergenceWithChat(
-      {List<String>? phones, String? tokenId}) async {
+      {List<String>? phones,
+      String? tokenId,
+      CurrentPosition? position}) async {
     List<String> idsContacts = [];
     final userDoc = await firestoreService.getDocument('users', tokenId!);
     UserResultHomeModel user = UserResultHomeModel.fromDocument(userDoc);
@@ -156,7 +159,7 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
           sendMessageToUser(
               message: MessageChat(
                   date: DateTime.now().toString(),
-                  text: await FunctionUtils.currentLocationMessage,
+                  text: FunctionUtils.currentLocationMessage(position!),
                   tokenId: user.tokenId),
               name: contactUserResult.name,
               photo: contactUserResult.photo,
@@ -165,7 +168,7 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
           sendMessageToUser(
               message: MessageChat(
                   date: DateTime.now().toString(),
-                  text: await FunctionUtils.currentLocationMessage,
+                  text: FunctionUtils.currentLocationMessage(position),
                   tokenId: user.tokenId),
               name: user.name,
               photo: user.photo,

@@ -58,6 +58,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  bool _statusSoundPolice = false;
+  bool _statusSoundAlert = false;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GetUserHomeBloc, AppState>(
@@ -273,7 +275,7 @@ class _HomePageState extends State<HomePage> {
                                 ? Container(
                                     height: 55,
                                     width:
-                                        MediaQuery.of(context).size.width * 0.7,
+                                        MediaQuery.of(context).size.width * 0.5,
                                     decoration: BoxDecoration(
                                         color: ColorUtils.primaryColor,
                                         borderRadius:
@@ -286,33 +288,31 @@ class _HomePageState extends State<HomePage> {
                                       children: [
                                         InkWell(
                                             onTap: () async {
+                                              _statusSoundPolice =
+                                                  !_statusSoundPolice;
                                               await _controllerAudioAssets.play(
                                                   path:
-                                                      'assets/audios/police.wav');
+                                                      'assets/audios/police.mp3',
+                                                  status: _statusSoundPolice);
                                             },
-                                            child: SvgDesign(
-                                              path:
-                                                  'assets/images/svg/button_police_icon.svg',
+                                            child: Icon(
+                                              Icons.local_police,
+                                              size: 30,
+                                              color: ColorUtils.whiteColor,
                                             )),
                                         InkWell(
                                             onTap: () async {
+                                              _statusSoundAlert =
+                                                  !_statusSoundAlert;
                                               await _controllerAudioAssets.play(
                                                   path:
-                                                      'assets/audios/sirene.mp3');
+                                                      'assets/audios/sirene.mp3',
+                                                  status: _statusSoundAlert);
                                             },
-                                            child: SvgDesign(
-                                              path:
-                                                  'assets/images/svg/button_sound_icon.svg',
-                                            )),
-                                        InkWell(
-                                            onTap: () async {
-                                              await _controllerAudioAssets.play(
-                                                  path:
-                                                      'assets/audios/bomb.mp3');
-                                            },
-                                            child: SvgDesign(
-                                              path:
-                                                  'assets/images/svg/button_bomb_icon.svg',
+                                            child: Icon(
+                                              Icons.volume_up_rounded,
+                                              size: 30,
+                                              color: ColorUtils.whiteColor,
                                             )),
                                         InkWell(
                                             onTap: _updateVolumeOptionsShow,

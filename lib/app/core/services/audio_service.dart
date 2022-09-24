@@ -1,7 +1,7 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 
 abstract class AudioService {
-  Future<void> play({String path});
+  Future<void> play({String path, bool status = true});
 }
 
 class AudioServiceImpl implements AudioService {
@@ -9,13 +9,18 @@ class AudioServiceImpl implements AudioService {
 
   AudioServiceImpl(this._audioPlayer);
   @override
-  Future<void> play({String? path}) async {
+  Future<void> play({String? path, bool status = true}) async {
     await _audioPlayer.open(
       Audio(path!),
       autoStart: true,
       volume: 100,
+      loopMode: LoopMode.single,
       showNotification: false,
     );
-    _audioPlayer.play();
+    if (status) {
+      _audioPlayer.play();
+      return;
+    }
+    _audioPlayer.stop();
   }
 }

@@ -42,6 +42,9 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
+  void _navigateToContactsEmergence() =>
+      Modular.to.pushNamed('emergence_phones_home');
+
   Completer<GoogleMapController> _controller = Completer();
 
   final _controllerAudioAssets = Modular.get<AudioService>();
@@ -112,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                           ? Padding(
                               padding: const EdgeInsets.only(right: 28.0),
                               child: Container(
-                                height: 180,
+                                height: 150,
                                 width: MediaQuery.of(context).size.width * .085,
                                 decoration: BoxDecoration(
                                     color: ColorUtils.primaryColor,
@@ -163,18 +166,6 @@ class _HomePageState extends State<HomePage> {
                                           path:
                                               'assets/images/svg/button_config.svg',
                                         )),
-                                    InkWell(
-                                        onTap: () {
-                                          _updateOptionsShow();
-                                          Modular.to.pushNamed(
-                                              'emergence_phones_home');
-                                        },
-                                        child: SvgDesign(
-                                          height: 25,
-                                          width: 25,
-                                          path:
-                                              'assets/images/svg/button_phone.svg',
-                                        ))
                                   ],
                                 ),
                               ),
@@ -182,8 +173,9 @@ class _HomePageState extends State<HomePage> {
                           : MaterialButton(
                               onPressed: _updateOptionsShow,
                               child: Container(
-                                  width: MediaQuery.of(context).size.width * .1,
-                                  height: 25,
+                                  width:
+                                      MediaQuery.of(context).size.width * .15,
+                                  height: 35,
                                   decoration: BoxDecoration(
                                     color: ColorUtils.primaryColor,
                                     shape: BoxShape.circle,
@@ -247,75 +239,108 @@ class _HomePageState extends State<HomePage> {
                           body: Container(),
                         );
                       }),
-                  Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 500),
-                        alignment: Alignment.bottomRight,
-                        child: _volumeOptionsShow
-                            ? Container(
-                                height: 55,
-                                width: MediaQuery.of(context).size.width * 0.7,
-                                decoration: BoxDecoration(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 500),
+                            alignment: Alignment.bottomRight,
+                            child: GestureDetector(
+                              onTap: _navigateToContactsEmergence,
+                              child: Container(
+                                  height: 55,
+                                  width: 55,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
                                     color: ColorUtils.primaryColor,
-                                    borderRadius: BorderRadius.circular(60.0)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    InkWell(
-                                        onTap: () async {
-                                          await _controllerAudioAssets.play(
-                                              path: 'assets/audios/police.wav');
-                                        },
-                                        child: SvgDesign(
-                                          path:
-                                              'assets/images/svg/button_police_icon.svg',
-                                        )),
-                                    InkWell(
-                                        onTap: () async {
-                                          await _controllerAudioAssets.play(
-                                              path: 'assets/audios/sirene.mp3');
-                                        },
-                                        child: SvgDesign(
-                                          path:
-                                              'assets/images/svg/button_sound_icon.svg',
-                                        )),
-                                    InkWell(
-                                        onTap: () async {
-                                          await _controllerAudioAssets.play(
-                                              path: 'assets/audios/bomb.mp3');
-                                        },
-                                        child: SvgDesign(
-                                          path:
-                                              'assets/images/svg/button_bomb_icon.svg',
-                                        )),
-                                    InkWell(
-                                        onTap: _updateVolumeOptionsShow,
-                                        child: SvgDesign(
-                                          path:
-                                              'assets/images/svg/button_arrow_back_rigth.svg',
-                                        )),
-                                  ],
-                                ),
-                              )
-                            : GestureDetector(
-                                onTap: _updateVolumeOptionsShow,
-                                child: Container(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    Icons.sos_outlined,
+                                    color: ColorUtils.whiteColor,
+                                  )),
+                            ),
+                          )),
+                      Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 500),
+                            alignment: Alignment.bottomRight,
+                            child: _volumeOptionsShow
+                                ? Container(
                                     height: 55,
-                                    width: 55,
-                                    alignment: Alignment.bottomRight,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.7,
                                     decoration: BoxDecoration(
-                                      color: ColorUtils.primaryColor,
-                                      shape: BoxShape.circle,
+                                        color: ColorUtils.primaryColor,
+                                        borderRadius:
+                                            BorderRadius.circular(60.0)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        InkWell(
+                                            onTap: () async {
+                                              await _controllerAudioAssets.play(
+                                                  path:
+                                                      'assets/audios/police.wav');
+                                            },
+                                            child: SvgDesign(
+                                              path:
+                                                  'assets/images/svg/button_police_icon.svg',
+                                            )),
+                                        InkWell(
+                                            onTap: () async {
+                                              await _controllerAudioAssets.play(
+                                                  path:
+                                                      'assets/audios/sirene.mp3');
+                                            },
+                                            child: SvgDesign(
+                                              path:
+                                                  'assets/images/svg/button_sound_icon.svg',
+                                            )),
+                                        InkWell(
+                                            onTap: () async {
+                                              await _controllerAudioAssets.play(
+                                                  path:
+                                                      'assets/audios/bomb.mp3');
+                                            },
+                                            child: SvgDesign(
+                                              path:
+                                                  'assets/images/svg/button_bomb_icon.svg',
+                                            )),
+                                        InkWell(
+                                            onTap: _updateVolumeOptionsShow,
+                                            child: SvgDesign(
+                                              path:
+                                                  'assets/images/svg/button_arrow_back_rigth.svg',
+                                            )),
+                                      ],
                                     ),
-                                    child: SvgDesign(
-                                      path:
-                                          'assets/images/svg/button_volume.svg',
-                                    )),
-                              ),
-                      )),
+                                  )
+                                : GestureDetector(
+                                    onTap: _updateVolumeOptionsShow,
+                                    child: Container(
+                                        height: 55,
+                                        width: 55,
+                                        alignment: Alignment.bottomRight,
+                                        decoration: BoxDecoration(
+                                          color: ColorUtils.primaryColor,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: SvgDesign(
+                                          path:
+                                              'assets/images/svg/button_volume.svg',
+                                        )),
+                                  ),
+                          )),
+                    ],
+                  ),
                 ],
               ),
             );

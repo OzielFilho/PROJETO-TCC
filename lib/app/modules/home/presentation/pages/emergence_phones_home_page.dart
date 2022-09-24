@@ -1,3 +1,5 @@
+import 'package:app/app/core/utils/colors/colors_utils.dart';
+
 import '../../../../core/presentation/widgets/buttons_design.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -52,7 +54,10 @@ class EmergencePhonesHome extends StatelessWidget {
                               "tel://${_phones[index].phone}");
                         },
                         text: _phones[index].phone,
-                        content: Icon(Icons.call)),
+                        content: Icon(
+                          Icons.call,
+                          color: ColorUtils.secondaryColor,
+                        )),
                   ],
                 ),
               ),

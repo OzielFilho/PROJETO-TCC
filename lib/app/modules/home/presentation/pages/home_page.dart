@@ -42,13 +42,9 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
-  List<int> a = [];
-
   Completer<GoogleMapController> _controller = Completer();
 
   final _controllerAudioAssets = Modular.get<AudioService>();
-  double currentvol = 0.5;
-  String buttontype = "none";
   final _blocSendMessageEmergence =
       Modular.get<SendMessageEmergenceWithChatBloc>();
   @override

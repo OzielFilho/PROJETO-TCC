@@ -142,12 +142,11 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
         nonExistentContacts.add(contact);
       }
     }
-    if (nonExistentContacts.isNotEmpty) {
-      await smsService.sendSms(nonExistentContacts);
-    }
+
     if (idsContacts.isNotEmpty) {
       for (String tokenIdContact in idsContacts) {
         final doc = await firestoreService.getDocument('chat', tokenIdContact);
+
         List listChat = doc['contacts'];
         final chat =
             listChat.firstWhereOrNull((chat) => chat['tokenId'] == tokenId);

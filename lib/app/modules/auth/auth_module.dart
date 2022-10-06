@@ -1,3 +1,5 @@
+import 'package:app/app/modules/auth/infra/repositories/create_account_repository_impl.dart';
+import 'package:app/app/modules/auth/presentation/controllers/create_account_controller/create_account_with_email_and_password_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../home/home_module.dart';
@@ -5,10 +7,8 @@ import 'domain/usecases/create_account_with_email_and_password.dart';
 import 'domain/usecases/login_with_email_and_password.dart';
 import 'domain/usecases/login_with_google_user.dart';
 import 'domain/usecases/recovery_password.dart';
-import 'infra/repositories/create_account_repository_impl.dart';
 import 'infra/repositories/login_repository_impl.dart';
 import 'infra/repositories/recovery_repository_impl.dart';
-import 'presentation/controllers/create_account_controller/create_account_bloc.dart';
 import 'presentation/controllers/login_controller/login_bloc.dart';
 import 'presentation/controllers/login_google_controller/login_google_bloc.dart';
 import 'presentation/controllers/recovery_account_controller/recovery_account_bloc.dart';
@@ -30,7 +30,7 @@ class AuthModule extends Module {
     //CREATE ACCOUNT
     Bind((i) => CreateAccountRepositoryImpl(i(), i())),
     Bind((i) => CreateAccountWithEmailAndPassword(i())),
-    Bind((i) => CreateAccountBloc(i())),
+    Bind((i) => CreateAccountWithEmailAndPasswordBloc(i())),
 
     //RECOVERY ACCOUNT
     Bind((i) => RecoveryRepositoryImpl(i(), i())),

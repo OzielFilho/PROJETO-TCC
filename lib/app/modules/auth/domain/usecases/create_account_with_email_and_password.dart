@@ -1,42 +1,57 @@
+import 'dart:io';
+
+import 'package:app/app/modules/auth/domain/repositories/create_account_repository.dart';
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/error/failure.dart';
+import 'package:app/app/core/error/failure.dart';
+import 'package:equatable/equatable.dart';
+
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/utils/validations/validations.dart';
-import '../entities/auth_result.dart';
-import '../entities/user_create.dart';
-import '../repositories/create_account_repository.dart';
+import '../entities/user_create_account.dart';
 
-class CreateAccountWithEmailAndPassword
-    implements Usecase<AuthResult, UserCreate> {
-  final CreateAccountRepository repository;
+class CreateAccountWithEmailAndPassword extends Usecase<String, Params> {
+  final CreateAccountRepository _repository;
 
-  CreateAccountWithEmailAndPassword(this.repository);
-
+  CreateAccountWithEmailAndPassword(this._repository);
   @override
-  Future<Either<Failure, AuthResult>> call(UserCreate? params) async {
-    if (params!.email.isEmpty ||
-        params.password.isEmpty ||
-        params.confirmePassword.isEmpty ||
-        params.name.isEmpty ||
-        params.phone.isEmpty) {
+  Future<Either<Failure, String>> call(Params? params) async {
+    if (params!.userCreateAccount!.email.isEmpty ||
+        params.userCreateAccount!.password.isEmpty ||
+        params.userCreateAccount!.confirmePassword.isEmpty ||
+        params.userCreateAccount!.name.isEmpty ||
+        params.userCreateAccount!.phone.isEmpty) {
       return left(ParamsEmptyUserFailure());
     }
-    if (!(Validations.emailValidation(email: params.email))) {
+    if (!(Validations.emailValidation(
+        email: params.userCreateAccount!.email))) {
       return left(ParamsInvalidUserFailure());
     }
-    if (!(Validations.phoneValidation(phone: params.phone))) {
+    if (!(Validations.phoneValidation(
+        phone: params.userCreateAccount!.phone))) {
       return left(PhoneInvalidFailure());
     }
-    if (params.password != params.confirmePassword) {
+    if (params.userCreateAccount!.password !=
+        params.userCreateAccount!.confirmePassword) {
       return left(PasswordAndConfirmePasswordDifferenceFailure());
     }
 
-    if (!(Validations.passwordValidation(password: params.password)) &&
-        !(Validations.passwordValidation(password: params.confirmePassword))) {
+    if (!(Validations.passwordValidation(
+            password: params.userCreateAccount!.password)) &&
+        !(Validations.passwordValidation(
+            password: params.userCreateAccount!.confirmePassword))) {
       return left(ParamsInvalidUserFailure());
     }
-
-    return await repository.createAccountWithEmailAndPassword(params);
+    return await _repository.createWithEmailAndPassword(
+        params.userCreateAccount!, params.image);
   }
+}
+
+class Params extends Equatable {
+  final UserCreateAccount? userCreateAccount;
+  final File? image;
+
+  const Params(this.userCreateAccount, this.image);
+  @override
+  List<Object?> get props => [userCreateAccount, image];
 }

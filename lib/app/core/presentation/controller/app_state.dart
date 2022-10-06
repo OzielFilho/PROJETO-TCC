@@ -94,6 +94,10 @@ class UserNotFoundErrorState extends ErrorState {
   UserNotFoundErrorState(String? message) : super(message);
 }
 
+class UserCreateAccountErroState extends ErrorState {
+  UserCreateAccountErroState(String? message) : super(message);
+}
+
 class UserNotLoggedState extends AppState {}
 
 class SuccessUpdateUserState extends AppState {}

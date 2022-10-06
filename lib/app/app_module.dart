@@ -24,16 +24,18 @@ class AppModule extends Module {
   final List<Bind> binds = [
     //DATASOURCE GENERAL
     Bind((i) => FirestoreServiceImpl(FirebaseFirestore.instance)),
-    Bind((i) => FirebaseAuthServiceImpl(FirebaseAuth.instance)),
+
     Bind((i) => NetworkServiceImpl()),
     Bind((i) => LocationsServiceImpl()),
     Bind((i) => AudioServiceImpl(AssetsAudioPlayer())),
     Bind((i) => FirestorageServiceImpl(FirebaseStorage.instance)),
+    Bind((i) => FirebaseAuthServiceImpl(FirebaseAuth.instance, i(), i())),
     Bind((i) => FirebaseAuthDatasourceImpl(
         authService: i(),
         googleSignIn: GoogleSignIn(),
         firestore: i(),
         firestorageService: i())),
+
     Bind((i) => SmsServiceImpl()),
   ];
 

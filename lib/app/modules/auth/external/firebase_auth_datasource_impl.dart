@@ -1,3 +1,6 @@
+import 'package:app/app/modules/auth/infra/models/user_create_account_model.dart';
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -12,14 +15,13 @@ import '../infra/datasources/login_datasource.dart';
 import '../infra/datasources/recovery_datasource.dart';
 import '../infra/models/auth_result_model.dart';
 import '../infra/models/user_create_google_model.dart';
-import '../infra/models/user_create_model.dart';
 
 class FirebaseAuthDatasourceImpl
     implements LoginDatasource, CreateAccountDatasource, RecoveryDatasource {
-  final FirebaseAuthServiceImpl authService;
+  final FirebaseAuthService authService;
   final GoogleSignIn googleSignIn;
-  final FirestorageServiceImpl firestorageService;
-  final FirestoreServiceImpl firestore;
+  final FirestorageService firestorageService;
+  final FirestoreService firestore;
   FirebaseAuthDatasourceImpl({
     required this.firestorageService,
     required this.authService,
@@ -75,50 +77,6 @@ class FirebaseAuthDatasourceImpl
   }
 
   @override
-  Future<AuthResult> createAccountWithEmailAndPassword(
-      UserCreateModel userCreate) async {
-    String urlPhoto = '';
-    late AuthResultModel userResult;
-
-    final phoneCrypt = EncryptData().encrypty(userCreate.phone).base16;
-
-    final existInContact =
-        await firestore.existDocument('contacts', phoneCrypt);
-
-    if (existInContact) {
-      throw PhoneExistException();
-    }
-
-    if (!(existInContact)) {
-      final user =
-          await authService.createUser(userCreate.email, userCreate.password);
-      if (userCreate.photo != null) {
-        await firestorageService.saveArchive(
-            path: 'image_user/${user.uid}.jpg', data: userCreate.photo);
-        urlPhoto = await firestorageService.getArchive(
-            path: 'image_user/${user.uid}.jpg');
-      }
-
-      userResult = AuthResultModel(
-          email: user.email!,
-          tokenId: user.uid,
-          welcomePage: false,
-          phone: phoneCrypt,
-          contacts: userCreate.contacts,
-          name: userCreate.name,
-          photo: urlPhoto);
-      await firestore.createDocument(
-          'contacts', phoneCrypt, {'tokenId': userResult.tokenId});
-      await firestore
-          .createDocument('chat', userResult.tokenId!, {'contacts': []});
-    }
-    await firestore.createDocument(
-        'users', userResult.tokenId!, userResult.toMap());
-
-    return userResult;
-  }
-
-  @override
   Future<bool> recoveryWithEmail(String email) async {
     try {
       await authService.recoveryPassword(
@@ -130,5 +88,11 @@ class FirebaseAuthDatasourceImpl
     } catch (e) {
       return false;
     }
+  }
+
+  @override
+  Future<String> createWithEmailAndPassword(
+      UserCreateAccountModel user, File? image) async {
+    return await authService.createAccount(user, image);
   }
 }

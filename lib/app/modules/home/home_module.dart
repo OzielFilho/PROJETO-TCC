@@ -1,6 +1,6 @@
-import 'package:app/app/modules/home/domain/usecases/update_user_home.dart';
-import 'package:app/app/modules/home/presentation/controllers/bloc/update_user_home_bloc.dart';
-import 'package:app/app/modules/home/presentation/pages/edit_profile_home_page.dart';
+import 'domain/usecases/update_user_home.dart';
+import 'presentation/controllers/bloc/update_user_home_bloc.dart';
+import 'presentation/pages/edit_profile_home_page.dart';
 
 import 'domain/usecases/chat/send_message_emergence_with_chat.dart';
 import 'domain/usecases/chat/send_message_to_user.dart';

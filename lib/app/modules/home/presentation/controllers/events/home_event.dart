@@ -1,5 +1,5 @@
-import 'package:app/app/modules/home/domain/entities/message_chat.dart';
-import 'package:app/app/modules/home/domain/entities/user_result_home.dart';
+import '../../../domain/entities/message_chat.dart';
+import '../../../domain/entities/user_result_home.dart';
 
 import '../../../domain/entities/current_position.dart';
 

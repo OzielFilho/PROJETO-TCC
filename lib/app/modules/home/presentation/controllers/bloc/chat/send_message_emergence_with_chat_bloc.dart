@@ -1,4 +1,4 @@
-import 'package:app/app/modules/home/domain/usecases/chat/send_message_emergence_with_chat.dart';
+import '../../../../domain/usecases/chat/send_message_emergence_with_chat.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 

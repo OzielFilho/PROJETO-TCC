@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:app/app/core/services/audio_service.dart';
-import 'package:app/app/modules/home/presentation/controllers/bloc/chat/send_message_emergence_with_chat_bloc.dart';
+import '../controllers/bloc/chat/send_message_emergence_with_chat_bloc.dart';
 
 import '../../../../core/presentation/controller/app_state.dart';
 import '../../../../core/presentation/widgets/svg_design.dart';
+import '../../../../core/services/audio_service.dart';
 import '../../../../core/services/volume_actions_service.dart';
 import '../../../../core/theme/theme_app.dart';
 import '../../../../core/utils/colors/colors_utils.dart';
@@ -50,6 +50,7 @@ class _HomePageState extends State<HomePage> {
   final _controllerAudioAssets = Modular.get<AudioService>();
   final _blocSendMessageEmergence =
       Modular.get<SendMessageEmergenceWithChatBloc>();
+
   @override
   void initState() {
     _blocGetUserHome.add(GetUserHomeEvent());
@@ -220,6 +221,7 @@ class _HomePageState extends State<HomePage> {
                         }
                         if (stateMap is SuccessGetCurrentLocationState) {
                           return GoogleMap(
+                            markers: _blocCurrentPositionHome.markers,
                             zoomControlsEnabled: false,
                             myLocationEnabled: true,
                             mapToolbarEnabled: false,
@@ -227,10 +229,11 @@ class _HomePageState extends State<HomePage> {
                             buildingsEnabled: false,
                             indoorViewEnabled: false,
                             compassEnabled: false,
-                            mapType: MapType.normal,
+                            mapType: MapType.terrain,
                             initialCameraPosition:
                                 _blocCurrentPositionHome.position!,
-                            onMapCreated: (GoogleMapController controller) {
+                            onMapCreated:
+                                (GoogleMapController controller) async {
                               if (!_controller.isCompleted) {
                                 _controller.complete(controller);
                               }
@@ -291,8 +294,7 @@ class _HomePageState extends State<HomePage> {
                                               _statusSoundPolice =
                                                   !_statusSoundPolice;
                                               await _controllerAudioAssets.play(
-                                                  path:
-                                                      'assets/audios/police.mp3',
+                                                  path: 'audios/police.mp3',
                                                   status: _statusSoundPolice);
                                             },
                                             child: Icon(
@@ -305,8 +307,7 @@ class _HomePageState extends State<HomePage> {
                                               _statusSoundAlert =
                                                   !_statusSoundAlert;
                                               await _controllerAudioAssets.play(
-                                                  path:
-                                                      'assets/audios/sirene.mp3',
+                                                  path: 'audios/sirene.mp3',
                                                   status: _statusSoundAlert);
                                             },
                                             child: Icon(

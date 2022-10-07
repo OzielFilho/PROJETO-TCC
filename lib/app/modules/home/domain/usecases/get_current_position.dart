@@ -1,8 +1,8 @@
+import 'package:dartz/dartz.dart';
+
 import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../entities/current_position.dart';
-import 'package:dartz/dartz.dart';
-
 import '../repositories/home_repository.dart';
 
 class GetCurrentPosition extends Usecase<CurrentPosition, NoParams> {

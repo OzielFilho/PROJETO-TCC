@@ -1,11 +1,9 @@
-import '../infra/models/current_position_model.dart';
-
-import '../infra/models/user_result_home_model.dart';
-
 import '../../../core/services/firebase_auth_service.dart';
 import '../../../core/services/firestore_service.dart';
 import '../../../core/services/locations_service.dart';
 import '../infra/datasources/home_datasource.dart';
+import '../infra/models/current_position_model.dart';
+import '../infra/models/user_result_home_model.dart';
 
 class HomeInformation implements HomeDatasource {
   final LocationsService locationsService;

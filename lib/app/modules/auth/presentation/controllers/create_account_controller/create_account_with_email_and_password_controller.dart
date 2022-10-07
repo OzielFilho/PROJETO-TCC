@@ -1,4 +1,4 @@
-import 'package:app/app/modules/auth/domain/usecases/create_account_with_email_and_password.dart';
+import '../../../domain/usecases/create_account_with_email_and_password.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -40,7 +40,10 @@ class CreateAccountWithEmailAndPasswordBloc
         default:
           return ErrorState('Não foi possível realizar o cadastro');
       }
-    }, (success) => SuccessCreateAccountState()));
+    },
+        (success) => success.isNotEmpty
+            ? UserCreateAccountErroState(success)
+            : SuccessCreateAccountState()));
   }
 
   @override

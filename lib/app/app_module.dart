@@ -1,6 +1,6 @@
-import 'package:app/app/core/services/firestorage_service.dart';
-import 'package:app/app/core/services/sms_service.dart';
-import 'package:assets_audio_player/assets_audio_player.dart';
+import 'core/services/firestorage_service.dart';
+import 'core/services/sms_service.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'core/services/audio_service.dart';
@@ -27,7 +27,7 @@ class AppModule extends Module {
 
     Bind((i) => NetworkServiceImpl()),
     Bind((i) => LocationsServiceImpl()),
-    Bind((i) => AudioServiceImpl(AssetsAudioPlayer())),
+    Bind((i) => AudioServiceImpl(AudioPlayer())),
     Bind((i) => FirestorageServiceImpl(FirebaseStorage.instance)),
     Bind((i) => FirebaseAuthServiceImpl(FirebaseAuth.instance, i(), i())),
     Bind((i) => FirebaseAuthDatasourceImpl(

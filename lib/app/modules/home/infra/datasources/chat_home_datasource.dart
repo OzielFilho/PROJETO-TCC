@@ -1,8 +1,7 @@
-import 'package:app/app/modules/home/domain/entities/message_chat.dart';
 import '../../domain/entities/current_position.dart';
-import '../models/message_chat_model.dart';
-
+import '../../domain/entities/message_chat.dart';
 import '../models/details_contact_chat_model.dart';
+import '../models/message_chat_model.dart';
 
 abstract class ChatHomeDatasource {
   Future<List<DetailsContactChatModel>> getListDetailsContactFromPhoneChat(

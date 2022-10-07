@@ -1,7 +1,7 @@
-import 'package:app/app/core/error/failure.dart';
-import 'package:app/app/core/usecases/usecase.dart';
-import 'package:app/app/modules/home/domain/entities/user_result_home.dart';
-import 'package:app/app/modules/home/domain/repositories/home_repository.dart';
+import '../../../../core/error/failure.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../entities/user_result_home.dart';
+import '../repositories/home_repository.dart';
 import 'package:dartz/dartz.dart';
 
 class UpdateUserHome extends Usecase<UserResultHome, UserResultHome> {

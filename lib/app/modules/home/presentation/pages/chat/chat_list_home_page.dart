@@ -1,4 +1,4 @@
-import 'package:app/app/modules/home/presentation/pages/chat/widgets/header_chat_user.dart';
+import 'widgets/header_chat_user.dart';
 
 import '../../../../../core/utils/widgets_utils.dart';
 import '../../controllers/events/home_event.dart';

@@ -1,6 +1,6 @@
-import 'package:app/app/core/services/sms_service.dart';
-import 'package:app/app/modules/home/domain/entities/current_position.dart';
-import 'package:app/app/modules/home/infra/models/user_result_home_model.dart';
+import '../../../core/services/sms_service.dart';
+import '../domain/entities/current_position.dart';
+import '../infra/models/user_result_home_model.dart';
 
 import '../../../core/utils/constants/encrypt_data.dart';
 import '../../../core/utils/functions_utils.dart';

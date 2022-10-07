@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:app/app/core/error/failure.dart';
-import 'package:app/app/core/presentation/controller/app_state.dart';
-import 'package:app/app/core/services/firestorage_service.dart';
-import 'package:app/app/modules/home/domain/usecases/update_user_home.dart';
-import 'package:app/app/modules/home/presentation/controllers/events/home_event.dart';
+import '../../../../../core/error/failure.dart';
+import '../../../../../core/presentation/controller/app_state.dart';
+import '../../../../../core/services/firestorage_service.dart';
+import '../../../domain/usecases/update_user_home.dart';
+import '../events/home_event.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 

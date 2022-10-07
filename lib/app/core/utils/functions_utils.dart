@@ -1,5 +1,5 @@
-import 'package:app/app/core/services/locations_service.dart';
-import 'package:app/app/modules/home/domain/entities/current_position.dart';
+import '../services/locations_service.dart';
+import '../../modules/home/domain/entities/current_position.dart';
 
 class FunctionUtils {
   static String currentLocationMessage(CurrentPosition position) {

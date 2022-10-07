@@ -1,4 +1,4 @@
-import 'package:app/app/core/utils/colors/colors_utils.dart';
+import '../../../../../../core/utils/colors/colors_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/theme/theme_app.dart';

@@ -1,7 +1,7 @@
-import 'package:app/app/modules/home/domain/entities/message_chat.dart';
+import '../../entities/message_chat.dart';
 import 'package:dartz/dartz.dart';
 
-import 'package:app/app/core/error/failure.dart';
+import '../../../../../core/error/failure.dart';
 
 import '../../../../../core/usecases/usecase.dart';
 import '../../repositories/chat_home_repository.dart';

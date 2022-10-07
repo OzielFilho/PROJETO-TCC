@@ -32,7 +32,11 @@ class LoginWithEmailAndPasswordBloc extends Bloc<LoginEvent, AppState>
           return ErrorState('Não foi possível realizar o login');
       }
     }, (success) {
-      return !success.welcomePage ? SuccessWelcomeState() : SuccessHomeState();
+      return success.isEmpty
+          ? SuccessHomeState()
+          : success == 'Welcome Page True'
+              ? SuccessWelcomeState()
+              : EmailNotVerificatedErroState(success);
     }));
   }
 

@@ -98,6 +98,10 @@ class UserCreateAccountErroState extends ErrorState {
   UserCreateAccountErroState(String? message) : super(message);
 }
 
+class EmailNotVerificatedErroState extends ErrorState {
+  EmailNotVerificatedErroState(String? message) : super(message);
+}
+
 class UserNotLoggedState extends AppState {}
 
 class SuccessUpdateUserState extends AppState {}

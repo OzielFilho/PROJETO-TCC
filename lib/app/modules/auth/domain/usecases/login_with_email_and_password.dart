@@ -4,16 +4,15 @@ import 'package:equatable/equatable.dart';
 import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/utils/validations/validations.dart';
-import '../entities/auth_result.dart';
 import '../repositories/login_repository.dart';
 
-class LoginWithEmailAndPassword implements Usecase<AuthResult, Params> {
+class LoginWithEmailAndPassword implements Usecase<String, Params> {
   final LoginRepository repository;
 
   LoginWithEmailAndPassword(this.repository);
 
   @override
-  Future<Either<Failure, AuthResult>> call(Params? params) async {
+  Future<Either<Failure, String>> call(Params? params) async {
     if (params!.email.isEmpty || params.password.isEmpty) {
       return left(ParamsEmptyUserFailure());
     }

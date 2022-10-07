@@ -4,11 +4,9 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../../core/error/exceptions.dart';
 import '../../../core/services/firebase_auth_service.dart';
 import '../../../core/services/firestorage_service.dart';
 import '../../../core/services/firestore_service.dart';
-import '../../../core/utils/constants/encrypt_data.dart';
 import '../domain/entities/auth_result.dart';
 import '../infra/datasources/create_account_datasource.dart';
 import '../infra/datasources/login_datasource.dart';
@@ -30,15 +28,9 @@ class FirebaseAuthDatasourceImpl
   });
 
   @override
-  Future<AuthResult> loginWithEmailAndPassword(
+  Future<String> loginWithEmailAndPassword(
       String email, String password) async {
-    late AuthResult userResult;
-    final userLogin =
-        await authService.signInWithEmailAndPassword(email, password);
-    final user = await firestore.getDocument('users', userLogin.uid);
-
-    userResult = AuthResultModel.fromMap(user);
-    return userResult;
+    return await authService.signInWithEmailAndPassword(email, password);
   }
 
   @override

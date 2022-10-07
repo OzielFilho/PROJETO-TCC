@@ -4,12 +4,14 @@ import 'package:app/app/core/services/firestorage_service.dart';
 import 'package:app/app/core/services/firestore_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../modules/auth/domain/entities/auth_result.dart';
+import '../../modules/auth/infra/models/auth_result_model.dart';
 import '../../modules/auth/infra/models/user_create_account_model.dart';
 import '../error/exceptions.dart';
 import '../utils/constants/encrypt_data.dart';
 
 abstract class FirebaseAuthService {
-  Future<User> signInWithEmailAndPassword(String email, String password);
+  Future<String> signInWithEmailAndPassword(String email, String password);
   Future<User> signInWithCredential(dynamic credential);
   Future<void> recoveryPassword(String email);
   Future<void> signOut();
@@ -35,10 +37,27 @@ class FirebaseAuthServiceImpl implements FirebaseAuthService {
   }
 
   @override
-  Future<User> signInWithEmailAndPassword(String email, String password) async {
-    final result =
-        await auth.signInWithEmailAndPassword(email: email, password: password);
-    return result.user!;
+  Future<String> signInWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      final userLogin = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+
+      final user =
+          await _firestoreService.getDocument('users', userLogin.user!.uid);
+
+      AuthResult userResult = AuthResultModel.fromMap(user);
+      if (!userResult.welcomePage && userLogin.user!.emailVerified) {
+        return 'Welcome Page True';
+      }
+
+      if (!(userLogin.user!.emailVerified)) {
+        return 'Email não verificado! Verifique o email utilizar o app';
+      }
+      return '';
+    } catch (e) {
+      return 'Erro $e';
+    }
   }
 
   @override

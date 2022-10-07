@@ -1,6 +1,8 @@
-import '../../domain/entities/auth_result.dart';
-import '../models/user_create_model.dart';
+import 'dart:io';
+
+import '../models/user_create_account_model.dart';
 
 abstract class CreateAccountDatasource {
-  Future<AuthResult> createAccountWithEmailAndPassword(UserCreateModel user);
+  Future<String> createWithEmailAndPassword(
+      UserCreateAccountModel user, File? image);
 }

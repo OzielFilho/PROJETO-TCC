@@ -14,8 +14,9 @@ import '../../../../core/presentation/widgets/loading_desing.dart';
 import '../../../../core/theme/theme_app.dart';
 import '../../../../core/utils/colors/colors_utils.dart';
 import '../../../../core/utils/widgets_utils.dart';
-import '../controllers/create_account_controller/create_account_bloc.dart';
+import '../../infra/models/user_create_account_model.dart';
 import '../controllers/create_account_controller/create_account_event.dart';
+import '../controllers/create_account_controller/create_account_with_email_and_password_controller.dart';
 
 class CreateAccountPage extends StatefulWidget {
   CreateAccountPage({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   final _confirmPasswordControllerNew = TextEditingController();
   final _phoneControllerNew = TextEditingController();
   final _passwordControllerNew = TextEditingController();
-  final _createAccount = Modular.get<CreateAccountBloc>();
+  final _createAccount = Modular.get<CreateAccountWithEmailAndPasswordBloc>();
   File? _file;
 
   bool _visibilityConfirmPassword = true;
@@ -42,11 +43,11 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CreateAccountBloc, AppState>(
+    return BlocConsumer<CreateAccountWithEmailAndPasswordBloc, AppState>(
       bloc: _createAccount,
       listener: (context, state) {
         if (state is SuccessCreateAccountState) {
-          Modular.to.pushReplacementNamed('/welcome/');
+          Modular.to.pop();
         }
         if (state is NetworkErrorState) {
           WidgetUtils.showOkDialog(
@@ -254,17 +255,18 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                                   if (!(state is ProcessingState)) {
                                     _createAccount.add(
                                         CreateAccountWithEmailAndPasswordEvent(
-                                            contacts: [],
-                                            photo: _file,
-                                            welcomePage: false,
-                                            phone: _phoneControllerNew.text,
-                                            confirmePassword:
-                                                _confirmPasswordControllerNew
-                                                    .text,
-                                            email: _emailControllerNew.text,
-                                            name: _nameControllerNew.text,
-                                            password:
-                                                _passwordControllerNew.text));
+                                      UserCreateAccountModel(
+                                        _nameControllerNew.text,
+                                        _emailControllerNew.text,
+                                        _passwordControllerNew.text,
+                                        '',
+                                        _confirmPasswordControllerNew.text,
+                                        [],
+                                        _phoneControllerNew.text,
+                                        false,
+                                      ),
+                                      _file,
+                                    ));
                                   }
                                 }),
                           ),

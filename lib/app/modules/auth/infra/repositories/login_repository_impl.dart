@@ -29,7 +29,7 @@ class LoginRepositoryImpl extends LoginRepository {
   }
 
   @override
-  Future<Either<Failure, AuthResult>> loginWithEmailAndPassword(
+  Future<Either<Failure, String>> loginWithEmailAndPassword(
       String email, String password) async {
     if (!(await _networkService.hasConnection)) {
       return left(NetworkFailure());

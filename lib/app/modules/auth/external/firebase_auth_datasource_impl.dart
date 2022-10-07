@@ -1,4 +1,3 @@
-import 'package:app/app/modules/auth/infra/models/user_create_account_model.dart';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +11,7 @@ import '../infra/datasources/create_account_datasource.dart';
 import '../infra/datasources/login_datasource.dart';
 import '../infra/datasources/recovery_datasource.dart';
 import '../infra/models/auth_result_model.dart';
+import '../infra/models/user_create_account_model.dart';
 import '../infra/models/user_create_google_model.dart';
 
 class FirebaseAuthDatasourceImpl

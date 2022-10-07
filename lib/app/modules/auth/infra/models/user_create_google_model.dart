@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:app/app/modules/auth/domain/entities/user_create_google.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../../core/utils/constants/encrypt_data.dart';
+import '../../domain/entities/user_create_google.dart';
 
 class UserCreateGoogleModel extends UserCreateGoogle {
   final String email;

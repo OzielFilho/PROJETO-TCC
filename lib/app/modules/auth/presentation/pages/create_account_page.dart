@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:app/app/core/services/image_service.dart';
+import '../../../../core/services/image_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';

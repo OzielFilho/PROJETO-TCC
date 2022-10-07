@@ -10,10 +10,10 @@ import '../../../../core/usecases/usecase.dart';
 import '../../../../core/utils/validations/validations.dart';
 import '../entities/user_create_account.dart';
 
-class CreateAccountWithEmailAndPassword extends Usecase<String, Params> {
+class CreateWithEmailAndPassword extends Usecase<String, Params> {
   final CreateAccountRepository _repository;
 
-  CreateAccountWithEmailAndPassword(this._repository);
+  CreateWithEmailAndPassword(this._repository);
   @override
   Future<Either<Failure, String>> call(Params? params) async {
     if (params!.userCreateAccount!.email.isEmpty ||

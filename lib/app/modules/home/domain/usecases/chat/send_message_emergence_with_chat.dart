@@ -1,4 +1,4 @@
-import 'package:app/app/modules/home/domain/entities/current_position.dart';
+import '../../entities/current_position.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../../core/error/failure.dart';

@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:app/app/core/services/network_service.dart';
-import 'package:app/app/modules/auth/domain/entities/user_create_account.dart';
+import '../../../../core/services/network_service.dart';
+import '../../domain/entities/user_create_account.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';

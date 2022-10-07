@@ -1,6 +1,5 @@
-import '../../repositories/chat_home_repository.dart';
-
 import '../../entities/message_chat.dart';
+import '../../repositories/chat_home_repository.dart';
 
 class GetListMessageChatUser {
   final ChatHomeRepository repository;

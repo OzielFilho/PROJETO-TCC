@@ -1,26 +1,19 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 abstract class AudioService {
   Future<void> play({String path, bool status = true});
 }
 
 class AudioServiceImpl implements AudioService {
-  final AssetsAudioPlayer _audioPlayer;
+  final AudioPlayer _audioPlayer;
 
   AudioServiceImpl(this._audioPlayer);
   @override
   Future<void> play({String? path, bool status = true}) async {
-    await _audioPlayer.open(
-      Audio(path!),
-      autoStart: true,
-      volume: 100,
-      loopMode: LoopMode.single,
-      showNotification: false,
-    );
     if (status) {
-      _audioPlayer.play();
+      await _audioPlayer.play(AssetSource(path!));
       return;
     }
-    _audioPlayer.stop();
+    await _audioPlayer.stop();
   }
 }

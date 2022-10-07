@@ -1,4 +1,4 @@
-import 'package:app/app/core/services/network_service.dart';
+import '../../../../core/services/network_service.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../domain/entities/current_position.dart';

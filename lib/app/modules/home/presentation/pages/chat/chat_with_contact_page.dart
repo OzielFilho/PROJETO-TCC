@@ -1,6 +1,6 @@
-import 'package:app/app/core/utils/functions_utils.dart';
-import 'package:app/app/core/utils/widgets_utils.dart';
-import 'package:app/app/modules/home/presentation/controllers/bloc/chat/send_message_user_bloc.dart';
+import '../../../../../core/utils/functions_utils.dart';
+import '../../../../../core/utils/widgets_utils.dart';
+import '../../controllers/bloc/chat/send_message_user_bloc.dart';
 
 import '../../../../../core/presentation/controller/app_state.dart';
 import '../../../../../core/presentation/widgets/form_desing.dart';

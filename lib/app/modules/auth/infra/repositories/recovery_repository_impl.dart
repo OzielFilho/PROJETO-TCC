@@ -1,4 +1,4 @@
-import 'package:app/app/core/services/network_service.dart';
+import '../../../../core/services/network_service.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';

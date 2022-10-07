@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:app/app/core/presentation/controller/app_state.dart';
-import 'package:app/app/core/presentation/widgets/buttons_design.dart';
-import 'package:app/app/core/presentation/widgets/form_desing.dart';
-import 'package:app/app/core/utils/colors/colors_utils.dart';
-import 'package:app/app/modules/home/presentation/controllers/bloc/get_user_home_bloc.dart';
-import 'package:app/app/modules/home/presentation/controllers/bloc/update_user_home_bloc.dart';
-import 'package:app/app/modules/home/presentation/controllers/events/home_event.dart';
+import '../../../../core/presentation/controller/app_state.dart';
+import '../../../../core/presentation/widgets/buttons_design.dart';
+import '../../../../core/presentation/widgets/form_desing.dart';
+import '../../../../core/utils/colors/colors_utils.dart';
+import '../controllers/bloc/get_user_home_bloc.dart';
+import '../controllers/bloc/update_user_home_bloc.dart';
+import '../controllers/events/home_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';

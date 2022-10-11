@@ -141,7 +141,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                     }, permanentDialog: false);
                                   }
                                   if (state is SuccessUpdateUserCreateState) {
-                                    Modular.to.pushReplacementNamed('/home/');
+                                    Modular.to.pushReplacementNamed('tutorial');
                                   }
                                 },
                                 bloc: _updateUserCreateBloc,

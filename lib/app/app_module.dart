@@ -1,3 +1,5 @@
+import 'package:app/app/modules/home/presentation/pages/tutorial_home_page.dart';
+
 import 'core/services/firestorage_service.dart';
 import 'core/services/sms_service.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -55,6 +57,10 @@ class AppModule extends Module {
         duration: Duration(milliseconds: 500)),
     ModuleRoute('/home',
         module: HomeModule(),
+        transition: TransitionType.leftToRight,
+        duration: Duration(milliseconds: 500)),
+    ChildRoute('/tutorial',
+        child: (context, args) => TutorialPage(),
         transition: TransitionType.leftToRight,
         duration: Duration(milliseconds: 500)),
   ];

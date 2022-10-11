@@ -1,3 +1,6 @@
+import 'package:url_launcher/url_launcher_string.dart';
+
+import '../../../../../core/utils/constants/encrypt_data.dart';
 import 'widgets/header_chat_user.dart';
 
 import '../../../../../core/utils/widgets_utils.dart';
@@ -37,6 +40,18 @@ class _ChatListHomePageState extends State<ChatListHomePage> {
     super.initState();
   }
 
+  final ScrollController _scrollController = ScrollController();
+
+  List<String> _getListContactWithoutApp() {
+    final copyContacts = [...widget.contacts.toList()];
+    final contactsWithChatPhone =
+        _blocGetContacts.contacts!.map((e) => e.phone).toList();
+    copyContacts
+        .removeWhere((element) => contactsWithChatPhone.contains(element));
+
+    return copyContacts.map((e) => EncryptData().decrypty(e)).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,25 +86,52 @@ class _ChatListHomePageState extends State<ChatListHomePage> {
             if (state is SuccessGetListDetailsContactFromPhoneChatState) {
               return Container(
                   padding: const EdgeInsets.all(12.0),
-                  child: ListView.builder(
-                    itemBuilder: (context, index) => InkWell(
-                      onTap: () => Modular.to
-                          .pushNamed('chat_with_contact_home', arguments: {
-                        'tokenIdContact':
-                            _blocGetContacts.contacts![index].tokenId,
-                        'photoContact': _blocGetContacts.contacts![index].photo,
-                        'photoUser': widget.photo,
-                        'tokenIdUser': widget.tokenId,
-                        'name': _blocGetContacts.contacts![index].name
-                      }),
-                      child: HeaderChatUser(
-                        body: '${_blocGetContacts.contacts![index].email}',
-                        title: '${_blocGetContacts.contacts![index].name}',
-                        image: _blocGetContacts.contacts![index].photo!,
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                        controller: _scrollController,
+                        itemBuilder: (context, index) => InkWell(
+                          onTap: () => Modular.to
+                              .pushNamed('chat_with_contact_home', arguments: {
+                            'tokenIdContact':
+                                _blocGetContacts.contacts![index].tokenId,
+                            'photoContact':
+                                _blocGetContacts.contacts![index].photo,
+                            'photoUser': widget.photo,
+                            'tokenIdUser': widget.tokenId,
+                            'name': _blocGetContacts.contacts![index].name
+                          }),
+                          child: HeaderChatUser(
+                            body: '${_blocGetContacts.contacts![index].email}',
+                            title: '${_blocGetContacts.contacts![index].name}',
+                            image: _blocGetContacts.contacts![index].photo!,
+                          ),
+                        ),
+                        itemCount: _blocGetContacts.contacts!.length,
+                        shrinkWrap: true,
                       ),
-                    ),
-                    itemCount: _blocGetContacts.contacts!.length,
-                    shrinkWrap: true,
+                      ListView.builder(
+                        controller: _scrollController,
+                        itemBuilder: (context, index) {
+                          final phoneConvert =
+                              _getListContactWithoutApp()[index];
+                          return InkWell(
+                            onTap: () async {
+                              await launchUrlString("tel://$phoneConvert");
+                            },
+                            child: Container(
+                              child: HeaderChatUser(
+                                body: 'Usuário não disponível',
+                                title: phoneConvert,
+                                image: null,
+                              ),
+                            ),
+                          );
+                        },
+                        itemCount: _getListContactWithoutApp().length,
+                        shrinkWrap: true,
+                      ),
+                    ],
                   ));
             }
             return Center(child: LoadingDesign());

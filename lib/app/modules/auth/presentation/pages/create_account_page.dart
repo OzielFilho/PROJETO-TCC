@@ -47,6 +47,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       bloc: _createAccount,
       listener: (context, state) {
         if (state is SuccessCreateAccountState) {
+          WidgetUtils.showSnackBar(context, 'Usuário criado com sucesso',
+              actionText: 'Fechar', onTap: () {});
           Modular.to.pop();
         }
         if (state is NetworkErrorState) {

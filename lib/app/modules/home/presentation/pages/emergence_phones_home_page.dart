@@ -13,7 +13,9 @@ class EmergencePhonesHome extends StatelessWidget {
   final List<PhonesEmergenceModel> _phones = [
     PhonesEmergenceModel('190', 'Policia Militar'),
     PhonesEmergenceModel('192', 'Samu'),
-    PhonesEmergenceModel('193', 'Bombeiros')
+    PhonesEmergenceModel('193', 'Bombeiros'),
+    PhonesEmergenceModel('180', 'Ligue 180'),
+    PhonesEmergenceModel('100', 'Disque 100'),
   ];
   @override
   Widget build(BuildContext context) {

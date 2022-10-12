@@ -6,6 +6,8 @@ import '../entities/details_contact_chat.dart';
 import '../entities/message_chat.dart';
 
 abstract class ChatHomeRepository {
+  Future<Either<Failure, void>> addNewContacts(
+      List<String> contacts, String tokenId);
   Stream<List> getListContactsMessage(String tokenId);
   Stream<List<MessageChat>> getListMessageChatUser(
       {String tokenIdUserActual, String tokenIdContact});

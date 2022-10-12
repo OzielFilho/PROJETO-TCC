@@ -1,5 +1,9 @@
+import 'package:app/app/modules/home/presentation/controllers/bloc/chat/add_new_contacts_bloc.dart';
+
+import 'domain/usecases/chat/add_new_contacts.dart';
 import 'domain/usecases/update_user_home.dart';
 import 'presentation/controllers/bloc/update_user_home_bloc.dart';
+import 'presentation/pages/add_new_contacts_page.dart';
 import 'presentation/pages/edit_profile_home_page.dart';
 
 import 'domain/usecases/chat/send_message_emergence_with_chat.dart';
@@ -54,6 +58,8 @@ class HomeModule extends Module {
         Bind((i) => UpdateUserHomeBloc(i(), i())),
         Bind((i) => SendMessageEmergenceWithChat(i())),
         Bind((i) => SendMessageEmergenceWithChatBloc(i())),
+        Bind((i) => AddNewContacts(i())),
+        Bind((i) => AddNewContactsBloc(i())),
       ];
 
   @override
@@ -69,6 +75,7 @@ class HomeModule extends Module {
             duration: Duration(milliseconds: 500)),
         ChildRoute('/chat_home',
             child: (context, args) => ChatPageHome(
+                bloc: args.data['bloc'],
                 contacts: args.data['contacts'],
                 tokenId: args.data['tokenId'],
                 photoUser: args.data['photoUser']),
@@ -91,6 +98,11 @@ class HomeModule extends Module {
         ChildRoute('/edit_profile_home',
             child: (context, args) => EditProfileHomePage(
                 user: args.data['user'], blocGetUser: args.data['bloc']),
+            transition: TransitionType.leftToRight,
+            duration: Duration(milliseconds: 500)),
+        ChildRoute('/add_new_contact',
+            child: (context, args) => AddNewContactsPage(
+                tokenId: args.data['tokenId'], bloc: args.data['bloc']),
             transition: TransitionType.leftToRight,
             duration: Duration(milliseconds: 500)),
       ];

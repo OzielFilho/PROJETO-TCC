@@ -58,3 +58,10 @@ class UpdateUserHomeEvent implements HomeEvent {
 
   UpdateUserHomeEvent(this.user);
 }
+
+class AddNewContactsEvent implements HomeEvent {
+  final List<String> contacts;
+  final String tokenId;
+
+  AddNewContactsEvent(this.contacts, this.tokenId);
+}

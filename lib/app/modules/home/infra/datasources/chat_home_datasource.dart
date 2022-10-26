@@ -4,6 +4,7 @@ import '../models/details_contact_chat_model.dart';
 import '../models/message_chat_model.dart';
 
 abstract class ChatHomeDatasource {
+  Future<void> addNewContacts(List<String> contacts, String tokenId);
   Future<List<DetailsContactChatModel>> getListDetailsContactFromPhoneChat(
       {List<String>? phones});
   Stream<List> getListContactsMessage(String tokenId);

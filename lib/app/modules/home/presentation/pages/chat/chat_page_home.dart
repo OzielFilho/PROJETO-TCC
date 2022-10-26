@@ -1,12 +1,15 @@
+import 'package:app/app/modules/home/presentation/controllers/bloc/get_user_home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../../core/theme/theme_app.dart';
 import '../../../../../core/utils/colors/colors_utils.dart';
+import '../../controllers/events/home_event.dart';
 import 'chat_conversation_home_page.dart';
 import 'chat_list_home_page.dart';
 
 class ChatPageHome extends StatefulWidget {
+  final GetUserHomeBloc bloc;
   final List<String> contacts;
   final String tokenId;
   final String photoUser;
@@ -14,7 +17,8 @@ class ChatPageHome extends StatefulWidget {
       {Key? key,
       required this.contacts,
       required this.tokenId,
-      required this.photoUser})
+      required this.photoUser,
+      required this.bloc})
       : super(key: key);
 
   @override
@@ -35,8 +39,24 @@ class _ChatPageHomeState extends State<ChatPageHome>
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () => Modular.to.pop(),
+            onPressed: () {
+              widget.bloc.add(GetUserHomeEvent());
+              Modular.to.pop();
+            },
             icon: Icon(Icons.arrow_back_ios)),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: () => Modular.to.pushNamed('add_new_contact',
+                  arguments: {'tokenId': widget.tokenId, 'bloc': widget.bloc}),
+              child: Icon(
+                Icons.add_call,
+                color: ColorUtils.whiteColor,
+              ),
+            ),
+          )
+        ],
         title: Text(
           'Chat',
           style: ThemeApp.theme.textTheme.headline3,
@@ -62,8 +82,12 @@ class _ChatPageHomeState extends State<ChatPageHome>
         controller: _tabController,
         children: <Widget>[
           ChatConversationHomePage(
-              tokenId: widget.tokenId, photo: widget.photoUser),
+            tokenId: widget.tokenId,
+            photo: widget.photoUser,
+            nameUser: widget.bloc.user!.name,
+          ),
           ChatListHomePage(
+            nameUser: widget.bloc.user!.name,
             contacts: widget.contacts,
             tokenId: widget.tokenId,
             photo: widget.photoUser,

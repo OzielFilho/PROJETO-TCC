@@ -19,11 +19,13 @@ class ChatListHomePage extends StatefulWidget {
   final List<String> contacts;
   final String tokenId;
   final String photo;
+  final String nameUser;
   const ChatListHomePage(
       {Key? key,
       required this.contacts,
       required this.tokenId,
-      required this.photo})
+      required this.photo,
+      required this.nameUser})
       : super(key: key);
 
   @override
@@ -85,81 +87,49 @@ class _ChatListHomePageState extends State<ChatListHomePage> {
               );
             }
             if (state is SuccessGetListDetailsContactFromPhoneChatState) {
-              return Container(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    children: [
-                      ListView.builder(
-                        controller: _scrollController,
-                        itemBuilder: (context, index) => Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            InkWell(
-                              onTap: () => Modular.to.pushNamed(
-                                  'chat_with_contact_home',
-                                  arguments: {
-                                    'tokenIdContact': _blocGetContacts
-                                        .contacts![index].tokenId,
-                                    'photoContact':
-                                        _blocGetContacts.contacts![index].photo,
-                                    'photoUser': widget.photo,
-                                    'tokenIdUser': widget.tokenId,
-                                    'name':
-                                        _blocGetContacts.contacts![index].name
-                                  }),
-                              child: SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.08,
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: HeaderChatUser(
-                                  body:
-                                      '${_blocGetContacts.contacts![index].email}',
-                                  title:
-                                      '${_blocGetContacts.contacts![index].name}',
-                                  image:
-                                      _blocGetContacts.contacts![index].photo!,
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () async {
-                                await launchUrlString(
-                                    "tel://${EncryptData().decrypty(_blocGetContacts.contacts![index].phone)}");
-                              },
-                              child: Icon(
-                                Icons.call,
-                                color: ColorUtils.whiteColor,
-                              ),
-                            )
-                          ],
-                        ),
-                        itemCount: _blocGetContacts.contacts!.length,
-                        shrinkWrap: true,
-                      ),
-                      ListView.builder(
-                        controller: _scrollController,
-                        itemBuilder: (context, index) {
-                          final phoneConvert =
-                              _getListContactWithoutApp()[index];
-                          return Row(
+              return SingleChildScrollView(
+                child: Container(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        ListView.builder(
+                          controller: _scrollController,
+                          itemBuilder: (context, index) => Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
+                              InkWell(
+                                onTap: () => Modular.to.pushNamed(
+                                    'chat_with_contact_home',
+                                    arguments: {
+                                      'tokenIdContact': _blocGetContacts
+                                          .contacts![index].tokenId,
+                                      'photoContact': _blocGetContacts
+                                          .contacts![index].photo,
+                                      'photoUser': widget.photo,
+                                      'tokenIdUser': widget.tokenId,
+                                      'nameContact': _blocGetContacts
+                                          .contacts![index].name,
+                                      'nameUser': widget.nameUser,
+                                    }),
                                 child: SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height * 0.08,
                                   width:
                                       MediaQuery.of(context).size.width * 0.8,
                                   child: HeaderChatUser(
-                                    body: 'Usuário não disponível',
-                                    title: phoneConvert,
-                                    image: null,
+                                    body:
+                                        '${_blocGetContacts.contacts![index].email}',
+                                    title:
+                                        '${_blocGetContacts.contacts![index].name}',
+                                    image: _blocGetContacts
+                                        .contacts![index].photo!,
                                   ),
                                 ),
                               ),
                               InkWell(
                                 onTap: () async {
-                                  await launchUrlString("tel://$phoneConvert");
+                                  await launchUrlString(
+                                      "tel://${EncryptData().decrypty(_blocGetContacts.contacts![index].phone)}");
                                 },
                                 child: Icon(
                                   Icons.call,
@@ -167,13 +137,50 @@ class _ChatListHomePageState extends State<ChatListHomePage> {
                                 ),
                               )
                             ],
-                          );
-                        },
-                        itemCount: _getListContactWithoutApp().length,
-                        shrinkWrap: true,
-                      ),
-                    ],
-                  ));
+                          ),
+                          itemCount: _blocGetContacts.contacts!.length,
+                          shrinkWrap: true,
+                        ),
+                        ListView.builder(
+                          controller: _scrollController,
+                          itemBuilder: (context, index) {
+                            final phoneConvert =
+                                _getListContactWithoutApp()[index];
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  child: SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.08,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.8,
+                                    child: HeaderChatUser(
+                                      body: 'Usuário não disponível',
+                                      title: phoneConvert,
+                                      image: null,
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () async {
+                                    await launchUrlString(
+                                        "tel://$phoneConvert");
+                                  },
+                                  child: Icon(
+                                    Icons.call,
+                                    color: ColorUtils.whiteColor,
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+                          itemCount: _getListContactWithoutApp().length,
+                          shrinkWrap: true,
+                        ),
+                      ],
+                    )),
+              );
             }
             return Center(child: LoadingDesign());
           }),

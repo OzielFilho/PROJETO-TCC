@@ -1,3 +1,4 @@
+import '../../../../../core/utils/constants/encrypt_data.dart';
 import 'widgets/header_chat_user.dart';
 
 import '../../../../../core/presentation/controller/app_state.dart';
@@ -13,8 +14,12 @@ import '../../controllers/bloc/chat/get_list_contacts_message_bloc.dart';
 class ChatConversationHomePage extends StatefulWidget {
   final String tokenId;
   final String photo;
+  final String nameUser;
   ChatConversationHomePage(
-      {Key? key, required this.tokenId, required this.photo})
+      {Key? key,
+      required this.tokenId,
+      required this.photo,
+      required this.nameUser})
       : super(key: key);
 
   @override
@@ -103,7 +108,8 @@ class _ChatConversationHomePageState extends State<ChatConversationHomePage> {
                                       'tokenIdUser': widget.tokenId,
                                       'photoContact': result[index].photo,
                                       'photoUser': widget.photo,
-                                      'name': result[index].name
+                                      'nameContact': result[index].name,
+                                      'nameUser': widget.nameUser
                                     }),
                             child: HeaderChatUser(
                               title: '${result[index].name}',

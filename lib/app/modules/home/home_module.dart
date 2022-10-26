@@ -83,7 +83,8 @@ class HomeModule extends Module {
             duration: Duration(milliseconds: 500)),
         ChildRoute('/chat_with_contact_home',
             child: (context, args) => ChatWithContactPage(
-                  name: args.data['name'],
+                  nameUser: args.data['nameUser'],
+                  nameContact: args.data['nameContact'],
                   photoContact: args.data['photoContact'],
                   photoUser: args.data['photoUser'],
                   tokenIdContact: args.data['tokenIdContact'],

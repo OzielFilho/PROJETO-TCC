@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:app/app/modules/home/domain/usecases/chat/add_new_contacts.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';

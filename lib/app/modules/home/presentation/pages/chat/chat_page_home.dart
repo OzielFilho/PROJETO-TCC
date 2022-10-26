@@ -82,8 +82,12 @@ class _ChatPageHomeState extends State<ChatPageHome>
         controller: _tabController,
         children: <Widget>[
           ChatConversationHomePage(
-              tokenId: widget.tokenId, photo: widget.photoUser),
+            tokenId: widget.tokenId,
+            photo: widget.photoUser,
+            nameUser: widget.bloc.user!.name,
+          ),
           ChatListHomePage(
+            nameUser: widget.bloc.user!.name,
             contacts: widget.contacts,
             tokenId: widget.tokenId,
             photo: widget.photoUser,

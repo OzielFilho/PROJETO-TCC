@@ -79,8 +79,9 @@ class _WelcomePageState extends State<WelcomePage> {
             if (_controllerPage!.hasClients) {
               if (_getUserBloc.user!.phone.isEmpty) {
                 _controllerPage!.jumpToPage(2);
+              } else {
+                _controllerPage!.jumpToPage(1);
               }
-              _controllerPage!.jumpToPage(1);
             }
           });
         }
@@ -141,7 +142,8 @@ class _WelcomePageState extends State<WelcomePage> {
                                     }, permanentDialog: false);
                                   }
                                   if (state is SuccessUpdateUserCreateState) {
-                                    Modular.to.pushReplacementNamed('tutorial');
+                                    Modular.to
+                                        .pushReplacementNamed('/tutorial');
                                   }
                                 },
                                 bloc: _updateUserCreateBloc,
@@ -188,6 +190,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                                     .map((e) =>
                                                         e.controller.text)
                                                     .toList();
+                                                print(_contactsText);
                                                 _updateUserCreateBloc.add(
                                                     UpdateUserCreateEvent(
                                                         contacts: _contactsText,

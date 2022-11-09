@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:app/app/core/services/notifications_service.dart';
+
 import '../controllers/bloc/chat/send_message_emergence_with_chat_bloc.dart';
 
 import '../../../../core/presentation/controller/app_state.dart';
@@ -56,6 +58,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _blocGetUserHome.add(GetUserHomeEvent());
     _blocCurrentPositionHome.add(GetCurrentLocationEvent());
+    NotificationService.initNotification();
   }
 
   @override

@@ -90,8 +90,14 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
       String? tokenIdContact,
       String? name,
       String? photo}) async {
+    final userContact =
+        await firestoreService.getDocument('users', tokenIdContact!);
+    final user = await firestoreService.getDocument('users', tokenIdUser!);
+    userContact.addAll({'lastId': tokenIdContact});
+    user.addAll({'lastId': tokenIdContact});
+
     final existDocument =
-        await firestoreService.existDocument('chat', tokenIdUser!);
+        await firestoreService.existDocument('chat', tokenIdUser);
     if (!existDocument) {
       await firestoreService
           .createDocument('chat', tokenIdUser, {'contacts': []});
@@ -106,7 +112,7 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
       (element) => element.tokenId == tokenIdContact,
     );
     if (existContact == null) {
-      contacts.add(ContactsWithMessageModel([], tokenIdContact!, name!, photo));
+      contacts.add(ContactsWithMessageModel([], tokenIdContact, name!, photo));
     }
     ContactsWithMessageModel contactUser =
         contacts.firstWhere((element) => element.tokenId == tokenIdContact);
@@ -116,7 +122,8 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
     contactUser.messages.add(MessageChatModel.fromMessageChat(message!));
     await firestoreService.updateDocument('chat', tokenIdUser,
         {'contacts': contacts.map((e) => e.toMap()).toList()});
-
+    await firestoreService.updateDocument('users', tokenIdUser, user);
+    await firestoreService.updateDocument('users', tokenIdContact, userContact);
     return;
   }
 

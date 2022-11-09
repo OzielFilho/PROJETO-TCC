@@ -87,4 +87,19 @@ class ChatHomeRepositoryImpl implements ChatHomeRepository {
       return left(SendMessageUserFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, void>> addNewContacts(
+      List<String> contacts, String tokenId) async {
+    if (!(await _networkService.hasConnection)) {
+      return left(NetworkFailure());
+    }
+    try {
+      return right(await datasource.addNewContacts(contacts, tokenId));
+    } on ChatHomeException {
+      return left(AddNewContactsFailure());
+    } catch (e) {
+      return left(AddNewContactsFailure());
+    }
+  }
 }

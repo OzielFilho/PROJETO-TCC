@@ -184,4 +184,17 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
       }
     }
   }
+
+  @override
+  Future<void> addNewContacts(List<String> contacts, String tokenId) async {
+    final userDoc = await firestoreService.getDocument('users', tokenId);
+    UserResultHomeModel user = UserResultHomeModel.fromDocument(userDoc);
+    contacts.map((e) {
+      final phoneEnc = EncryptData().encrypty(e).base16;
+      if (!user.contacts.contains(phoneEnc)) {
+        user.contacts.add(phoneEnc);
+      }
+    }).toList();
+    await firestoreService.updateDocument('users', tokenId, user.toMap());
+  }
 }

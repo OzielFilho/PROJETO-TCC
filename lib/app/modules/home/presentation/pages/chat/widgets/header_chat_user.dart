@@ -20,8 +20,9 @@ class HeaderChatUser extends StatelessWidget {
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: ColorUtils.secondaryColor,
-        backgroundImage:
-            image != null && image!.isNotEmpty ? NetworkImage(image!) : null,
+        backgroundImage: image != null && image!.isNotEmpty
+            ? NetworkImage(image!)
+            : AssetImage('assets/images/icon.png') as ImageProvider,
       ),
       subtitle: Text(
         body,

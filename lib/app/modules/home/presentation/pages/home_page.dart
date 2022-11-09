@@ -55,12 +55,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    super.initState();
     _blocGetUserHome.add(GetUserHomeEvent());
     _blocCurrentPositionHome.add(GetCurrentLocationEvent());
-
-    super.initState();
-
     NotificationService.initNotification();
+  }
+
+  @override
+  void dispose() {
+    _blocGetUserHome.dispose();
+    _blocCurrentPositionHome.dispose();
+    super.dispose();
   }
 
   bool _statusSoundPolice = false;
@@ -141,8 +146,10 @@ class _HomePageState extends State<HomePage> {
                                     InkWell(
                                         onTap: () {
                                           _updateOptionsShow();
+
                                           Modular.to.pushNamed('chat_home',
                                               arguments: {
+                                                'bloc': _blocGetUserHome,
                                                 'contacts': _blocGetUserHome
                                                     .user!.contacts,
                                                 'tokenId': _blocGetUserHome

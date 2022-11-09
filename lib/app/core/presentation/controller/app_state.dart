@@ -16,6 +16,8 @@ class NetworkErrorState extends AppState {
 
 class SuccessState extends AppState {}
 
+class SuccessAddNewContactsState extends AppState {}
+
 class SuccessGetUserState extends AppState {}
 
 class SuccessGetListDetailsContactFromPhoneChatState extends AppState {}
@@ -84,6 +86,14 @@ class EmailOrPasswordEmptyErrorState extends ErrorState {
 
 class EmailOrPasswordInvalidErrorState extends ErrorState {
   EmailOrPasswordInvalidErrorState(String? message) : super(message);
+}
+
+class ParamsInvalidErrorState extends ErrorState {
+  ParamsInvalidErrorState(String? message) : super(message);
+}
+
+class ParamsEmptyErrorState extends ErrorState {
+  ParamsEmptyErrorState(String? message) : super(message);
 }
 
 class PasswordDifferenceInvalidErrorState extends ErrorState {

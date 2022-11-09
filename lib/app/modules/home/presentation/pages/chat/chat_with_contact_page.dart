@@ -17,14 +17,16 @@ import '../../../../../core/theme/theme_app.dart';
 import '../../controllers/bloc/chat/get_list_message_chat_user_bloc.dart';
 
 class ChatWithContactPage extends StatefulWidget {
-  final String name;
+  final String nameUser;
+  final String nameContact;
   final String tokenIdUser;
   final String tokenIdContact;
   final String photoUser;
   final String photoContact;
   ChatWithContactPage({
     Key? key,
-    required this.name,
+    required this.nameUser,
+    required this.nameContact,
     required this.tokenIdUser,
     required this.tokenIdContact,
     required this.photoUser,
@@ -41,14 +43,18 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
   ScrollController _controller = ScrollController();
   final _messageController = TextEditingController();
   final _sendMessageBloc = Modular.get<SendMessageUserBloc>();
-  _sendToLastElement() {
-    Future.delayed(Duration(milliseconds: 100), () {
-      _controller.animateTo(
-          _controller.position.maxScrollExtent +
-              MediaQuery.of(context).size.height * 0.85,
-          duration: Duration(milliseconds: 500),
-          curve: Curves.decelerate);
-    });
+  bool _hasCall = false;
+  _sendToLastElement(bool call) {
+    if (!call) {
+      Future.delayed(Duration(milliseconds: 100), () {
+        _controller.animateTo(
+            _controller.position.maxScrollExtent +
+                MediaQuery.of(context).size.height * 0.85,
+            duration: Duration(milliseconds: 500),
+            curve: Curves.decelerate);
+      });
+    }
+    _hasCall = true;
   }
 
   @override
@@ -73,7 +79,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
               onPressed: () => Modular.to.pop(),
               icon: Icon(Icons.arrow_back_ios)),
           title: Text(
-            widget.name,
+            widget.nameContact,
             style: ThemeApp.theme.textTheme.headline3,
           ),
           centerTitle: true,
@@ -99,7 +105,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                 return StreamBuilder<List<MessageChat>>(
                   stream: _blocChatListUser.streamGetList,
                   builder: (context, snapshot) {
-                    _sendToLastElement();
+                    _sendToLastElement(_hasCall);
                     if (!snapshot.hasData) {
                       return Center(child: LoadingDesign());
                     }
@@ -213,6 +219,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                           onPressed: () async {
                                             FocusScope.of(context).unfocus();
                                             if (!(state is ProcessingState)) {
+                                              //usuario logado
                                               _sendMessageBloc.add(SendMessageToUserEvent(
                                                   photo: widget.photoContact,
                                                   message: MessageChat(
@@ -229,7 +236,8 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                                       widget.tokenIdContact,
                                                   tokenIdUser:
                                                       widget.tokenIdUser,
-                                                  name: widget.name));
+                                                  name: widget.nameContact));
+                                              //contato
                                               _sendMessageBloc.add(SendMessageToUserEvent(
                                                   photo: widget.photoUser,
                                                   message: MessageChat(
@@ -246,7 +254,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                                       widget.tokenIdUser,
                                                   tokenIdUser:
                                                       widget.tokenIdContact,
-                                                  name: widget.name));
+                                                  name: widget.nameUser));
                                               if (snapshot.data!.isEmpty) {
                                                 _blocChatListUser.add(
                                                     GetListMessageChatUserEvent(
@@ -283,7 +291,8 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                                           widget.tokenIdContact,
                                                       tokenIdUser:
                                                           widget.tokenIdUser,
-                                                      name: widget.name));
+                                                      name:
+                                                          widget.nameContact));
                                               _sendMessageBloc.add(
                                                   SendMessageToUserEvent(
                                                       photo: widget.photoUser,
@@ -300,7 +309,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                                                           widget.tokenIdUser,
                                                       tokenIdUser:
                                                           widget.tokenIdContact,
-                                                      name: widget.name));
+                                                      name: widget.nameUser));
                                               if (snapshot.data!.isEmpty) {
                                                 _blocChatListUser.add(
                                                     GetListMessageChatUserEvent(

@@ -27,14 +27,14 @@ class GetCurrentLocationBloc extends Bloc<HomeEvent, AppState>
       GoogleMapsPlaces(apiKey: "AIzaSyBqhOxHQZ1hk4KFC4086Ia2Y4X8Xt7JcK8");
 
   Set<Marker> markers = {};
-  Future<void> _retrieveNearbyRestaurants(CurrentPosition _userLocation) async {
+  Future<void> _retrieveNearbyPolices(CurrentPosition _userLocation) async {
     PlacesSearchResponse _response = await _places.searchNearbyWithRadius(
         Location(lat: _userLocation.lat, lng: _userLocation.long), 50000,
         type: "police");
     BitmapDescriptor markerbitmap = await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(),
-      "assets/images/marker_custom.png",
-    );
+        ImageConfiguration(size: Size(100, 100)),
+        "assets/images/marker_custom.png",
+        mipmaps: false);
     Set<Marker> _restaurantMarkers = _response.results.map((result) {
       return Marker(
           markerId: MarkerId(result.name),
@@ -74,7 +74,7 @@ class GetCurrentLocationBloc extends Bloc<HomeEvent, AppState>
 
       return ProcessingState();
     }));
-    await _retrieveNearbyRestaurants(location!)
+    await _retrieveNearbyPolices(location!)
         .whenComplete(() => emit(SuccessGetCurrentLocationState()));
   }
 

@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: Text(
                         'Olá, ${_blocGetUserHome.user!.name}',
-                        overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.clip,
                         maxLines: 1,
                         style: ThemeApp.theme.textTheme.headline2,
                       ),

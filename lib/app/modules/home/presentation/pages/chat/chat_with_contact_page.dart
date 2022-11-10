@@ -164,9 +164,9 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
                             alignment: Alignment.bottomCenter,
                             color: ColorUtils.primaryColor,
                             padding: const EdgeInsets.only(
-                                bottom: 6, left: 12.0, right: 12.0, top: 6.0),
+                                bottom: 3, left: 12.0, right: 12.0, top: 3.0),
                             width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * .08,
+                            height: MediaQuery.of(context).size.height * .09,
                             child: FormsDesign(
                               prefixIcon: null,
                               filled: true,
@@ -205,7 +205,7 @@ class _ChatWithContactPageState extends State<ChatWithContactPage> {
 
                                   return SizedBox(
                                     width: MediaQuery.of(context).size.width *
-                                        0.25,
+                                        0.30,
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end,

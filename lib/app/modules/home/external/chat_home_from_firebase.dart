@@ -90,14 +90,17 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
       String? tokenIdContact,
       String? name,
       String? photo}) async {
-    final userContact =
-        await firestoreService.getDocument('users', tokenIdContact!);
-    final user = await firestoreService.getDocument('users', tokenIdUser!);
-    userContact.addAll({'lastId': tokenIdContact});
-    user.addAll({'lastId': tokenIdContact});
+    Map<String, dynamic> userContact = Map();
+    Map<String, dynamic> user = Map();
+    if (tokenIdContact!.isNotEmpty && tokenIdUser!.isNotEmpty) {
+      userContact = await firestoreService.getDocument('users', tokenIdContact);
+      userContact.addAll({'lastId': tokenIdContact});
+      user = await firestoreService.getDocument('users', tokenIdUser);
+      user.addAll({'lastId': tokenIdContact});
+    }
 
     final existDocument =
-        await firestoreService.existDocument('chat', tokenIdUser);
+        await firestoreService.existDocument('chat', tokenIdUser!);
     if (!existDocument) {
       await firestoreService
           .createDocument('chat', tokenIdUser, {'contacts': []});
@@ -123,7 +126,10 @@ class ChatHomeFromFirebase implements ChatHomeDatasource {
     await firestoreService.updateDocument('chat', tokenIdUser,
         {'contacts': contacts.map((e) => e.toMap()).toList()});
     await firestoreService.updateDocument('users', tokenIdUser, user);
-    await firestoreService.updateDocument('users', tokenIdContact, userContact);
+    if (tokenIdContact.isNotEmpty) {
+      await firestoreService.updateDocument(
+          'users', tokenIdContact, userContact);
+    }
     return;
   }
 

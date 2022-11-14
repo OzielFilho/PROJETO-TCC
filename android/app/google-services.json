@@ -14,19 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1034754858326-d8u77j25e1mfq86c0r87q6ncfq7vsc9l.apps.googleusercontent.com",
+          "client_id": "1034754858326-i6ujmaf3vqfhpa96svfgnls4qa9re6uu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.lum.app",
-            "certificate_hash": "d2c22a8066e515b04806e5529e4de54668f4b11f"
-          }
-        },
-        {
-          "client_id": "1034754858326-rvnpvfgddovt8j3bo6fc7dklvs1c2lg5.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.lum.app",
-            "certificate_hash": "9e5d1e0e8c40b21d53040c7217d14f61c062422a"
+            "certificate_hash": "6c13e732a46dafb8941f1dc0c53e0c203d89a137"
           }
         },
         {

@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'firestorage_service.dart';
 import 'firestore_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import '../../modules/auth/domain/entities/auth_result.dart';
 import '../../modules/auth/infra/models/auth_result_model.dart';
 import '../../modules/auth/infra/models/user_create_account_model.dart';
@@ -47,11 +45,12 @@ class FirebaseAuthServiceImpl implements FirebaseAuthService {
           await _firestoreService.getDocument('users', userLogin.user!.uid);
 
       AuthResult userResult = AuthResultModel.fromMap(user);
-      if (!userResult.welcomePage) {
+      final emailVerified = userLogin.user!.emailVerified;
+      if (!userResult.welcomePage && emailVerified) {
         return 'Welcome Page True';
       }
 
-      if (!(userLogin.user!.emailVerified)) {
+      if (!emailVerified) {
         await auth.signOut();
         return 'Email não verificado! Verifique o email utilizar o app';
       }

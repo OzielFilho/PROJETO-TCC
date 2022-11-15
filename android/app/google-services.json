@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1034754858326-89qc12sv56rr4uce1bkhulc39mk1h5m3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lum.app",
+            "certificate_hash": "87b6c4ba489cedbf7b0528b9de4084e6c9a7d77e"
+          }
+        },
+        {
           "client_id": "1034754858326-i6ujmaf3vqfhpa96svfgnls4qa9re6uu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

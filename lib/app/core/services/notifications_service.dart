@@ -1,6 +1,7 @@
 import 'package:app/app/core/services/firebase_auth_service.dart';
 import 'package:app/app/core/services/firestore_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class NotificationService {
@@ -24,5 +25,33 @@ class NotificationService {
     result.addAll({'fcm': token != null ? token : fcmToken});
 
     await _firestoreService.updateDocument('users', tokenUser, result);
+  }
+
+  static Future<void> notificationLocalBackground() async {
+    await FlutterLocalNotificationsPlugin().show(
+        DateTime.now().millisecond,
+        'Aplicativo Ativo em segundo plano.',
+        'Em caso de emergência, clique 3 vezes no botão de volume para se proteger!',
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            'ShhPrecisoAjuda',
+            'shh',
+            indeterminate: true,
+            ongoing: true,
+            autoCancel: false,
+            icon: "mipmap/ic_launcher",
+            priority: Priority.max,
+            category: AndroidNotificationCategory.locationSharing,
+            fullScreenIntent: true,
+            playSound: true,
+            visibility: NotificationVisibility.private,
+            importance: Importance.max,
+            enableVibration: true,
+          ),
+        ));
+  }
+
+  static Future<void> cancelAllNotificationsLocalBackground() async {
+    await FlutterLocalNotificationsPlugin().cancelAll();
   }
 }

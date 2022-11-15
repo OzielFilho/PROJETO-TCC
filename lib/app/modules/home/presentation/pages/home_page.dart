@@ -28,7 +28,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   VolumeActionsServiceImpl _actionsServiceImpl = VolumeActionsServiceImpl();
   final _blocGetUserHome = Modular.get<GetUserHomeBloc>();
   final _blocCurrentPositionHome = Modular.get<GetCurrentLocationBloc>();
@@ -55,10 +55,22 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
     _blocGetUserHome.add(GetUserHomeEvent());
     _blocCurrentPositionHome.add(GetCurrentLocationEvent());
     NotificationService.initNotification();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.paused) {
+      await NotificationService.notificationLocalBackground();
+    }
+    if (state == AppLifecycleState.resumed) {
+      await NotificationService.cancelAllNotificationsLocalBackground();
+    }
+    super.didChangeAppLifecycleState(state);
   }
 
   @override

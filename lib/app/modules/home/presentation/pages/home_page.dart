@@ -1,9 +1,7 @@
 import 'dart:async';
 
 import 'package:app/app/core/services/notifications_service.dart';
-
 import '../controllers/bloc/chat/send_message_emergence_with_chat_bloc.dart';
-
 import '../../../../core/presentation/controller/app_state.dart';
 import '../../../../core/presentation/widgets/svg_design.dart';
 import '../../../../core/services/audio_service.dart';
@@ -70,6 +68,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       await NotificationService.cancelAllNotificationsLocalBackground();
     }
+    if (state == AppLifecycleState.inactive) {
+      await NotificationService.cancelAllNotificationsLocalBackground();
+    }
+
     super.didChangeAppLifecycleState(state);
   }
 

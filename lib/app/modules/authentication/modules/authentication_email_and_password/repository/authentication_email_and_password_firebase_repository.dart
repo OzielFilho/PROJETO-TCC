@@ -19,9 +19,6 @@ class AuthenticationEmailAndPasswordFirebaseRepository
   @override
   Future<void> execute(
       {required String email, required String password}) async {
-    print(
-        'eh valid? ${(Validations.emailValidation(email: email) && Validations.passwordValidation(password: password))}');
-
     if (email.isEmpty || password.isEmpty) {
       _receiver.handleAuthenticationEmailAndPasswordException(
           EmailOrPasswordEmptyException());
@@ -42,6 +39,8 @@ class AuthenticationEmailAndPasswordFirebaseRepository
     } on TimeoutException catch (exception) {
       _receiver.handleAuthenticationEmailAndPasswordException(exception);
     } on FirebaseAuthException catch (exception) {
+      _receiver.handleAuthenticationEmailAndPasswordException(exception);
+    } on Exception catch (exception) {
       _receiver.handleAuthenticationEmailAndPasswordException(exception);
     }
   }

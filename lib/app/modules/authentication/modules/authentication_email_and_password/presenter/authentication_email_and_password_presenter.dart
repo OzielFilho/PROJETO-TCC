@@ -20,14 +20,14 @@ class AuthenticationEmailAndPasswordPresenter extends ChangeNotifier
   late AuthenticationEmailAndPasswordProvider _provider;
 
   late AuthenticationRoutable _routable;
-  late BuildContext _context;
+  BuildContext? _context;
 
   AuthenticationEmailAndPasswordPresenter(
       {AuthenticationEmailAndPasswordProvider? provider,
-      required BuildContext context,
+      BuildContext? context,
       AuthenticationRoutable? routable}) {
     this._routable = routable ?? AuthenticationRouter();
-    this._context = context;
+    this._context = context!;
     this._provider = provider ??
         AuthenticationEmailAndPasswordInteractorExecutor(listener: this);
   }
@@ -44,15 +44,15 @@ class AuthenticationEmailAndPasswordPresenter extends ChangeNotifier
   void authenticationEmailAndPasswordReceiver(String result) {
     _controllerStream.sink.add(result);
     if (result.isEmpty) {
-      _routable.navigateToHomePage(context: _context);
+      _routable.navigateToHomePage(context: _context!);
       return;
     }
     if (result == 'Welcome Page True') {
-      _routable.navigateToWelcomePage(context: _context);
+      _routable.navigateToWelcomePage(context: _context!);
       return;
     }
     _routable.openDialogError(
-        context: _context, error: 'Não foi possível realizar o login');
+        context: _context!, error: 'Não foi possível realizar o login');
   }
 
   @override
@@ -60,16 +60,16 @@ class AuthenticationEmailAndPasswordPresenter extends ChangeNotifier
     _controllerStream.sink.add(exception);
     if (exception is EmailOrPasswordEmptyException) {
       _routable.openDialogError(
-          context: _context, error: 'Email ou Senha estão vazios');
+          context: _context!, error: 'Email ou Senha estão vazios');
       return;
     }
     if (exception is EmailOrPasswordInvalidException) {
       _routable.openDialogError(
-          context: _context, error: 'Email ou Senha são inválidos');
+          context: _context!, error: 'Email ou Senha são inválidos');
       return;
     }
     _routable.openDialogError(
-        context: _context, error: 'Não foi possível realizar o login');
+        context: _context!, error: 'Não foi possível realizar o login');
   }
 
   @override

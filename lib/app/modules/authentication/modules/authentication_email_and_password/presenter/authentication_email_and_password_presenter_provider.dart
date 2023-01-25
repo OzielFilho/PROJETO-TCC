@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../models/authentication_params_model.dart';
 
 abstract class AuthenticationEmailAndPasswordPresenterProvider {

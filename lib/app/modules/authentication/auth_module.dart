@@ -10,7 +10,7 @@ import '../auth/presentation/controllers/recovery_account_controller/recovery_ac
 import '../auth/presentation/pages/auth_page.dart';
 import '../auth/presentation/pages/create_account_page.dart';
 import 'ui/login_app_page.dart';
-import '../auth/presentation/pages/recovery_account_page.dart';
+import 'ui/recovery_account_page.dart';
 
 class AuthModule extends Module {
   @override

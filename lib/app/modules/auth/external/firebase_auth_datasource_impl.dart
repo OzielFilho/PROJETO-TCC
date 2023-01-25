@@ -6,16 +6,12 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../../../core/services/firebase_auth_service.dart';
 import '../../../core/services/firestorage_service.dart';
 import '../../../core/services/firestore_service.dart';
-import '../domain/entities/auth_result.dart';
 import '../infra/datasources/create_account_datasource.dart';
-import '../infra/datasources/login_datasource.dart';
 import '../infra/datasources/recovery_datasource.dart';
-import '../infra/models/auth_result_model.dart';
 import '../infra/models/user_create_account_model.dart';
-import '../infra/models/user_create_google_model.dart';
 
 class FirebaseAuthDatasourceImpl
-    implements LoginDatasource, CreateAccountDatasource, RecoveryDatasource {
+    implements CreateAccountDatasource, RecoveryDatasource {
   final FirebaseAuthService authService;
   final GoogleSignIn googleSignIn;
   final FirestorageService firestorageService;
@@ -26,47 +22,6 @@ class FirebaseAuthDatasourceImpl
     required this.googleSignIn,
     required this.firestore,
   });
-
-  @override
-  Future<String> loginWithEmailAndPassword(
-      String email, String password) async {
-    return await authService.signInWithEmailAndPassword(email, password);
-  }
-
-  @override
-  Future<AuthResult> loginWithGoogle() async {
-    late AuthResult userResult = AuthResultModel.empty();
-
-    final GoogleSignInAccount? googleSignInAccount =
-        await googleSignIn.signIn();
-
-    if (googleSignInAccount != null) {
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
-
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
-
-      final userCredential = await authService.signInWithCredential(credential);
-      final existUser =
-          await firestore.existDocument('users', userCredential.uid);
-
-      if (!existUser) {
-        await firestore.createDocument('users', userCredential.uid,
-            UserCreateGoogleModel.fromUser(userCredential).toMap());
-        await firestore
-            .createDocument('chat', userCredential.uid, {'contacts': []});
-      }
-
-      final user = await firestore.getDocument('users', userCredential.uid);
-
-      userResult = AuthResultModel.fromMap(user);
-      return userResult;
-    }
-    return userResult;
-  }
 
   @override
   Future<bool> recoveryWithEmail(String email) async {

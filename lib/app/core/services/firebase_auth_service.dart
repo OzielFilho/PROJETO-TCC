@@ -3,7 +3,7 @@ import 'firestorage_service.dart';
 import 'firestore_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../modules/auth/domain/entities/auth_result.dart';
-import '../../modules/auth/infra/models/auth_result_model.dart';
+import '../../modules/authentication/authentication_google/models/auth_result_model.dart';
 import '../../modules/auth/infra/models/user_create_account_model.dart';
 import '../error/exceptions.dart';
 import '../utils/constants/encrypt_data.dart';
@@ -56,8 +56,8 @@ class FirebaseAuthServiceImpl implements FirebaseAuthService {
         return 'Email não verificado! Verifique o email utilizar o app';
       }
       return '';
-    } catch (e) {
-      return 'Não foi possivel realizar o login';
+    } on Exception catch (e) {
+      throw e;
     }
   }
 
@@ -73,8 +73,12 @@ class FirebaseAuthServiceImpl implements FirebaseAuthService {
 
   @override
   Future<User> signInWithCredential(dynamic credential) async {
-    final result = await auth.signInWithCredential(credential);
-    return result.user!;
+    try {
+      final result = await auth.signInWithCredential(credential);
+      return result.user!;
+    } on Exception catch (e) {
+      throw e;
+    }
   }
 
   @override

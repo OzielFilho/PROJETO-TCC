@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../../domain/entities/auth_result.dart';
+import '../../../auth/domain/entities/auth_result.dart';
 
 class AuthResultModel extends AuthResult {
   AuthResultModel(

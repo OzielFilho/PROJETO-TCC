@@ -1,6 +1,5 @@
 import 'package:app/app/core/services/firebase_auth_service.dart';
 import 'package:app/app/modules/authentication/modules/authentication_google/interactor/authentication_google_interactor_executor.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:test/test.dart';
 
 import '../../../../mocks/services/firebase_auth_service_mock_200.dart';
@@ -12,8 +11,7 @@ import '../presenter/authentication_google_presenter_listener_mock.dart';
 main() {
   FirebaseAuthService _authService;
 
-  final _credential =
-      OAuthCredential(providerId: '132345', signInMethod: 'google');
+  final _credential = {'providerId': '132345', 'signInMethod': 'google'};
   final _authenticationListener = AuthenticationGooglePresenterListenerMock();
 
   group('Authentication With Google Executor Test', () {

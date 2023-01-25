@@ -16,8 +16,8 @@ class AuthenticationGoogleFirebaseRepository
       this._authService, this._receiver);
 
   @override
-  Future<void> execute({required OAuthCredential credential}) async {
-    if (credential.asMap().isEmpty) {
+  Future<void> execute({required dynamic credential}) async {
+    if (credential.isEmpty) {
       _receiver.handleAuthenticationGoogleException(CredentialEmptyException());
       return;
     }

@@ -28,7 +28,7 @@ class AuthenticationGoogleInteractorExecutor
         this._listener = listener!;
 
   @override
-  Future<void> authenticationGoogle(OAuthCredential credential) async {
+  Future<void> authenticationGoogle(dynamic credential) async {
     final repository =
         AuthenticationGoogleFirebaseRepository(_authService, this);
     await repository.execute(credential: credential);

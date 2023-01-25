@@ -50,7 +50,7 @@ class AuthenticationGooglePresenter extends ChangeNotifier
           idToken: googleSignInAuthentication.idToken,
         );
 
-        await _provider.authenticationGoogle(credential);
+        await _provider.authenticationGoogle(credential.asMap());
       }
     } on Exception catch (exception) {
       _controller.sink.add(exception);

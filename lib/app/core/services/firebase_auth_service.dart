@@ -56,8 +56,8 @@ class FirebaseAuthServiceImpl implements FirebaseAuthService {
         return 'Email não verificado! Verifique o email utilizar o app';
       }
       return '';
-    } catch (e) {
-      return 'Não foi possivel realizar o login';
+    } on Exception catch (e) {
+      throw e;
     }
   }
 

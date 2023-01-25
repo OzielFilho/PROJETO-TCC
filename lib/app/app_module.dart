@@ -15,7 +15,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import 'core/services/firebase_auth_service.dart';
 import 'core/services/firestore_service.dart';
-import 'modules/auth/auth_module.dart';
+import 'modules/authentication/auth_module.dart';
 import 'modules/auth/external/firebase_auth_datasource_impl.dart';
 import 'modules/home/home_module.dart';
 import 'modules/splash/splash_module.dart';

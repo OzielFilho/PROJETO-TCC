@@ -1,5 +1,9 @@
 class LoginException implements Exception {}
 
+class EmailOrPasswordEmptyException implements Exception {}
+
+class EmailOrPasswordInvalidException implements Exception {}
+
 class CreateUserException implements Exception {}
 
 class PhoneExistException implements Exception {}

@@ -40,6 +40,8 @@ class AuthenticationEmailAndPasswordFirebaseRepository
       _receiver.handleAuthenticationEmailAndPasswordException(exception);
     } on FirebaseAuthException catch (exception) {
       _receiver.handleAuthenticationEmailAndPasswordException(exception);
+    } on FirebaseException catch (exception) {
+      _receiver.handleAuthenticationEmailAndPasswordException(exception);
     } on Exception catch (exception) {
       _receiver.handleAuthenticationEmailAndPasswordException(exception);
     }

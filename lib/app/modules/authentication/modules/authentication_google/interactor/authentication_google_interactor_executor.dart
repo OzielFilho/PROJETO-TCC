@@ -19,10 +19,12 @@ class AuthenticationGoogleInteractorExecutor
 
   AuthenticationGoogleInteractorExecutor(
       {FirebaseAuthService? authService,
+      FirestoreService? firestoreService,
       AuthenticationGooglePresenterListener? listener})
       : this._authService =
             authService ?? Modular.get<FirebaseAuthServiceImpl>(),
-        this._firestoreService = Modular.get<FirestoreServiceImpl>(),
+        this._firestoreService =
+            firestoreService ?? Modular.get<FirestoreServiceImpl>(),
         this._listener = listener!;
 
   @override

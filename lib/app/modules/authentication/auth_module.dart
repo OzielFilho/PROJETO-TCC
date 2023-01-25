@@ -1,21 +1,21 @@
-import 'infra/repositories/create_account_repository_impl.dart';
-import 'presentation/controllers/create_account_controller/create_account_with_email_and_password_controller.dart';
+import '../auth/infra/repositories/create_account_repository_impl.dart';
+import '../auth/presentation/controllers/create_account_controller/create_account_with_email_and_password_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../home/home_module.dart';
-import 'domain/usecases/create_account_with_email_and_password.dart';
-import 'domain/usecases/login_with_email_and_password.dart';
-import 'domain/usecases/login_with_google_user.dart';
-import 'domain/usecases/recovery_password.dart';
-import 'infra/repositories/login_repository_impl.dart';
-import 'infra/repositories/recovery_repository_impl.dart';
-import 'presentation/controllers/login_controller/login_bloc.dart';
-import 'presentation/controllers/login_google_controller/login_google_bloc.dart';
-import 'presentation/controllers/recovery_account_controller/recovery_account_bloc.dart';
-import 'presentation/pages/auth_page.dart';
-import 'presentation/pages/create_account_page.dart';
-import 'presentation/pages/login_app_page.dart';
-import 'presentation/pages/recovery_account_page.dart';
+import '../auth/domain/usecases/create_account_with_email_and_password.dart';
+import '../auth/domain/usecases/login_with_email_and_password.dart';
+import '../auth/domain/usecases/login_with_google_user.dart';
+import '../auth/domain/usecases/recovery_password.dart';
+import '../auth/infra/repositories/login_repository_impl.dart';
+import '../auth/infra/repositories/recovery_repository_impl.dart';
+import '../auth/presentation/controllers/login_controller/login_bloc.dart';
+import '../auth/presentation/controllers/login_google_controller/login_google_bloc.dart';
+import '../auth/presentation/controllers/recovery_account_controller/recovery_account_bloc.dart';
+import '../auth/presentation/pages/auth_page.dart';
+import '../auth/presentation/pages/create_account_page.dart';
+import 'ui/login_app_page.dart';
+import '../auth/presentation/pages/recovery_account_page.dart';
 
 class AuthModule extends Module {
   @override

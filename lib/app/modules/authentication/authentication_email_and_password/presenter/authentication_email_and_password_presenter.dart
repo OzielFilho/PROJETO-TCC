@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:app/app/core/error/exceptions.dart';
 import 'package:app/app/core/presentation/controller/app_state.dart';
-import 'package:app/app/modules/authentication/modules/authentication_email_and_password/interactor/authentication_email_and_password_provider.dart';
-import 'package:app/app/modules/authentication/modules/authentication_email_and_password/presenter/authentication_email_and_password_presenter_listener.dart';
-import 'package:app/app/modules/authentication/modules/authentication_email_and_password/presenter/authentication_email_and_password_presenter_provider.dart';
+import 'package:app/app/modules/authentication/authentication_email_and_password/interactor/authentication_email_and_password_provider.dart';
+import 'package:app/app/modules/authentication/authentication_email_and_password/presenter/authentication_email_and_password_presenter_listener.dart';
+import 'package:app/app/modules/authentication/authentication_email_and_password/presenter/authentication_email_and_password_presenter_provider.dart';
 import 'package:app/app/modules/authentication/routers/authentication_routable.dart';
 import 'package:app/app/modules/authentication/routers/authentication_router.dart';
 import 'package:flutter/material.dart';

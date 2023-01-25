@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:app/app/core/services/firebase_auth_service.dart';
 import 'package:app/app/core/utils/validations/validations.dart';
-import 'package:app/app/modules/authentication/modules/authentication_email_and_password/repository/authentication_email_and_password_executor.dart';
+import 'package:app/app/modules/authentication/authentication_email_and_password/repository/authentication_email_and_password_executor.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../../../core/error/exceptions.dart';
+import '../../../../core/error/exceptions.dart';
 import '../interactor/authentication_email_and_password_receiver.dart';
 
 class AuthenticationEmailAndPasswordFirebaseRepository

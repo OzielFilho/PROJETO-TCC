@@ -1,15 +1,14 @@
-import 'package:app/app/modules/authentication/modules/authentication_google/interactor/authentication_google_provider.dart';
-import 'package:app/app/modules/authentication/modules/authentication_google/interactor/authentication_google_receiver.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../../core/services/firebase_auth_service.dart';
-import '../../../../../core/services/firestore_service.dart';
-import '../../../../auth/domain/entities/auth_result.dart';
-import '../../../../auth/infra/models/auth_result_model.dart';
-import '../../../../auth/infra/models/user_create_google_model.dart';
+import '../../../../core/services/firebase_auth_service.dart';
+import '../../../../core/services/firestore_service.dart';
+import '../models/auth_result_model.dart';
+import '../models/user_create_google_model.dart';
 import '../presenter/authentication_google_presenter_listener.dart';
 import '../repository/authentication_google_firebase_repository.dart';
+import 'authentication_google_provider.dart';
+import 'authentication_google_receiver.dart';
 
 class AuthenticationGoogleInteractorExecutor
     implements AuthenticationGoogleProvider, AuthenticationGoogleReceiver {
@@ -48,7 +47,7 @@ class AuthenticationGoogleInteractorExecutor
       }
 
       final user = await _firestoreService.getDocument('users', result.uid);
-      AuthResult userResult = AuthResultModel.fromMap(user);
+      final userResult = AuthResultModel.fromMap(user);
       if (!userResult.welcomePage) {
         _listener.authenticationGoogleReceiver('Welcome Page True');
       }

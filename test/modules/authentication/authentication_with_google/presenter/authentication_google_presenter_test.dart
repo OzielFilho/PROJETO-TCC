@@ -1,5 +1,5 @@
 import 'package:app/app/core/presentation/controller/app_state.dart';
-import 'package:app/app/modules/authentication/modules/authentication_google/presenter/authentication_google_presenter.dart';
+import 'package:app/app/modules/authentication/authentication_google/presenter/authentication_google_presenter.dart';
 import 'package:test/test.dart';
 
 import '../../../../mocks/build_context_mock.dart';

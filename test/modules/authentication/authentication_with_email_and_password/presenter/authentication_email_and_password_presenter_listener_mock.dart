@@ -1,4 +1,4 @@
-import 'package:app/app/modules/authentication/modules/authentication_email_and_password/presenter/authentication_email_and_password_presenter_listener.dart';
+import 'package:app/app/modules/authentication/authentication_email_and_password/presenter/authentication_email_and_password_presenter_listener.dart';
 
 class AuthenticationEmailAndPasswordPresenterListenerMock
     implements AuthenticationEmailAndPasswordPresenterListener {

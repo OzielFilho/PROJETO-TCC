@@ -1,17 +1,17 @@
 import 'dart:async';
 
 import 'package:app/app/core/presentation/controller/app_state.dart';
-import 'package:app/app/modules/authentication/modules/authentication_google/presenter/authentication_google_presenter_listener.dart';
-import 'package:app/app/modules/authentication/modules/authentication_google/presenter/authentication_google_presenter_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../../../../core/error/exceptions.dart';
-import '../../../routers/authentication_routable.dart';
-import '../../../routers/authentication_router.dart';
+import '../../../../core/error/exceptions.dart';
+import '../../routers/authentication_routable.dart';
+import '../../routers/authentication_router.dart';
 import '../interactor/authentication_google_interactor_executor.dart';
 import '../interactor/authentication_google_provider.dart';
+import 'authentication_google_presenter_listener.dart';
+import 'authentication_google_presenter_provider.dart';
 
 class AuthenticationGooglePresenter extends ChangeNotifier
     implements

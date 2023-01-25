@@ -7,11 +7,11 @@ import '../../../core/presentation/widgets/form_desing.dart';
 import '../../../core/presentation/widgets/loading_desing.dart';
 import '../../../core/theme/theme_app.dart';
 import '../../../core/utils/colors/colors_utils.dart';
-import '../modules/authentication_email_and_password/models/authentication_params_model.dart';
-import '../modules/authentication_email_and_password/presenter/authentication_email_and_password_presenter.dart';
-import '../modules/authentication_email_and_password/presenter/authentication_email_and_password_presenter_provider.dart';
-import '../modules/authentication_google/presenter/authentication_google_presenter.dart';
-import '../modules/authentication_google/presenter/authentication_google_presenter_provider.dart';
+import '../authentication_email_and_password/models/authentication_params_model.dart';
+import '../authentication_email_and_password/presenter/authentication_email_and_password_presenter.dart';
+import '../authentication_email_and_password/presenter/authentication_email_and_password_presenter_provider.dart';
+import '../authentication_google/presenter/authentication_google_presenter.dart';
+import '../authentication_google/presenter/authentication_google_presenter_provider.dart';
 
 class LoginAppPage extends StatefulWidget {
   const LoginAppPage({Key? key}) : super(key: key);

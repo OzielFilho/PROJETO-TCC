@@ -1,4 +1,4 @@
-import 'package:app/app/modules/authentication/modules/authentication_google/presenter/authentication_google_presenter_listener.dart';
+import 'package:app/app/modules/authentication/authentication_google/presenter/authentication_google_presenter_listener.dart';
 
 class AuthenticationGooglePresenterListenerMock
     implements AuthenticationGooglePresenterListener {

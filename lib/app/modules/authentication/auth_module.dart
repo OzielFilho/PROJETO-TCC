@@ -4,13 +4,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../home/home_module.dart';
 import '../auth/domain/usecases/create_account_with_email_and_password.dart';
-import '../auth/domain/usecases/login_with_email_and_password.dart';
-import '../auth/domain/usecases/login_with_google_user.dart';
 import '../auth/domain/usecases/recovery_password.dart';
-import '../auth/infra/repositories/login_repository_impl.dart';
 import '../auth/infra/repositories/recovery_repository_impl.dart';
-import '../auth/presentation/controllers/login_controller/login_bloc.dart';
-import '../auth/presentation/controllers/login_google_controller/login_google_bloc.dart';
 import '../auth/presentation/controllers/recovery_account_controller/recovery_account_bloc.dart';
 import '../auth/presentation/pages/auth_page.dart';
 import '../auth/presentation/pages/create_account_page.dart';
@@ -20,13 +15,6 @@ import '../auth/presentation/pages/recovery_account_page.dart';
 class AuthModule extends Module {
   @override
   final List<Bind> binds = [
-    //LOGIN
-    Bind((i) => LoginRepositoryImpl(i(), i())),
-    Bind((i) => LoginWithEmailAndPassword(i())),
-    Bind((i) => LoginWithEmailAndPasswordBloc(i())),
-    Bind((i) => LoginWithGoogle(i())),
-    Bind((i) => LoginWithGoogleBloc(i())),
-
     //CREATE ACCOUNT
     Bind((i) => CreateAccountRepositoryImpl(i(), i())),
     Bind((i) => CreateAccountWithEmailAndPassword(i())),

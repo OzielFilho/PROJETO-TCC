@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:app/app/core/services/firebase_auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../../../core/error/exceptions.dart';
+import '../../../../core/error/exceptions.dart';
 import '../interactor/authentication_google_receiver.dart';
 import 'authentication_google_repository_executor.dart';
 

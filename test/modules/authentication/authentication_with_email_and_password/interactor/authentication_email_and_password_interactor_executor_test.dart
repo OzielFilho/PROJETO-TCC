@@ -1,5 +1,5 @@
 import 'package:app/app/core/services/firebase_auth_service.dart';
-import 'package:app/app/modules/authentication/modules/authentication_email_and_password/interactor/authentication_email_and_password_interactor_executor.dart';
+import 'package:app/app/modules/authentication/authentication_email_and_password/interactor/authentication_email_and_password_interactor_executor.dart';
 import 'package:test/test.dart';
 
 import '../../../../mocks/services/firebase_auth_service_mock_200.dart';

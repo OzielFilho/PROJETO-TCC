@@ -1,6 +1,6 @@
 import 'package:app/app/core/presentation/controller/app_state.dart';
-import 'package:app/app/modules/authentication/modules/authentication_email_and_password/models/authentication_params_model.dart';
-import 'package:app/app/modules/authentication/modules/authentication_email_and_password/presenter/authentication_email_and_password_presenter.dart';
+import 'package:app/app/modules/authentication/authentication_email_and_password/models/authentication_params_model.dart';
+import 'package:app/app/modules/authentication/authentication_email_and_password/presenter/authentication_email_and_password_presenter.dart';
 import 'package:test/test.dart';
 
 import '../../../../mocks/build_context_mock.dart';

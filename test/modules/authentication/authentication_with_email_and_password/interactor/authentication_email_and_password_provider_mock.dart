@@ -1,4 +1,4 @@
-import 'package:app/app/modules/authentication/modules/authentication_email_and_password/interactor/authentication_email_and_password_provider.dart';
+import 'package:app/app/modules/authentication/authentication_email_and_password/interactor/authentication_email_and_password_provider.dart';
 
 class AuthenticationEmailAndPasswordProviderMock
     implements AuthenticationEmailAndPasswordProvider {

@@ -10,6 +10,8 @@ import '../../../core/utils/colors/colors_utils.dart';
 import '../modules/authentication_email_and_password/models/authentication_params_model.dart';
 import '../modules/authentication_email_and_password/presenter/authentication_email_and_password_presenter.dart';
 import '../modules/authentication_email_and_password/presenter/authentication_email_and_password_presenter_provider.dart';
+import '../modules/authentication_google/presenter/authentication_google_presenter.dart';
+import '../modules/authentication_google/presenter/authentication_google_presenter_provider.dart';
 
 class LoginAppPage extends StatefulWidget {
   const LoginAppPage({Key? key}) : super(key: key);
@@ -24,10 +26,12 @@ class _LoginAppPageState extends State<LoginAppPage> {
   bool _visibility = true;
 
   late AuthenticationEmailAndPasswordPresenterProvider _providerLogin;
+  late AuthenticationGooglePresenterProvider _providerLoginGoogle;
 
   @override
   void initState() {
     _providerLogin = AuthenticationEmailAndPasswordPresenter(context: context);
+    _providerLoginGoogle = AuthenticationGooglePresenter(context: context);
     super.initState();
   }
 
@@ -150,31 +154,37 @@ class _LoginAppPageState extends State<LoginAppPage> {
                       ],
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      // if (!(stateGoogle is ProcessingState) ||
-                      //     !(stateEmail is ProcessingState)) {
-                      //   _loginGoogleBloc.add(LoginWithGoogleEvent());
-                      // }
+                  StreamBuilder<Object>(
+                    stream: _providerLoginGoogle.outGoogleLoginController,
+                    builder: (context, snapshot) {
+                      if (snapshot.data is ProcessingState) {
+                        return LoadingDesign();
+                      }
+
+                      return InkWell(
+                        onTap: () async {
+                          await _providerLoginGoogle.authenticationGoogle();
+                        },
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 15,
+                              backgroundColor: ColorUtils.transparentColor,
+                              backgroundImage:
+                                  AssetImage('assets/images/google_icon.png'),
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              'Entre com sua conta Google',
+                              style: ThemeApp.theme.textTheme.caption,
+                            )
+                          ],
+                        ),
+                      );
                     },
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 15,
-                          backgroundColor: ColorUtils.transparentColor,
-                          backgroundImage:
-                              AssetImage('assets/images/google_icon.png'),
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          'Entre com sua conta Google',
-                          style: ThemeApp.theme.textTheme.caption,
-                        )
-                      ],
-                    ),
-                  )
+                  ),
                 ],
               ))),
     );

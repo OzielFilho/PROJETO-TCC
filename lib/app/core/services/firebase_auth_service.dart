@@ -73,8 +73,12 @@ class FirebaseAuthServiceImpl implements FirebaseAuthService {
 
   @override
   Future<User> signInWithCredential(dynamic credential) async {
-    final result = await auth.signInWithCredential(credential);
-    return result.user!;
+    try {
+      final result = await auth.signInWithCredential(credential);
+      return result.user!;
+    } on Exception catch (e) {
+      throw e;
+    }
   }
 
   @override

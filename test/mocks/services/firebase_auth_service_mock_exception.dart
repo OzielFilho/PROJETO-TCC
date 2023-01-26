@@ -20,7 +20,7 @@ class FirebaseAuthServiceMockException implements FirebaseAuthService {
   @override
   Future<String> createAccount(UserCreateAccountModel userModel, File? image) {
     callCreateAccount += 1;
-    return Future.value('success');
+    throw Exception();
   }
 
   @override
@@ -39,6 +39,7 @@ class FirebaseAuthServiceMockException implements FirebaseAuthService {
   @override
   Future<void> recoveryPassword(String email) async {
     callRecoveryPassword += 1;
+    throw Exception();
   }
 
   @override
@@ -57,6 +58,7 @@ class FirebaseAuthServiceMockException implements FirebaseAuthService {
   @override
   Future<void> signOut() async {
     callSignOut += 1;
+    throw Exception();
   }
 
   @override

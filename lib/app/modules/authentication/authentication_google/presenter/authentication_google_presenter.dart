@@ -1,9 +1,7 @@
 import 'dart:async';
 
 import 'package:app/app/core/presentation/controller/app_state.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../routers/authentication_routable.dart';
@@ -19,7 +17,6 @@ class AuthenticationGooglePresenter extends ChangeNotifier
         AuthenticationGooglePresenterProvider {
   final _controller = StreamController<Object>();
   late AuthenticationGoogleProvider _provider;
-  late GoogleSignIn _googleSignIn;
   late AuthenticationRoutable _routable;
   BuildContext? _context;
 
@@ -28,36 +25,15 @@ class AuthenticationGooglePresenter extends ChangeNotifier
       BuildContext? context,
       AuthenticationRoutable? routable}) {
     this._routable = routable ?? AuthenticationRouter();
-    this._googleSignIn = GoogleSignIn();
     this._context = context!;
     this._provider =
         provider ?? AuthenticationGoogleInteractorExecutor(listener: this);
   }
 
   @override
-  Future<void> authenticationGoogle() async {
+  Future<void> authenticationGoogle(dynamic credential) async {
     _controller.sink.add(ProcessingState());
-    try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
-
-      if (googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount.authentication;
-
-        final credential = GoogleAuthProvider.credential(
-          accessToken: googleSignInAuthentication.accessToken,
-          idToken: googleSignInAuthentication.idToken,
-        );
-
-        await _provider.authenticationGoogle(credential.asMap());
-      }
-    } on Exception catch (exception) {
-      _controller.sink.add(exception);
-      _routable.openDialogError(
-          context: _context!,
-          error: 'Não foi possível realizar o login com sua conta google');
-    }
+    await _provider.authenticationGoogle(credential);
   }
 
   @override

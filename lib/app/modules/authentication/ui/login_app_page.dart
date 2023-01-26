@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../core/presentation/controller/app_state.dart';
 import '../../../core/presentation/widgets/buttons_design.dart';
@@ -163,7 +165,22 @@ class _LoginAppPageState extends State<LoginAppPage> {
 
                       return InkWell(
                         onTap: () async {
-                          await _providerLoginGoogle.authenticationGoogle();
+                          final GoogleSignInAccount? googleSignInAccount =
+                              await GoogleSignIn().signIn();
+
+                          if (googleSignInAccount != null) {
+                            final GoogleSignInAuthentication
+                                googleSignInAuthentication =
+                                await googleSignInAccount.authentication;
+
+                            final credential = GoogleAuthProvider.credential(
+                              accessToken:
+                                  googleSignInAuthentication.accessToken,
+                              idToken: googleSignInAuthentication.idToken,
+                            );
+                            await _providerLoginGoogle
+                                .authenticationGoogle(credential);
+                          }
                         },
                         child: Row(
                           children: [

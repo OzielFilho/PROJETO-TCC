@@ -1,4 +1,4 @@
 abstract class AuthenticationGooglePresenterProvider {
-  Future<void> authenticationGoogle();
+  Future<void> authenticationGoogle(dynamic credential);
   Stream<Object> get outGoogleLoginController;
 }

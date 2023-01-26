@@ -11,10 +11,11 @@ main() {
   final _authPresenter = AuthenticationGooglePresenter(
       provider: _authProvider, context: BuildContextMock());
   final _result = 'success';
+  final _credential = {'publicKey': '123456'};
 
   group('Authentication With Google Executor Test Presenter', () {
     test('Authentication With Google - Presenter - Success', () async {
-      await _authPresenter.authenticationGoogle();
+      await _authPresenter.authenticationGoogle(_credential);
       expect(_authProvider.callAuthenticationGoogle, 1);
     });
 

@@ -14,7 +14,8 @@ class AuthenticationRouter implements AuthenticationRoutable {
       Modular.to.pushReplacementNamed('/welcome/');
 
   @override
-  void openDialogError({required BuildContext context, required String error}) {
+  void openDialogAuthentication(
+      {required BuildContext context, required String error}) {
     WidgetUtils.showOkDialog(
         context, 'Ops! Problema encontrado', error, 'Fechar', () {
       Modular.to.pop(context);

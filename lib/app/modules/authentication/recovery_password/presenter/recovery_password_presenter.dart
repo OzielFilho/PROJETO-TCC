@@ -45,14 +45,16 @@ class RecoveryPasswordPresenter extends ChangeNotifier
   void handleRecoveryPasswordException(Exception exception) {
     _controller.sink.add(exception);
     if (exception is EmailEmptyException) {
-      _routable.openDialogError(context: _context!, error: 'Email vazio');
+      _routable.openDialogAuthentication(
+          context: _context!, error: 'Email vazio');
       return;
     }
     if (exception is EmailInvalidException) {
-      _routable.openDialogError(context: _context!, error: 'Email Inválido');
+      _routable.openDialogAuthentication(
+          context: _context!, error: 'Email Inválido');
       return;
     }
-    _routable.openDialogError(
+    _routable.openDialogAuthentication(
         context: _context!, error: 'Não foi possível recuperar sua senha');
   }
 

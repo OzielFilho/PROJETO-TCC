@@ -1,4 +1,5 @@
 import 'package:app/app/modules/authentication/authentication_email_and_password/presenter/authentication_email_and_password_presenter_listener.dart';
+import 'package:app/app/modules/authentication/enums/errors_enum_authentication.dart';
 
 class AuthenticationEmailAndPasswordPresenterListenerMock
     implements AuthenticationEmailAndPasswordPresenterListener {
@@ -6,7 +7,7 @@ class AuthenticationEmailAndPasswordPresenterListenerMock
   int callsHandleAuthenticationEmailAndPasswordException = 0;
 
   @override
-  void authenticationEmailAndPasswordReceiver(String result) {
+  void authenticationEmailAndPasswordReceiver(EnumAuthentication result) {
     callsAuthenticationEmailAndPasswordReceiver += 1;
   }
 

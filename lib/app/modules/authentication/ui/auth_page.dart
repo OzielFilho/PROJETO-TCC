@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../core/presentation/widgets/buttons_design.dart';
-import '../../../../core/theme/theme_app.dart';
-import '../../../../core/utils/colors/colors_utils.dart';
+import '../../../core/presentation/widgets/buttons_design.dart';
+import '../../../core/theme/theme_app.dart';
+import '../../../core/utils/colors/colors_utils.dart';
 
 class AuthPage extends StatefulWidget {
   AuthPage({Key? key}) : super(key: key);

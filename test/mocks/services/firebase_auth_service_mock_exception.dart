@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:app/app/core/services/firebase_auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:app/app/modules/auth/infra/models/user_create_account_model.dart';
+import 'package:app/app/modules/authentication/create_account_with_email_and_password/models/user_create_account_model.dart';
 
 class FirebaseAuthServiceMockException implements FirebaseAuthService {
   dynamic mock;

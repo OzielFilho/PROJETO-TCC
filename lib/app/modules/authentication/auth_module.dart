@@ -4,9 +4,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../home/home_module.dart';
 import '../auth/domain/usecases/create_account_with_email_and_password.dart';
-import '../auth/domain/usecases/recovery_password.dart';
-import '../auth/infra/repositories/recovery_repository_impl.dart';
-import '../auth/presentation/controllers/recovery_account_controller/recovery_account_bloc.dart';
 import '../auth/presentation/pages/auth_page.dart';
 import '../auth/presentation/pages/create_account_page.dart';
 import 'ui/login_app_page.dart';
@@ -19,11 +16,6 @@ class AuthModule extends Module {
     Bind((i) => CreateAccountRepositoryImpl(i(), i())),
     Bind((i) => CreateAccountWithEmailAndPassword(i())),
     Bind((i) => CreateAccountWithEmailAndPasswordBloc(i())),
-
-    //RECOVERY ACCOUNT
-    Bind((i) => RecoveryRepositoryImpl(i(), i())),
-    Bind((i) => RecoveryPassword(i())),
-    Bind((i) => RecoveryAccountBloc(i())),
   ];
 
   @override

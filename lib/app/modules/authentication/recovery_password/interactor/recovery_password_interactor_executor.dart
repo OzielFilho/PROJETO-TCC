@@ -27,7 +27,7 @@ class RecoveryPasswordInteractorExecutor
   }
 
   @override
-  Future<void> recoveryPasswordReceiver(bool result) async {
+  void recoveryPasswordReceiver(bool result) {
     _listener.recoveryPasswordReceiver(result);
   }
 

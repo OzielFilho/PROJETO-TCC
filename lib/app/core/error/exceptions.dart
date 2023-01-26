@@ -4,6 +4,10 @@ class EmailOrPasswordEmptyException implements Exception {}
 
 class CredentialEmptyException implements Exception {}
 
+class EmailEmptyException implements Exception {}
+
+class EmailInvalidException implements Exception {}
+
 class EmailOrPasswordInvalidException implements Exception {}
 
 class CreateUserException implements Exception {}

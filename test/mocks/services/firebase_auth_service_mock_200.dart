@@ -27,7 +27,7 @@ class FirebaseAuthServiceMock200 implements FirebaseAuthService {
   Future<User> createUser(String email, String password) {
     callCreateUser += 1;
     // ignore: null_argument_to_non_null_type
-    return Future.value(null);
+    return Future.value();
   }
 
   @override
@@ -39,6 +39,7 @@ class FirebaseAuthServiceMock200 implements FirebaseAuthService {
   @override
   Future<void> recoveryPassword(String email) async {
     callRecoveryPassword += 1;
+    return Future.value(null);
   }
 
   @override
@@ -57,6 +58,7 @@ class FirebaseAuthServiceMock200 implements FirebaseAuthService {
   @override
   Future<void> signOut() async {
     callSignOut += 1;
+    return Future.value(null);
   }
 
   @override

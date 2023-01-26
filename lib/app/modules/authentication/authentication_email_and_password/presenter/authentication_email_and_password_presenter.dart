@@ -9,6 +9,7 @@ import 'package:app/app/modules/authentication/routers/authentication_routable.d
 import 'package:app/app/modules/authentication/routers/authentication_router.dart';
 import 'package:flutter/material.dart';
 
+import '../../enums/errors_enum_authentication.dart';
 import '../interactor/authentication_email_and_password_interactor_executor.dart';
 import '../models/authentication_params_model.dart';
 
@@ -41,17 +42,23 @@ class AuthenticationEmailAndPasswordPresenter extends ChangeNotifier
   }
 
   @override
-  void authenticationEmailAndPasswordReceiver(String result) {
+  void authenticationEmailAndPasswordReceiver(EnumAuthentication result) {
     _controllerStream.sink.add(result);
-    if (result.isEmpty) {
+    if (result == EnumAuthentication.homePage) {
       _routable.navigateToHomePage(context: _context!);
       return;
     }
-    if (result == 'Welcome Page True') {
+    if (result == EnumAuthentication.emailNotVerified) {
+      _routable.openDialogAuthentication(
+          context: _context!,
+          error: 'Email não verificado! Verifique o email utilizar o app');
+      return;
+    }
+    if (result == EnumAuthentication.welcomePage) {
       _routable.navigateToWelcomePage(context: _context!);
       return;
     }
-    _routable.openDialogError(
+    _routable.openDialogAuthentication(
         context: _context!, error: 'Não foi possível realizar o login');
   }
 
@@ -59,16 +66,16 @@ class AuthenticationEmailAndPasswordPresenter extends ChangeNotifier
   void handleAuthenticationEmailAndPasswordException(Exception exception) {
     _controllerStream.sink.add(exception);
     if (exception is EmailOrPasswordEmptyException) {
-      _routable.openDialogError(
+      _routable.openDialogAuthentication(
           context: _context!, error: 'Email ou Senha estão vazios');
       return;
     }
     if (exception is EmailOrPasswordInvalidException) {
-      _routable.openDialogError(
+      _routable.openDialogAuthentication(
           context: _context!, error: 'Email ou Senha são inválidos');
       return;
     }
-    _routable.openDialogError(
+    _routable.openDialogAuthentication(
         context: _context!, error: 'Não foi possível realizar o login');
   }
 

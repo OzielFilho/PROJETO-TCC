@@ -47,7 +47,7 @@ class AuthenticationGooglePresenter extends ChangeNotifier
       _routable.navigateToWelcomePage(context: _context!);
       return;
     }
-    _routable.openDialogError(
+    _routable.openDialogAuthentication(
         context: _context!,
         error: 'Não foi possível realizar o login com sua conta google');
   }
@@ -56,11 +56,11 @@ class AuthenticationGooglePresenter extends ChangeNotifier
   void handleAuthenticationGoogleException(Exception exception) {
     _controller.sink.add(exception);
     if (exception is CredentialEmptyException) {
-      _routable.openDialogError(
+      _routable.openDialogAuthentication(
           context: _context!, error: 'Credencial Inválida');
       return;
     }
-    _routable.openDialogError(
+    _routable.openDialogAuthentication(
         context: _context!,
         error: 'Não foi possível realizar o login com sua conta google');
   }

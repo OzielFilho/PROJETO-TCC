@@ -1,6 +1,7 @@
 import 'package:app/app/core/presentation/controller/app_state.dart';
 import 'package:app/app/modules/authentication/authentication_email_and_password/models/authentication_params_model.dart';
 import 'package:app/app/modules/authentication/authentication_email_and_password/presenter/authentication_email_and_password_presenter.dart';
+import 'package:app/app/modules/authentication/enums/errors_enum_authentication.dart';
 import 'package:test/test.dart';
 
 import '../../../../mocks/build_context_mock.dart';
@@ -14,7 +15,7 @@ main() {
   final _authProvider = AuthenticationEmailAndPasswordProviderMock();
   final _authPresenter = AuthenticationEmailAndPasswordPresenter(
       provider: _authProvider, context: BuildContextMock());
-  final _result = 'success';
+  final _result = EnumAuthentication.emailNotVerified;
 
   group('Authentication With Email And Password Executor Test Presenter', () {
     test('Authentication With Email And Password - Presenter - Success',

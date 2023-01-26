@@ -6,7 +6,7 @@ import '../../../core/services/firebase_auth_service.dart';
 import '../../../core/services/firestorage_service.dart';
 import '../../../core/services/firestore_service.dart';
 import '../infra/datasources/create_account_datasource.dart';
-import '../infra/models/user_create_account_model.dart';
+import '../../authentication/create_account_with_email_and_password/models/user_create_account_model.dart';
 
 class FirebaseAuthDatasourceImpl implements CreateAccountDatasource {
   final FirebaseAuthService authService;

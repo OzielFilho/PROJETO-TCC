@@ -4,6 +4,7 @@ import 'package:app/app/modules/authentication/authentication_email_and_password
 import 'package:app/app/modules/authentication/authentication_email_and_password/repository/authentication_email_and_password_firebase_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../enums/errors_enum_authentication.dart';
 import '../presenter/authentication_email_and_password_presenter_listener.dart';
 
 class AuthenticationEmailAndPasswordInteractorExecutor
@@ -31,8 +32,26 @@ class AuthenticationEmailAndPasswordInteractorExecutor
 
   @override
   void authenticationEmailAndPasswordReceiver(String result) {
+    if (result == 'Email não verificado! Verifique o email utilizar o app') {
+      _authenticationEmailAndPasswordListener
+          .authenticationEmailAndPasswordReceiver(
+              EnumAuthentication.emailNotVerified);
+      return;
+    }
+    if (result == 'Welcome Page True') {
+      _authenticationEmailAndPasswordListener
+          .authenticationEmailAndPasswordReceiver(
+              EnumAuthentication.welcomePage);
+      return;
+    }
+    if (result.isEmpty) {
+      _authenticationEmailAndPasswordListener
+          .authenticationEmailAndPasswordReceiver(EnumAuthentication.homePage);
+      return;
+    }
     _authenticationEmailAndPasswordListener
-        .authenticationEmailAndPasswordReceiver(result);
+        .authenticationEmailAndPasswordReceiver(
+            EnumAuthentication.defaultError);
   }
 
   @override

@@ -8,6 +8,14 @@ class EmailEmptyException implements Exception {}
 
 class EmailInvalidException implements Exception {}
 
+class ParamsInvalidUserException implements Exception {}
+
+class ParamsEmptyUserException implements Exception {}
+
+class PhoneInvalidException implements Exception {}
+
+class PasswordAndConfirmePasswordDifferenceException implements Exception {}
+
 class EmailOrPasswordInvalidException implements Exception {}
 
 class CreateUserException implements Exception {}

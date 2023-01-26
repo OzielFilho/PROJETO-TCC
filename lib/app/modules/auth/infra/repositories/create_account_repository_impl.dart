@@ -8,7 +8,7 @@ import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failure.dart';
 import '../../domain/repositories/create_account_repository.dart';
 import '../datasources/create_account_datasource.dart';
-import '../models/user_create_account_model.dart';
+import '../../../authentication/create_account_with_email_and_password/models/user_create_account_model.dart';
 
 class CreateAccountRepositoryImpl extends CreateAccountRepository {
   final CreateAccountDatasource datasource;

@@ -4,8 +4,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../home/home_module.dart';
 import '../auth/domain/usecases/create_account_with_email_and_password.dart';
-import '../auth/presentation/pages/auth_page.dart';
-import '../auth/presentation/pages/create_account_page.dart';
+import 'ui/auth_page.dart';
+import 'ui/create_account_page.dart';
 import 'ui/login_app_page.dart';
 import 'ui/recovery_account_page.dart';
 

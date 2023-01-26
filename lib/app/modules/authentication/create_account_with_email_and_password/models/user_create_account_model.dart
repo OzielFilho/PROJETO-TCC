@@ -1,5 +1,5 @@
 import '../../../../core/utils/constants/encrypt_data.dart';
-import '../../domain/entities/user_create_account.dart';
+import '../../../auth/domain/entities/user_create_account.dart';
 
 class UserCreateAccountModel extends UserCreateAccount {
   UserCreateAccountModel(

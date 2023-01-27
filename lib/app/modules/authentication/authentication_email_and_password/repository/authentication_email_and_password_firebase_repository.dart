@@ -6,15 +6,16 @@ import 'package:app/app/modules/authentication/authentication_email_and_password
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../../core/error/exceptions.dart';
+import '../../../../core/services/network_service.dart';
 import '../interactor/authentication_email_and_password_receiver.dart';
 
 class AuthenticationEmailAndPasswordFirebaseRepository
     implements AuthenticationEmailAndPasswordRepositoryExecutor {
   final FirebaseAuthService _authService;
   final AuthenticationEmailAndPasswordReceiver _receiver;
-
+  final NetworkService _networkService;
   const AuthenticationEmailAndPasswordFirebaseRepository(
-      this._authService, this._receiver);
+      this._authService, this._receiver, this._networkService);
 
   @override
   Future<void> execute(
@@ -33,9 +34,16 @@ class AuthenticationEmailAndPasswordFirebaseRepository
     }
 
     try {
-      final result =
-          await _authService.signInWithEmailAndPassword(email, password);
-      _receiver.authenticationEmailAndPasswordReceiver(result);
+      if (await _networkService.hasConnection) {
+        final result =
+            await _authService.signInWithEmailAndPassword(email, password);
+        _receiver.authenticationEmailAndPasswordReceiver(result);
+        return;
+      }
+      _receiver
+          .handleAuthenticationEmailAndPasswordException(NetworkException());
+    } on NetworkException catch (exception) {
+      _receiver.handleAuthenticationEmailAndPasswordException(exception);
     } on TimeoutException catch (exception) {
       _receiver.handleAuthenticationEmailAndPasswordException(exception);
     } on FirebaseAuthException catch (exception) {

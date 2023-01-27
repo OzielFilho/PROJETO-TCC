@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:app/app/core/services/firebase_auth_service.dart';
-import 'package:app/app/core/services/network_service.dart';
 import 'package:app/app/modules/authentication/create_account_with_email_and_password/interactor/create_account_with_email_and_password_executor.dart';
 import 'package:app/app/modules/authentication/create_account_with_email_and_password/models/user_create_account_model.dart';
 import 'package:test/test.dart';

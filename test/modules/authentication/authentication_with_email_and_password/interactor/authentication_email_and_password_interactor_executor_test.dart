@@ -4,6 +4,8 @@ import 'package:test/test.dart';
 
 import '../../../../mocks/services/firebase_auth_service_mock_200.dart';
 import '../../../../mocks/services/firebase_auth_service_mock_exception.dart';
+import '../../../../mocks/services/network_service_mock_200.dart';
+import '../../../../mocks/services/network_service_mock_exception.dart';
 import '../presenter/authentication_email_and_password_presenter_listener_mock.dart';
 
 main() {
@@ -18,10 +20,13 @@ main() {
     test('Authentication With Email And Password - Interactor - Success',
         () async {
       _authService = FirebaseAuthServiceMock200(mock: 'success');
+      final networkService = NetworkServiceMock200();
 
       final authenticationEmailAndPassword =
           AuthenticationEmailAndPasswordInteractorExecutor(
-              listener: _authenticationListener, authService: _authService);
+              listener: _authenticationListener,
+              authService: _authService,
+              networkService: networkService);
 
       await authenticationEmailAndPassword.authenticationEmailAndPassword(
           email: _email, password: _password);
@@ -34,10 +39,13 @@ main() {
     test('Authentication With Email And Password - Interactor - Failure',
         () async {
       _authService = FirebaseAuthServiceMockException();
+      final networkService = NetworkServiceMockException();
 
       final authenticationEmailAndPassword =
           AuthenticationEmailAndPasswordInteractorExecutor(
-              listener: _authenticationListener, authService: _authService);
+              listener: _authenticationListener,
+              authService: _authService,
+              networkService: networkService);
 
       await authenticationEmailAndPassword.authenticationEmailAndPassword(
           email: _email, password: _password);

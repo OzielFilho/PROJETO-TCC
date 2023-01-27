@@ -31,7 +31,11 @@ class RefreshTokenPresenter extends ChangeNotifier
   @override
   void handleLoggedUserException(Exception exception) {
     _controller.sink.add(exception);
-
+    if (exception is NetworkException) {
+      _routable.openDialogSplash(
+          context: _context!, error: 'Sem conexão com a internet');
+      return;
+    }
     if (exception is TokenInvalidException) {
       _routable.navigateToLoginPage(context: _context!);
       return;

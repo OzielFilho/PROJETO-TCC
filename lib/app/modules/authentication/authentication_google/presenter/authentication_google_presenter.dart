@@ -55,6 +55,11 @@ class AuthenticationGooglePresenter extends ChangeNotifier
   @override
   void handleAuthenticationGoogleException(Exception exception) {
     _controller.sink.add(exception);
+    if (exception is NetworkException) {
+      _routable.openDialogAuthentication(
+          context: _context!, error: 'Sem conexão com a internet');
+      return;
+    }
     if (exception is CredentialEmptyException) {
       _routable.openDialogAuthentication(
           context: _context!, error: 'Credencial Inválida');

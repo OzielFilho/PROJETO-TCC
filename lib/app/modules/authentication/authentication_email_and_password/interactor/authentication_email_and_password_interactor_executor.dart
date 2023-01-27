@@ -4,6 +4,7 @@ import 'package:app/app/modules/authentication/authentication_email_and_password
 import 'package:app/app/modules/authentication/authentication_email_and_password/repository/authentication_email_and_password_firebase_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../core/services/network_service.dart';
 import '../../utils/enums/errors_enum_authentication.dart';
 import '../presenter/authentication_email_and_password_presenter_listener.dart';
 
@@ -14,19 +15,22 @@ class AuthenticationEmailAndPasswordInteractorExecutor
   final AuthenticationEmailAndPasswordPresenterListener
       _authenticationEmailAndPasswordListener;
   final FirebaseAuthService _authService;
-
+  final NetworkService _networkService;
   AuthenticationEmailAndPasswordInteractorExecutor(
       {FirebaseAuthService? authService,
+      NetworkService? networkService,
       AuthenticationEmailAndPasswordPresenterListener? listener})
       : this._authService =
             authService ?? Modular.get<FirebaseAuthServiceImpl>(),
+        this._networkService =
+            networkService ?? Modular.get<NetworkServiceImpl>(),
         this._authenticationEmailAndPasswordListener = listener!;
 
   @override
   Future<void> authenticationEmailAndPassword(
       {required String email, required String password}) async {
-    final _repository =
-        AuthenticationEmailAndPasswordFirebaseRepository(_authService, this);
+    final _repository = AuthenticationEmailAndPasswordFirebaseRepository(
+        _authService, this, _networkService);
     await _repository.execute(email: email, password: password);
   }
 

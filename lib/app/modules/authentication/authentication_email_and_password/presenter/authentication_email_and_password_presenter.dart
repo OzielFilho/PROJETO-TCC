@@ -65,6 +65,11 @@ class AuthenticationEmailAndPasswordPresenter extends ChangeNotifier
   @override
   void handleAuthenticationEmailAndPasswordException(Exception exception) {
     _controllerStream.sink.add(exception);
+    if (exception is NetworkException) {
+      _routable.openDialogAuthentication(
+          context: _context!, error: 'Sem conexão com a internet');
+      return;
+    }
     if (exception is EmailOrPasswordEmptyException) {
       _routable.openDialogAuthentication(
           context: _context!, error: 'Email ou Senha estão vazios');

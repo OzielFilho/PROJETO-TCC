@@ -10,6 +10,8 @@ class NetworkServiceImpl implements NetworkService {
     try {
       final result = await InternetAddress.lookup('www.google.com');
       return result.first.rawAddress.isNotEmpty;
+    } on Exception catch (exception) {
+      throw exception;
     } catch (e) {
       return false;
     }

@@ -44,6 +44,11 @@ class RecoveryPasswordPresenter extends ChangeNotifier
   @override
   void handleRecoveryPasswordException(Exception exception) {
     _controller.sink.add(exception);
+    if (exception is NetworkException) {
+      _routable.openDialogAuthentication(
+          context: _context!, error: 'Sem conexão com a internet');
+      return;
+    }
     if (exception is EmailEmptyException) {
       _routable.openDialogAuthentication(
           context: _context!, error: 'Email vazio');

@@ -7,6 +7,8 @@ import 'package:test/test.dart';
 
 import '../../../../mocks/services/firebase_auth_service_mock_200.dart';
 import '../../../../mocks/services/firebase_auth_service_mock_exception.dart';
+import '../../../../mocks/services/network_service_mock_200.dart';
+import '../../../../mocks/services/network_service_mock_exception.dart';
 import '../presenter/create_account_email_and_password_presenter_listener_mock.dart';
 
 void main() {
@@ -20,9 +22,12 @@ void main() {
     test('Create Account With With Email And Password - Interactor - Success',
         () async {
       _authService = FirebaseAuthServiceMock200(mock: 'success');
+      final networkService = NetworkServiceMock200();
       final createAccountEmailAndPassword =
           CreateAccountWithEmailAndPasswordExecutor(
-              listener: _createAccountWithListener, authService: _authService);
+              listener: _createAccountWithListener,
+              authService: _authService,
+              networkService: networkService);
       await createAccountEmailAndPassword.createAccount(
           _user, File('12345688'));
 
@@ -35,9 +40,12 @@ void main() {
     test('Create Account With With Email And Password - Interactor - Failure',
         () async {
       _authService = FirebaseAuthServiceMockException();
+      final networkService = NetworkServiceMockException();
       final createAccountEmailAndPassword =
           CreateAccountWithEmailAndPasswordExecutor(
-              listener: _createAccountWithListener, authService: _authService);
+              listener: _createAccountWithListener,
+              authService: _authService,
+              networkService: networkService);
       await createAccountEmailAndPassword.createAccount(
           _user, File('12345688'));
       expect(

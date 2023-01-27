@@ -8,6 +8,8 @@ class EmailEmptyException implements Exception {}
 
 class EmailInvalidException implements Exception {}
 
+class TokenInvalidException implements Exception {}
+
 class ParamsInvalidUserException implements Exception {}
 
 class ParamsEmptyUserException implements Exception {}

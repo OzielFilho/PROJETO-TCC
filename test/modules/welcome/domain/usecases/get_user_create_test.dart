@@ -1,5 +1,5 @@
 import 'package:app/app/core/usecases/usecase.dart';
-import 'package:app/app/modules/authentication/entities/auth_result.dart';
+import 'package:app/app/modules/authentication/utils/entities/auth_result.dart';
 import 'package:app/app/modules/welcome/domain/repositories/welcome_repository.dart';
 import 'package:app/app/modules/welcome/domain/usecases/get_user_create.dart';
 import 'package:dartz/dartz.dart';

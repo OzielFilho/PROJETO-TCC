@@ -19,10 +19,11 @@ class SplashRouter implements SplashRoutable {
 
   @override
   void openDialogSplash(
-      {required BuildContext context, required String error}) {
+      {required BuildContext context,
+      required String error,
+      required VoidCallback callback}) {
     WidgetUtils.showOkDialog(
-        context, 'Ops! Problema encontrado', error, 'Fechar', () {
-      Modular.to.pop(context);
-    }, permanentDialog: false);
+        context, 'Ops! Problema encontrado', error, 'Fechar', callback,
+        permanentDialog: false);
   }
 }

@@ -7,6 +7,7 @@ import 'package:app/app/modules/splash/presenter/refresh_token_presenter_listene
 import 'package:app/app/modules/splash/presenter/refresh_token_presenter_provider.dart';
 import 'package:app/app/modules/splash/routers/splash_router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../interactor/refresh_token_interactor_executor.dart';
 import '../routers/splash_routable.dart';
@@ -33,7 +34,13 @@ class RefreshTokenPresenter extends ChangeNotifier
     _controller.sink.add(exception);
     if (exception is NetworkException) {
       _routable.openDialogSplash(
-          context: _context!, error: 'Sem conexão com a internet');
+        context: _context!,
+        error: 'Sem conexão com a internet',
+        callback: () {
+          verifyLoggedUser();
+          Modular.to.pop();
+        },
+      );
       return;
     }
     if (exception is TokenInvalidException) {
@@ -41,7 +48,12 @@ class RefreshTokenPresenter extends ChangeNotifier
       return;
     }
     _routable.openDialogSplash(
-        context: _context!, error: 'Problemas ao acessar o aplicativo');
+        context: _context!,
+        error: 'Problemas ao acessar o aplicativo',
+        callback: () {
+          verifyLoggedUser();
+          Modular.to.pop();
+        });
   }
 
   @override

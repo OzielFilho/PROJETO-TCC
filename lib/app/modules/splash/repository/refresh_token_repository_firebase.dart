@@ -26,8 +26,8 @@ class RefreshTokenRepositoryFirebase implements RefreshTokenRepositoryExecute {
         final logged = await _authService.userLogged();
         final result = UserLoggedInfoModel(
             logged: logged,
-            welcomePage: user['welcome_page'] ?? user['welcomePage'],
-            phone: user['phone']);
+            welcomePage: user['welcome_page'] ?? user['welcomePage'] ?? false,
+            phone: user['phone'] ?? '');
         _receiver.loggedUserReceiver(result);
         return;
       }

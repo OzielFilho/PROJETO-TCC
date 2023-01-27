@@ -37,3 +37,5 @@ class ChatHomeException implements Exception {}
 class UpdateUserErrorException implements Exception {}
 
 class LogoutUserErrorException implements Exception {}
+
+class NetworkException implements Exception {}

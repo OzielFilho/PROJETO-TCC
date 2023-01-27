@@ -1,3 +1,4 @@
+import 'package:app/app/core/services/network_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -15,21 +16,24 @@ class AuthenticationGoogleInteractorExecutor
   final AuthenticationGooglePresenterListener _listener;
   final FirebaseAuthService _authService;
   final FirestoreService _firestoreService;
-
+  final NetworkService _networkService;
   AuthenticationGoogleInteractorExecutor(
       {FirebaseAuthService? authService,
       FirestoreService? firestoreService,
+      NetworkService? networkService,
       AuthenticationGooglePresenterListener? listener})
       : this._authService =
             authService ?? Modular.get<FirebaseAuthServiceImpl>(),
         this._firestoreService =
             firestoreService ?? Modular.get<FirestoreServiceImpl>(),
-        this._listener = listener!;
+        this._listener = listener!,
+        this._networkService =
+            networkService ?? Modular.get<NetworkServiceImpl>();
 
   @override
   Future<void> authenticationGoogle(dynamic credential) async {
-    final repository =
-        AuthenticationGoogleFirebaseRepository(_authService, this);
+    final repository = AuthenticationGoogleFirebaseRepository(
+        _authService, this, _networkService);
     await repository.execute(credential: credential);
   }
 

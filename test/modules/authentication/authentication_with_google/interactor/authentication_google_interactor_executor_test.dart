@@ -6,6 +6,8 @@ import '../../../../mocks/services/firebase_auth_service_mock_200.dart';
 import '../../../../mocks/services/firebase_auth_service_mock_exception.dart';
 import '../../../../mocks/services/firestore_service_mock_200.dart';
 import '../../../../mocks/services/firestore_service_mock_exception.dart';
+import '../../../../mocks/services/network_service_mock_200.dart';
+import '../../../../mocks/services/network_service_mock_exception.dart';
 import '../presenter/authentication_google_presenter_listener_mock.dart';
 
 main() {
@@ -18,10 +20,12 @@ main() {
     test('Authentication With Google - Interactor - Success', () async {
       _authService = FirebaseAuthServiceMock200(mock: 'success');
       final firestoreService = FirestoreServiceMock200(mock: 'success');
+      final networkService = NetworkServiceMock200();
 
       final authenticationGoogle = AuthenticationGoogleInteractorExecutor(
           listener: _authenticationListener,
           authService: _authService,
+          networkService: networkService,
           firestoreService: firestoreService);
 
       await authenticationGoogle.authenticationGoogle(_credential);
@@ -32,9 +36,11 @@ main() {
     test('Authentication With Google - Interactor - Failure', () async {
       _authService = FirebaseAuthServiceMockException();
       final firestoreService = FirestoreServiceMockException();
+      final networkService = NetworkServiceMockException();
       final authenticationGoogle = AuthenticationGoogleInteractorExecutor(
           listener: _authenticationListener,
           authService: _authService,
+          networkService: networkService,
           firestoreService: firestoreService);
 
       await authenticationGoogle.authenticationGoogle(_credential);

@@ -49,6 +49,12 @@ class CreateAccountWithEmailAndPasswordPresenter extends ChangeNotifier
   void handleCreateAccountExceptionReceiver(Exception exception) {
     _controller.sink.add(exception);
 
+    if (exception is NetworkException) {
+      _routable.openDialogAuthentication(
+          context: _context!, error: 'Sem conexão com a internet');
+      return;
+    }
+
     if (exception is ParamsEmptyUserException) {
       _routable.openDialogAuthentication(
           context: _context!, error: 'Alguma informação está vazia');

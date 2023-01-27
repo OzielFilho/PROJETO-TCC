@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app/app/core/services/network_service.dart';
 import 'package:app/app/modules/authentication/create_account_with_email_and_password/models/user_create_account_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -15,9 +16,10 @@ class CreateAccountWithEmailAndPasswordFirebaseRepository
     implements CreateAccountWithEmailAndPasswordRepositoryExecutor {
   final CreateAccountWithEmailAndPasswordReceiver _receiver;
   final FirebaseAuthService _authService;
+  final NetworkService _networkService;
 
   CreateAccountWithEmailAndPasswordFirebaseRepository(
-      this._receiver, this._authService);
+      this._receiver, this._authService, this._networkService);
 
   @override
   Future<void> createAccount(
@@ -57,9 +59,15 @@ class CreateAccountWithEmailAndPasswordFirebaseRepository
     }
 
     try {
-      final result =
-          await _authService.createAccount(userCreateAccountModel, image);
-      _receiver.createdAccountReceiver(result);
+      if (await _networkService.hasConnection) {
+        final result =
+            await _authService.createAccount(userCreateAccountModel, image);
+        _receiver.createdAccountReceiver(result);
+        return;
+      }
+      _receiver.handleCreateAccountExceptionReceiver(NetworkException());
+    } on NetworkException catch (exception) {
+      _receiver.handleCreateAccountExceptionReceiver(exception);
     } on TimeoutException catch (exception) {
       _receiver.handleCreateAccountExceptionReceiver(exception);
     } on FirebaseAuthException catch (exception) {

@@ -1,4 +1,5 @@
 import 'package:app/app/core/services/firebase_auth_service.dart';
+import 'package:app/app/core/services/network_service.dart';
 import 'package:app/app/modules/authentication/create_account_with_email_and_password/models/user_create_account_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -15,19 +16,21 @@ class CreateAccountWithEmailAndPasswordExecutor
         CreateAccountWithEmailAndPasswordReceiver {
   late CreateAccountWithEmailAndPasswordPresenterListener _listener;
   late FirebaseAuthService _authService;
+  late NetworkService _networkService;
 
   CreateAccountWithEmailAndPasswordExecutor(
       {CreateAccountWithEmailAndPasswordPresenterListener? listener,
-      FirebaseAuthService? authService}) {
-    _listener = listener!;
-    _authService = authService ?? Modular.get<FirebaseAuthServiceImpl>();
-  }
+      FirebaseAuthService? authService,
+      NetworkService? networkService})
+      : _listener = listener!,
+        _authService = authService ?? Modular.get<FirebaseAuthServiceImpl>(),
+        _networkService = networkService ?? Modular.get<NetworkServiceImpl>();
 
   @override
   Future<void> createAccount(
       UserCreateAccountModel userCreateAccountModel, File? image) async {
-    final repository =
-        CreateAccountWithEmailAndPasswordFirebaseRepository(this, _authService);
+    final repository = CreateAccountWithEmailAndPasswordFirebaseRepository(
+        this, _authService, _networkService);
     await repository.createAccount(userCreateAccountModel, image);
   }
 

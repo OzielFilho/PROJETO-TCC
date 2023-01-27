@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failure.dart';
-import '../../../authentication/entities/auth_result.dart';
+import '../../../authentication/utils/entities/auth_result.dart';
 import '../entities/update_user.dart';
 
 abstract class WelcomeRepository {

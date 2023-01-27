@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failure.dart';
 import '../../../../core/services/network_service.dart';
-import '../../../authentication/entities/auth_result.dart';
+import '../../../authentication/utils/entities/auth_result.dart';
 import '../../domain/entities/update_user.dart';
 import '../../domain/repositories/welcome_repository.dart';
 import '../datasources/welcome_datasource.dart';

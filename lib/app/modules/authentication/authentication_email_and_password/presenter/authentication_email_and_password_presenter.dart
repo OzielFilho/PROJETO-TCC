@@ -9,7 +9,7 @@ import 'package:app/app/modules/authentication/routers/authentication_routable.d
 import 'package:app/app/modules/authentication/routers/authentication_router.dart';
 import 'package:flutter/material.dart';
 
-import '../../enums/errors_enum_authentication.dart';
+import '../../utils/enums/errors_enum_authentication.dart';
 import '../interactor/authentication_email_and_password_interactor_executor.dart';
 import '../models/authentication_params_model.dart';
 

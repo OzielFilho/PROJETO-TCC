@@ -1,4 +1,4 @@
-import '../../domain/entities/user_logged_info.dart';
+import '../utils/entities/user_logged_info.dart';
 
 class UserLoggedInfoModel extends UserLoggedInfo {
   final bool logged;

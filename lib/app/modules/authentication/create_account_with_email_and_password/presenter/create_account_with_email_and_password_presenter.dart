@@ -79,4 +79,10 @@ class CreateAccountWithEmailAndPasswordPresenter extends ChangeNotifier
 
   @override
   Stream<Object> get outCreateAccountController => _controller.stream;
+
+  @override
+  void dispose() {
+    _controller.close();
+    super.dispose();
+  }
 }

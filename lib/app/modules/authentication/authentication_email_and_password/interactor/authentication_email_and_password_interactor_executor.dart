@@ -4,7 +4,7 @@ import 'package:app/app/modules/authentication/authentication_email_and_password
 import 'package:app/app/modules/authentication/authentication_email_and_password/repository/authentication_email_and_password_firebase_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../enums/errors_enum_authentication.dart';
+import '../../utils/enums/errors_enum_authentication.dart';
 import '../presenter/authentication_email_and_password_presenter_listener.dart';
 
 class AuthenticationEmailAndPasswordInteractorExecutor

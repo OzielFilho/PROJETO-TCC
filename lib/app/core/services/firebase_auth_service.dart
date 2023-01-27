@@ -2,7 +2,7 @@ import 'dart:io';
 import 'firestorage_service.dart';
 import 'firestore_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../modules/authentication/entities/auth_result.dart';
+import '../../modules/authentication/utils/entities/auth_result.dart';
 import '../../modules/authentication/authentication_google/models/auth_result_model.dart';
 import '../../modules/authentication/create_account_with_email_and_password/models/user_create_account_model.dart';
 import '../error/exceptions.dart';
@@ -29,9 +29,13 @@ class FirebaseAuthServiceImpl implements FirebaseAuthService {
 
   @override
   Future<User> createUser(String email, String password) async {
-    final result = await auth.createUserWithEmailAndPassword(
-        email: email, password: password);
-    return result.user!;
+    try {
+      final result = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      return result.user!;
+    } on Exception catch (e) {
+      throw e;
+    }
   }
 
   @override
@@ -66,11 +70,22 @@ class FirebaseAuthServiceImpl implements FirebaseAuthService {
   Future<void> signOut() async => await auth.signOut();
 
   @override
-  Future<bool> userLogged() async => auth.currentUser != null;
+  Future<bool> userLogged() async {
+    try {
+      return auth.currentUser != null;
+    } on Exception catch (exception) {
+      throw exception;
+    }
+  }
 
   @override
-  Future<void> recoveryPassword(String email) async =>
+  Future<void> recoveryPassword(String email) async {
+    try {
       await auth.sendPasswordResetEmail(email: email);
+    } on Exception catch (exception) {
+      throw exception;
+    }
+  }
 
   @override
   Future<User> signInWithCredential(dynamic credential) async {
@@ -84,12 +99,16 @@ class FirebaseAuthServiceImpl implements FirebaseAuthService {
 
   @override
   Future<String> getToken() async {
-    String result = '';
-    final currentUser = auth.currentUser != null;
-    if (currentUser) {
-      result = auth.currentUser!.uid;
+    try {
+      String result = '';
+      final currentUser = auth.currentUser != null;
+      if (currentUser) {
+        result = auth.currentUser!.uid;
+      }
+      return result;
+    } on Exception catch (e) {
+      throw e;
     }
-    return result;
   }
 
   @override
@@ -122,6 +141,8 @@ class FirebaseAuthServiceImpl implements FirebaseAuthService {
           'users', auth.currentUser!.uid, userModel.toMap());
       await auth.signOut();
       return '';
+    } on Exception catch (exception) {
+      throw exception;
     } catch (e) {
       return 'Usuário não pode ser criado';
     }

@@ -6,7 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../../core/presentation/controller/app_state.dart';
-import '../../../../authentication/entities/auth_result.dart';
+import '../../../../authentication/utils/entities/auth_result.dart';
 
 class GetUserWelcomeBloc extends Bloc<WelcomeEvent, AppState>
     implements Disposable {

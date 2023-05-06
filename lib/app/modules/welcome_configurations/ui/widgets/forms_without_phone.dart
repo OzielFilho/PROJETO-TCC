@@ -1,7 +1,7 @@
-import '../../../../../core/presentation/widgets/form_desing.dart';
-import 'package:flutter/material.dart';
+import 'package:app/app/core/presentation/widgets/form_desing.dart';
+import 'package:app/app/core/theme/theme_app.dart';
 
-import '../../../../../core/theme/theme_app.dart';
+import 'package:flutter/material.dart';
 
 class FormsWithoutPhoneWidget extends StatelessWidget {
   FormsWithoutPhoneWidget({Key? key}) : super(key: key);

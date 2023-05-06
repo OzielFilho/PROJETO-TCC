@@ -1,6 +1,6 @@
-import 'package:app/app/core/models/user_actual.dart';
+import 'package:app/app/core/models/user_account.dart';
 
 abstract class RefreshTokenPresenterListener {
-  void loggedUserReceiver(UserActual result);
+  void loggedUserReceiver(UserAccount result);
   void handleLoggedUserException(Exception exception);
 }

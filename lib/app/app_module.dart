@@ -17,7 +17,7 @@ import 'core/services/firestore_service.dart';
 import 'modules/authentication/auth_module.dart';
 import 'modules/home/home_module.dart';
 import 'modules/splash/splash_module.dart';
-import 'modules/welcome/welcome_module.dart';
+import 'modules/welcome_configurations/welcome_module.dart';
 
 class AppModule extends Module {
   @override

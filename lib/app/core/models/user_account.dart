@@ -1,17 +1,17 @@
 import '../utils/constants/encrypt_data.dart';
 
-class UserActual {
+class UserAccount {
   final String name;
   final bool welcomePage;
   final String photo;
   final String email;
-  final String phone;
-  final String token;
+  late final String phone;
+  final String? token;
   final bool logged;
-  final List<String> contacts;
-  static late UserActual _instance;
+  late final List<String> contacts;
+  static late UserAccount _instance;
 
-  UserActual(
+  UserAccount(
       {required this.photo,
       required this.email,
       required this.phone,
@@ -21,19 +21,19 @@ class UserActual {
       required this.logged,
       required this.welcomePage});
 
-  factory UserActual.fromJson(Map<String, dynamic> json) {
+  factory UserAccount.fromJson(Map<String, dynamic> json) {
     final contactsConvert = json['contacts']
             ?.map<String>((contact) => contact.toString())
             ?.toList() ??
         [];
-    _instance = UserActual(
+    _instance = UserAccount(
         name: json['name'],
         welcomePage: json['welcomePage'] ?? false,
         email: json['email'],
         phone: json['phone'] ?? null,
         photo: json['photo'] ?? null,
         contacts: contactsConvert,
-        token: json['token'] ?? '',
+        token: json['token'] ?? null,
         logged: json['logged'] ?? null);
     return _instance;
   }
@@ -52,7 +52,7 @@ class UserActual {
   }
 
   void clearLoginResponse() {
-    _instance = UserActual(
+    _instance = UserAccount(
         name: '',
         welcomePage: false,
         email: '',
@@ -63,5 +63,5 @@ class UserActual {
         token: '');
   }
 
-  static UserActual get instance => _instance;
+  static UserAccount get instance => _instance;
 }

@@ -1,6 +1,5 @@
+import 'package:app/app/core/theme/theme_app.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../../core/theme/theme_app.dart';
 
 class FormWithPhoneWidget extends StatelessWidget {
   const FormWithPhoneWidget({Key? key}) : super(key: key);

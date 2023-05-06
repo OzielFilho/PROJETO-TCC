@@ -1,4 +1,4 @@
-import 'package:app/app/core/models/user_actual.dart';
+import 'package:app/app/core/models/user_account.dart';
 import 'package:app/app/modules/splash/presenter/refresh_token_presenter_listener.dart';
 
 class RefreshTokenPresenterListenerMock
@@ -12,7 +12,7 @@ class RefreshTokenPresenterListenerMock
   }
 
   @override
-  void loggedUserReceiver(UserActual result) {
+  void loggedUserReceiver(UserAccount result) {
     callLoggedUserReceiver += 1;
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:app/app/core/error/exceptions.dart';
-import 'package:app/app/core/models/user_actual.dart';
+import 'package:app/app/core/models/user_account.dart';
 import 'package:app/app/modules/splash/interactor/refresh_token_interactor_provider.dart';
 import 'package:app/app/modules/splash/presenter/refresh_token_presenter_listener.dart';
 import 'package:app/app/modules/splash/presenter/refresh_token_presenter_provider.dart';
@@ -57,16 +57,16 @@ class RefreshTokenPresenter extends ChangeNotifier
   }
 
   @override
-  void loggedUserReceiver(UserActual result) {
+  void loggedUserReceiver(UserAccount result) {
     _controller.sink.add(result);
 
-    if (!result.logged || result.token.isEmpty) {
+    if (!result.logged || result.token!.isEmpty) {
       _routable.navigateToLoginPage(context: _context!);
       return;
     }
-    String token = result.token;
+    String? token = result.token;
     if (!result.welcomePage) {
-      _routable.navigateToWelcomePage(context: _context!, refreshToken: token);
+      _routable.navigateToWelcomePage(context: _context!, refreshToken: token!);
       return;
     }
 

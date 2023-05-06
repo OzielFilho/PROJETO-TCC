@@ -1,4 +1,4 @@
-import 'package:app/app/core/models/user_actual.dart';
+import 'package:app/app/core/models/user_account.dart';
 import 'package:app/app/modules/splash/interactor/refresh_token_interactor_provider.dart';
 import 'package:app/app/modules/splash/interactor/refresh_token_interactor_receiver.dart';
 import 'package:app/app/modules/splash/repository/refresh_token_repository_firebase.dart';
@@ -34,7 +34,7 @@ class RefreshTokenInteractorExecutor
 
   @override
   void loggedUserReceiver(Map<String, dynamic> result) {
-    final user = UserActual.fromJson(result);
+    final user = UserAccount.fromJson(result);
     _listener.loggedUserReceiver(user);
   }
 

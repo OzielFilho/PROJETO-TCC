@@ -5,7 +5,8 @@ abstract class SplashRoutable {
       {required BuildContext context,
       required String error,
       required VoidCallback callback});
-  void navigateToWelcomePage({required BuildContext context});
+  void navigateToWelcomePage(
+      {required BuildContext context, required String refreshToken});
   void navigateToHomePage({required BuildContext context});
   void navigateToLoginPage({required BuildContext context});
 }

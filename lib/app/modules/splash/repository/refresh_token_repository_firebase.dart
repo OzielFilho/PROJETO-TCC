@@ -8,7 +8,6 @@ import '../../../core/services/firebase_auth_service.dart';
 import '../../../core/services/firestore_service.dart';
 import '../../../core/services/network_service.dart';
 import '../interactor/refresh_token_interactor_receiver.dart';
-import '../models/user_logged_info_model.dart';
 
 class RefreshTokenRepositoryFirebase implements RefreshTokenRepositoryExecute {
   final FirebaseAuthService _authService;
@@ -26,11 +25,11 @@ class RefreshTokenRepositoryFirebase implements RefreshTokenRepositoryExecute {
         if (token.isNotEmpty) {
           final user = await _firestore.getDocument('users', token);
           final logged = await _authService.userLogged();
-          final result = UserLoggedInfoModel(
-              logged: logged,
-              welcomePage: user['welcome_page'] ?? user['welcomePage'] ?? false,
-              phone: user['phone'] ?? '');
-          _receiver.loggedUserReceiver(result);
+
+          user.addAll({'token': token});
+          user.addAll({'logged': logged});
+
+          _receiver.loggedUserReceiver(user);
           return;
         }
         _receiver.handleLoggedUserException(TokenInvalidException());

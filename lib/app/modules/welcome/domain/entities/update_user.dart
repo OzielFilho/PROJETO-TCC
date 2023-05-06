@@ -10,7 +10,7 @@ class UpdateUserWelcome {
     required this.photo,
     required this.phone,
     required this.email,
-    required this.welcomePage,
+    required this.welcomePage,  
     required this.contacts,
   });
 }

@@ -1,5 +1,4 @@
 import 'package:app/app/modules/splash/interactor/refresh_token_interactor_receiver.dart';
-import 'package:app/app/modules/splash/models/user_logged_info_model.dart';
 
 class RefreshTokenInteractorReceiverMock
     implements RefreshTokenInteractorReceiver {
@@ -11,7 +10,7 @@ class RefreshTokenInteractorReceiverMock
   }
 
   @override
-  void loggedUserReceiver(UserLoggedInfoModel result) {
+  void loggedUserReceiver(Map<String, dynamic> result) {
     callLoggedUserReceiver += 1;
   }
 }

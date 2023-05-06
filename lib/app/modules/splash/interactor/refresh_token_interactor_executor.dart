@@ -1,9 +1,9 @@
 import 'package:app/app/modules/splash/interactor/refresh_token_interactor_provider.dart';
 import 'package:app/app/modules/splash/interactor/refresh_token_interactor_receiver.dart';
-import 'package:app/app/modules/splash/models/user_logged_info_model.dart';
 import 'package:app/app/modules/splash/repository/refresh_token_repository_firebase.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../core/models/user_logged_response.dart';
 import '../../../core/services/firebase_auth_service.dart';
 import '../../../core/services/firestore_service.dart';
 import '../../../core/services/network_service.dart';
@@ -33,8 +33,9 @@ class RefreshTokenInteractorExecutor
   }
 
   @override
-  void loggedUserReceiver(UserLoggedInfoModel result) {
-    _listener.loggedUserReceiver(result);
+  void loggedUserReceiver(Map<String, dynamic> result) {
+    final user = UserLoggedResponse.fromJson(result);
+    _listener.loggedUserReceiver(user);
   }
 
   @override

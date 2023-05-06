@@ -14,8 +14,10 @@ class SplashRouter implements SplashRoutable {
       Modular.to.pushReplacementNamed('/auth/');
 
   @override
-  void navigateToWelcomePage({required BuildContext context}) =>
-      Modular.to.pushReplacementNamed('/welcome/');
+  void navigateToWelcomePage(
+          {required BuildContext context, required String refreshToken}) =>
+      Modular.to.pushReplacementNamed('/welcome/',
+          arguments: {'refreshToken': refreshToken});
 
   @override
   void openDialogSplash(

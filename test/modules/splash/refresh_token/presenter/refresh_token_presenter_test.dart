@@ -1,4 +1,4 @@
-import 'package:app/app/core/models/user_logged_response.dart';
+import 'package:app/app/core/models/user_actual.dart';
 import 'package:app/app/modules/splash/presenter/refresh_token_presenter.dart';
 import 'package:test/test.dart';
 
@@ -6,12 +6,13 @@ import '../../../../mocks/build_context_mock.dart';
 import '../interactor/refresh_token_interactor_provider_mock.dart';
 
 void main() {
-  final _result = UserLoggedResponse(
+  final _result = UserActual(
       logged: true,
       welcomePage: false,
       token: '123131',
       email: 'opzie@gmail.com',
       name: 'juarez',
+      contacts: [],
       phone: '1515151',
       photo: 'kmfanfjan');
   final _exception = Exception();

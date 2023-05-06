@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:app/app/core/error/exceptions.dart';
-import 'package:app/app/core/models/user_logged_response.dart';
+import 'package:app/app/core/models/user_actual.dart';
 import 'package:app/app/modules/splash/interactor/refresh_token_interactor_provider.dart';
 import 'package:app/app/modules/splash/presenter/refresh_token_presenter_listener.dart';
 import 'package:app/app/modules/splash/presenter/refresh_token_presenter_provider.dart';
@@ -57,7 +57,7 @@ class RefreshTokenPresenter extends ChangeNotifier
   }
 
   @override
-  void loggedUserReceiver(UserLoggedResponse result) {
+  void loggedUserReceiver(UserActual result) {
     _controller.sink.add(result);
 
     if (!result.logged || result.token.isEmpty) {

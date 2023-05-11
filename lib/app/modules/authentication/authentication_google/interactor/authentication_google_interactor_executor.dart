@@ -1,10 +1,10 @@
+import 'package:app/app/core/models/user_account.dart';
 import 'package:app/app/core/services/network_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../core/services/firebase_auth_service.dart';
 import '../../../../core/services/firestore_service.dart';
-import '../models/auth_result_model.dart';
 import '../models/user_create_google_model.dart';
 import '../presenter/authentication_google_presenter_listener.dart';
 import '../repository/authentication_google_firebase_repository.dart';
@@ -51,7 +51,9 @@ class AuthenticationGoogleInteractorExecutor
       }
 
       final user = await _firestoreService.getDocument('users', result.uid);
-      final userResult = AuthResultModel.fromMap(user);
+      UserAccount.fromJson(user);
+      final userResult = UserAccount.instance;
+      UserAccount.instance.logged = true;
       if (!userResult.welcomePage) {
         _listener.authenticationGoogleReceiver('Welcome Page True');
       }

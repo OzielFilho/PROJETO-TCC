@@ -59,7 +59,6 @@ class RefreshTokenPresenter extends ChangeNotifier
   @override
   void loggedUserReceiver(UserAccount result) {
     _controller.sink.add(result);
-
     if (!result.logged || result.token!.isEmpty) {
       _routable.navigateToLoginPage(context: _context!);
       return;

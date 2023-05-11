@@ -5,10 +5,10 @@ class UserAccount {
   final bool welcomePage;
   final String photo;
   final String email;
-  late final String phone;
+  String phone;
   final String? token;
-  final bool logged;
-  late final List<String> contacts;
+  bool logged;
+  List<String> contacts;
   static late UserAccount _instance;
 
   UserAccount(
@@ -34,7 +34,7 @@ class UserAccount {
         photo: json['photo'] ?? null,
         contacts: contactsConvert,
         token: json['token'] ?? null,
-        logged: json['logged'] ?? null);
+        logged: json['logged'] ?? false);
     return _instance;
   }
 
@@ -47,6 +47,8 @@ class UserAccount {
       'email': _instance.email,
       'phone': cryptPhone,
       'photo': _instance.photo,
+      'logged': _instance.logged,
+      'token': _instance.token,
       'contacts': _instance.contacts,
     };
   }

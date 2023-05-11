@@ -1,9 +1,9 @@
 import 'dart:io';
+import 'package:app/app/core/models/user_account.dart';
+
 import 'firestorage_service.dart';
 import 'firestore_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../modules/authentication/utils/entities/auth_result.dart';
-import '../../modules/authentication/authentication_google/models/auth_result_model.dart';
 import '../../modules/authentication/create_account_with_email_and_password/models/user_create_account_model.dart';
 import '../error/exceptions.dart';
 import '../utils/constants/encrypt_data.dart';
@@ -48,7 +48,9 @@ class FirebaseAuthServiceImpl implements FirebaseAuthService {
       final user =
           await _firestoreService.getDocument('users', userLogin.user!.uid);
 
-      AuthResult userResult = AuthResultModel.fromMap(user);
+      UserAccount.fromJson(user);
+      final userResult = UserAccount.instance;
+
       final emailVerified = userLogin.user!.emailVerified;
       final isGoogleTest = userLogin.user!.email == 'google_test@gmail.com';
 

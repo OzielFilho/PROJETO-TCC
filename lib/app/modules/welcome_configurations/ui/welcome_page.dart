@@ -3,11 +3,11 @@ import 'package:app/app/core/presentation/widgets/buttons_design.dart';
 import 'package:app/app/core/presentation/widgets/form_desing.dart';
 import 'package:app/app/core/presentation/widgets/loading_desing.dart';
 import 'package:app/app/core/theme/theme_app.dart';
-import 'package:app/app/core/utils/colors/colors_utils.dart';
 import 'package:app/app/modules/welcome_configurations/presenter/update_contacts_user_presenter.dart';
 import 'package:app/app/modules/welcome_configurations/presenter/update_contacts_user_presenter_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -24,17 +24,15 @@ class _WelcomePageState extends State<WelcomePage> {
   UserAccount _userAccount = UserAccount.instance;
 
   List<String> _contactsText = [];
+
   _createNewForm() {
     _formsContacts.add(FormsDesign(
-        controller: TextEditingController(),
-        title: 'Insira um número',
-        formatter: [_maskFormatter],
-        suffixIcon: IconButton(
-            onPressed: _createNewForm,
-            icon: Icon(
-              Icons.add,
-              color: ColorUtils.whiteColor,
-            ))));
+      controller: TextEditingController(),
+      title: _formsContacts.length <= 0
+          ? 'Digite um número'
+          : 'Digite outro número',
+      formatter: [_maskFormatter],
+    ));
     setState(() {});
   }
 
@@ -50,6 +48,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   void initState() {
+    super.initState();
     _createNewForm();
     _controllerPage = PageController(initialPage: 0);
 
@@ -63,7 +62,6 @@ class _WelcomePageState extends State<WelcomePage> {
       }
     });
     _provider = UpdateContactsUserPresenter();
-    super.initState();
   }
 
   @override
@@ -115,6 +113,12 @@ class _WelcomePageState extends State<WelcomePage> {
                                 },
                               ),
                             ),
+                            TextButton(
+                                onPressed: () => _createNewForm(),
+                                child: Text(
+                                  'Inserir mais um número',
+                                  style: ThemeApp.theme.textTheme.subtitle1,
+                                )),
                             const SizedBox(
                               height: 20.0,
                             ),
@@ -132,7 +136,8 @@ class _WelcomePageState extends State<WelcomePage> {
                                             MediaQuery.of(context).size.width *
                                                 0.7,
                                         child: ButtonDesign(
-                                            text: 'Finalizar Novamente a Conta',
+                                            text:
+                                                'Tente Novamente finalizar a Conta',
                                             action: () async {
                                               FocusScope.of(context).unfocus();
 
@@ -150,7 +155,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                       ),
                                     ],
                                   );
-                                if (!(snapshot.data is bool)) {
+                                if (!(snapshot.data as bool)) {
                                   return SizedBox(
                                       width: MediaQuery.of(context).size.width *
                                           0.7,
@@ -165,10 +170,17 @@ class _WelcomePageState extends State<WelcomePage> {
                                             _userAccount.contacts =
                                                 _contactsText;
                                             _formsContacts.clear();
+
                                             await _provider.updateContactsUser(
                                                 _userAccount);
+
                                             _createNewForm();
                                           }));
+                                }
+
+                                if ((snapshot.data as bool)) {
+                                  Modular.to.pushReplacementNamed('/home/');
+                                  return LoadingDesign();
                                 }
                                 return LoadingDesign();
                               },
@@ -201,27 +213,33 @@ class _WelcomePageState extends State<WelcomePage> {
                           ),
                           StreamBuilder<Object>(
                             initialData: false,
-                            stream: _provider.outUpdateContactsUser,
+                            stream: _provider.outUpdatePhoneUser,
                             builder: (context, snapshot) {
                               if (!snapshot.hasData) return LoadingDesign();
                               if (snapshot.data is Exception)
                                 return Column(
                                   children: [
-                                    Text(snapshot.data.toString()),
+                                    Text(
+                                      snapshot.data.toString(),
+                                      style: ThemeApp.theme.textTheme.subtitle1,
+                                    ),
                                     ButtonDesign(
-                                        text: 'Inserir um Novo Número',
+                                        text: 'Inserir Telefone',
                                         action: () async {
+                                          UpdateContactsUserPresenterProvider
+                                              _providerNewNumber =
+                                              UpdateContactsUserPresenter();
                                           FocusScope.of(context).unfocus();
                                           _userAccount.phone =
                                               _controllerPhone.text;
                                           _controllerPhone.clear();
                                           setState(() {});
-                                          await _provider
-                                              .updateContactsUser(_userAccount);
+                                          await _providerNewNumber
+                                              .updatePhoneUser(_userAccount);
                                         })
                                   ],
                                 );
-                              if (!(snapshot.data is bool)) {
+                              if (!(snapshot.data as bool)) {
                                 return Align(
                                   alignment: Alignment.center,
                                   child: ButtonDesign(
@@ -233,9 +251,15 @@ class _WelcomePageState extends State<WelcomePage> {
                                         _controllerPhone.clear();
                                         setState(() {});
                                         await _provider
-                                            .updateContactsUser(_userAccount);
+                                            .updatePhoneUser(_userAccount);
                                       }),
                                 );
+                              }
+                              if ((snapshot.data as bool)) {
+                                _controllerPage?.animateToPage(1,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.easeIn);
+                                return LoadingDesign();
                               }
                               return LoadingDesign();
                             },

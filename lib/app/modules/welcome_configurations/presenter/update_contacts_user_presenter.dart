@@ -11,9 +11,11 @@ class UpdateContactsUserPresenter extends ChangeNotifier
     implements
         UpdateContactsUserPresenterProvider,
         UpdateContactsUserPresenterListener {
-  final _controller = StreamController<Object>();
+  final _controllerContacts = StreamController<Object>();
+  final _controllerPhone = StreamController<Object>();
 
   late UpdateContactsUserInteractorProvider _provider;
+  late bool _isUpdateContact;
 
   UpdateContactsUserPresenter(
       {UpdateContactsUserInteractorProvider? provider}) {
@@ -23,25 +25,40 @@ class UpdateContactsUserPresenter extends ChangeNotifier
 
   @override
   void handleUpdateContactsUserException(Exception exception) {
-    _controller.sink.add(exception);
+    _isUpdateContact
+        ? _controllerContacts.sink.add(exception)
+        : _controllerPhone.sink.add(exception);
   }
 
   @override
-  Stream<Object> get outUpdateContactsUser => _controller.stream;
+  Stream<Object> get outUpdatePhoneUser => _controllerContacts.stream;
 
   @override
   Future<void> updateContactsUser(UserAccount userAccount) async {
+    _isUpdateContact = true;
     await _provider.updateContactsUser(userAccount);
   }
 
   @override
   void updateContactsUserReceiver(bool result) {
-    _controller.sink.add(result);
+    _isUpdateContact
+        ? _controllerContacts.sink.add(result)
+        : _controllerPhone.sink.add(result);
   }
 
   @override
   void dispose() {
-    _controller.close();
+    _controllerContacts.close();
+    _controllerPhone.close();
     super.dispose();
+  }
+
+  @override
+  Stream<Object> get outUpdateContactsUser => _controllerContacts.stream;
+
+  @override
+  Future<void> updatePhoneUser(UserAccount userAccount) async {
+    _isUpdateContact = false;
+    await _provider.updateContactsUser(userAccount);
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app/app/core/models/user_account.dart';
 import 'package:app/app/core/services/firebase_auth_service.dart';
 import 'package:app/app/core/utils/validations/validations.dart';
 import 'package:app/app/modules/authentication/authentication_email_and_password/repository/authentication_email_and_password_executor.dart';
@@ -38,6 +39,7 @@ class AuthenticationEmailAndPasswordFirebaseRepository
         final result =
             await _authService.signInWithEmailAndPassword(email, password);
         _receiver.authenticationEmailAndPasswordReceiver(result);
+        UserAccount.instance.logged = true;
         return;
       }
       _receiver
